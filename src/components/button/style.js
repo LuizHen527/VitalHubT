@@ -12,6 +12,11 @@ export const ButtonLogin = styled.TouchableOpacity`
     border: #496BBA;
 `
 
+export const ButtonLoginVE = styled(ButtonLogin)`
+    margin-top: 30px;
+    margin-bottom: 30px;
+`
+
 export const ButtonGoogle = styled(ButtonLogin)`
     background-color: white;
     border: 1px solid #496BBA;

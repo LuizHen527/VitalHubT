@@ -11,6 +11,10 @@ export const Navegation = ({navigation}) => {
                 title="Verificar Email"
                 onPress={() => navigation.navigate("VerifyEmail")}
             />
+            <Button
+                title="Redefinir senha"
+                onPress={() => navigation.navigate("ResetPassword")}
+            />
         </View>
     );
 } 

@@ -1,42 +1,42 @@
 import { AntDesign } from '@expo/vector-icons';
-import { ContainerBanner, ContainerButtonContinue, ContainerInput, ContainerLogo, ContentRP } from './style';
+
 import { ArrowIcon } from '../../components/ArrowIcon/arrowIcon';
 import { Logo } from '../../components/images/style';
-import { Container } from '../../components/container/style';
-import { ButtonTitle, ContainerText, RegularText, Title } from '../../components/title/style';
+import { Container, ContainerBanner, ContainerInput, ContainerLogo, ContentRP } from '../../components/container/style';
+import { ButtonTitle, RegularTextRP, Title } from '../../components/title/style';
 import { Input } from '../../components/input/styled';
 import { ButtonLogin } from '../../components/button/style';
 
 export const RecoverPassword = () => {
-    return(
+    return (
         <Container>
             <ContainerBanner>
-                <ArrowIcon/>
+                <ArrowIcon />
                 <ContainerLogo>
                     <Logo
                         source={require('../../assets/logo.png')}
                     />
                 </ContainerLogo>
             </ContainerBanner>
-            <ContentRP>
-                <Title>Recuperar senha</Title>
-                <ContainerText>
-                    <RegularText>Digite abaixo seu email cadastrado que enviaremos um link para recuperação de senha</RegularText>
-                </ContainerText>
 
-                <ContainerInput>
-                    <Input
-                        placeholder="Usuario ou Email"
-                    />
-                </ContainerInput>
+            <Title>Recuperar senha</Title>
 
-                
-                <ButtonLogin>
-                    <ButtonTitle>CONTINUAR</ButtonTitle>
-                </ButtonLogin>
-                
-                
-            </ContentRP>
+            <RegularTextRP>Digite abaixo seu email cadastrado que enviaremos um link para recuperação de senha</RegularTextRP>
+
+
+            <ContainerInput>
+                <Input
+                    placeholder="Usuario ou Email"
+                />
+            </ContainerInput>
+
+
+            <ButtonLogin>
+                <ButtonTitle>CONTINUAR</ButtonTitle>
+            </ButtonLogin>
+
+
+
         </Container>
 
     )

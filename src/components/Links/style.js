@@ -13,7 +13,11 @@ export const LinkMedium = styled.Text`
 
 export const LinkBold = styled.Text`
     font-family: MontserratAlternates_600SemiBold;
-    font-size: 14;
+    font-size: 14px;
     color: #4D659D;
     text-decoration: underline;
+`
+
+export const LinkCancel = styled(LinkBold)`
+    color: #344F8F;
 `

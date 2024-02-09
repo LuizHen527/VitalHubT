@@ -29,7 +29,25 @@ export const RegularText = styled.Text`
     text-align: center;
 `
 
+export const RegularTextVE = styled(RegularText)`
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 90%;
+`
+
+export const RegularTextRP = styled(RegularText)`
+    margin-top: 15px;
+    margin-bottom: 5px;
+    width: 90%;
+`
+
+
+export const RegularTextBlue = styled(RegularText)`
+    color: #496BBA;
+`
+
 export const ContainerText = styled.View`
     margin-top: 15px;
     margin-bottom: 5px;
+    width: 90%;
 `

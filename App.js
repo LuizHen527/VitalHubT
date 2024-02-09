@@ -11,10 +11,11 @@ const Stack = createNativeStackNavigator();
 //Import das fontes
 
 import { useFonts, MontserratAlternates_600SemiBold, MontserratAlternates_500Medium, MontserratAlternates_700Bold } from '@expo-google-fonts/montserrat-alternates';
-import { Quicksand_500Medium } from '@expo-google-fonts/quicksand';
+import { Quicksand_500Medium, Quicksand_600SemiBold } from '@expo-google-fonts/quicksand';
 import { LinkMedium } from './src/components/Links/style';
 import { RecoverPassword } from './src/screens/RecoverPassword/recoverPassword';
 import { VerifyEmail } from './src/screens/VerifyEmail/VerifyEmail';
+import { ResetPassword } from './src/screens/ResetPassword/resetPassword';
 
 export default function App() {
 
@@ -22,7 +23,8 @@ export default function App() {
     MontserratAlternates_600SemiBold,
     MontserratAlternates_500Medium,
     MontserratAlternates_700Bold,
-    Quicksand_500Medium
+    Quicksand_500Medium,
+    Quicksand_600SemiBold
   })
 
   if(!fontsLoaded && !fontsError){
@@ -60,6 +62,11 @@ export default function App() {
           name='VerifyEmail'
           component={VerifyEmail}
           options={{title:'VerifyEmail'}}
+        />
+        <Stack.Screen
+          name='ResetPassword'
+          component={ResetPassword}
+          options={{title:'Redefinir senha'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
