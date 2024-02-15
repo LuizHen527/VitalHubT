@@ -19,14 +19,26 @@ export const ButtonTitleGoogle = styled(ButtonTitle)`
 `
 export const TextAccount = styled.Text`
     font-family: MontserratAlternates_600SemiBold;
-    font-size: 14;
+    font-size: 14px;
     color: #4e5e59;
+`
+
+export const TitleProfile = styled(TextAccount)`
+    font-size: 20px;
+    color: #33303E;
+    margin-top: 20px;
+
 `
 
 export const RegularText = styled.Text`
     font-family: Quicksand_500Medium;
     font-size: 16px;
     text-align: center;
+`
+
+export const InfoTextProfile = styled(RegularText)`
+    font-size: 14px;
+    color: #5F5C6B;
 `
 
 export const RegularTextVE = styled(RegularText)`
@@ -50,4 +62,11 @@ export const ContainerText = styled.View`
     margin-top: 15px;
     margin-bottom: 5px;
     width: 90%;
+`
+
+export const InputTitle = styled.Text`
+    font-family: Quicksand_600SemiBold;
+    font-size: 16px;
+    margin-top: 24px;
+
 `

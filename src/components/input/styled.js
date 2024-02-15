@@ -15,3 +15,9 @@ export const Input = styled.TextInput.attrs({
     font-family: MontserratAlternates_600SemiBold;
     
 `
+
+export const InputDescriptionProfile = styled(Input)`
+    height: 320px;
+    justify-content: flex-start;
+    text-align: left;
+`

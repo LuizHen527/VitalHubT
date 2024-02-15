@@ -10,5 +10,8 @@ export const Logo = styled.Image`
 export const ImageGoogle = styled.Image`
     height: 20px;
     width: 20px;
-    
+`
+export const ImageProfile = styled.Image`
+    height: 360px;
+    width: 100%;
 `

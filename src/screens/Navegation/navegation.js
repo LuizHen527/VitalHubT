@@ -15,6 +15,14 @@ export const Navegation = ({navigation}) => {
                 title="Redefinir senha"
                 onPress={() => navigation.navigate("ResetPassword")}
             />
+            <Button
+                title="Criar conta"
+                onPress={() => navigation.navigate("CriarConta")}
+            />
+            <Button
+                title="Perfil"
+                onPress={() => navigation.navigate("Profile")}
+            />
         </View>
     );
 } 

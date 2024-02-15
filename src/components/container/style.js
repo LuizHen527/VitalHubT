@@ -18,6 +18,11 @@ export const ContainerLogo = styled.View`
     margin-left: 5.5%;
 `
 
+export const ContainerLogoTipo = styled.View`
+    margin-top: 20px;
+    margin-bottom: 20px;
+`
+
 export const ContentRP = styled.View`
     align-items: center;
     width: 90%;
@@ -30,4 +35,5 @@ export const ContainerInput = styled.View`
 
 export const ContainerInputRP = styled(ContainerInput)`
     margin-bottom: 0px;
-`
+` 
+

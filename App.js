@@ -16,6 +16,8 @@ import { LinkMedium } from './src/components/Links/style';
 import { RecoverPassword } from './src/screens/RecoverPassword/recoverPassword';
 import { VerifyEmail } from './src/screens/VerifyEmail/VerifyEmail';
 import { ResetPassword } from './src/screens/ResetPassword/resetPassword';
+import { CriarConta } from './src/screens/CriarConta/criarConta';
+import { Profile } from './src/screens/Profile/profile';
 
 export default function App() {
 
@@ -67,6 +69,16 @@ export default function App() {
           name='ResetPassword'
           component={ResetPassword}
           options={{title:'Redefinir senha'}}
+        />
+        <Stack.Screen
+          name='CriarConta'
+          component={CriarConta}
+          options={{title:'Criar conta'}}
+        />
+        <Stack.Screen
+          name='Profile'
+          component={Profile}
+          options={{title:'Perfil'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
