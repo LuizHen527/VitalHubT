@@ -20,4 +20,13 @@ export const InputDescriptionProfile = styled(Input)`
     height: 320px;
     justify-content: flex-start;
     text-align: left;
+    width: 90%;
+`
+
+export const InputDiagnosisProfile = styled(InputDescriptionProfile)`
+    height: 53px;
+`
+
+export const InputPrescriptionProfile = styled(InputDescriptionProfile)`
+    height: 120px;
 `

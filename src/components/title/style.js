@@ -68,5 +68,17 @@ export const InputTitle = styled.Text`
     font-family: Quicksand_600SemiBold;
     font-size: 16px;
     margin-top: 24px;
+    width: 90%;
+`
 
+export const TextDefault = styled.Text`
+    color: #4E4B59;
+    font-family: Quicksand_500Medium;
+    font-size: 14px;
+`
+
+export const NameUser = styled(InputTitle)`
+    margin-top: 0px;
+    width: auto;
+    color: #FBFBFB;
 `

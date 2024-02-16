@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { LinearGradient } from 'expo-linear-gradient'
 
 export const Container = styled.SafeAreaView`
     flex: 1;
@@ -37,3 +38,15 @@ export const ContainerInputRP = styled(ContainerInput)`
     margin-bottom: 0px;
 ` 
 
+export const ContainerHeader = styled(LinearGradient).attrs({
+    colors: ['#60BFC5', '#496BBA'],
+    start: {x: -0.05, y: 1.08},
+    end: {x: 1, y: 0}
+})`
+    width:100%;
+    height: 102px;
+    border-radius: 0px 0px 15px 15px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+`

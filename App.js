@@ -18,6 +18,7 @@ import { VerifyEmail } from './src/screens/VerifyEmail/VerifyEmail';
 import { ResetPassword } from './src/screens/ResetPassword/resetPassword';
 import { CriarConta } from './src/screens/CriarConta/criarConta';
 import { Profile } from './src/screens/Profile/profile';
+import { AppointmentDoctor } from './src/screens/AppointmentDoctor/appointmentDoctor';
 
 export default function App() {
 
@@ -79,6 +80,11 @@ export default function App() {
           name='Profile'
           component={Profile}
           options={{title:'Perfil'}}
+        />
+        <Stack.Screen
+          name='AppointmentDoctor'
+          component={AppointmentDoctor}
+          options={{title:'Consulta doutor'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

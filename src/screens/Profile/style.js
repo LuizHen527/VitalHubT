@@ -16,3 +16,9 @@ export const ContainerInput = styled.View`
     width: 100%;
     height: 100%;
 `
+
+export const ContainerInputProfile = styled.View`
+    width: 100%;
+    align-items: center;
+
+`
