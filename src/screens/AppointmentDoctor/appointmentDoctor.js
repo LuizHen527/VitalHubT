@@ -1,12 +1,25 @@
 import { HeaderProfile } from "../../components/HeaderProfile/HeaderProfile";
 import { Container } from "../../components/container/style";
 import CalendarStrip from 'react-native-calendar-strip';
-import { ContainerCalendar, ContainerFilter } from "./style";
+import { ContainerCalendar, ContainerFilter, FilterAppointment } from "./style";
 import { StyledCalendarStrip } from "../../components/StyledCalendarStrip/styledCalendarStrip";
 import { StyleSheet } from "react-native";
 import moment from "moment";
+import { AbsListAppointment } from "../../components/AbsListAppointment/AbsListAppointment";
+import { useState } from "react";
+import { AppointmentCard } from "../../components/AppointmentCard/AppointmentCard";
+
+const Consultas = [
+    {id: 1, nome: "Carlos", situacao: "pendente"},
+    {id: 2, nome: "Luiz", situacao: "realizado"},
+    {id: 3, nome: "Eduardo", situacao: "cancelado"},
+    {id: 4, nome: "Joao", situacao: "realizado"},
+    {id: 5, nome: "Maria", situacao: "cancelado"}
+]
 
 export const AppointmentDoctor = () => {
+
+    const[statusLista, setStatusLista] = useState("pedente"); 
 
     //define padrão pt-br para calendário
     moment.updateLocale("pt-br", {
@@ -80,9 +93,32 @@ export const AppointmentDoctor = () => {
                 scrollable={true}
             />
 
-            <ContainerFilter>
+            {/* Container */}
+            <FilterAppointment>
 
-            </ContainerFilter>
+                {/* Botao agendado */}
+                <AbsListAppointment
+                    textButton={"Agendadas"}
+                    clickButton={statusLista === "pendente"}
+                    onPress={() => setStatusLista("pendente")}
+                />
+                {/* Botao realizado */}
+                <AbsListAppointment
+                    textButton={"Realizadas"}
+                    clickButton={statusLista === "realizado"}
+                    onPress={() => setStatusLista("realizado")}
+                />
+                {/* Botao cancelado */}
+                <AbsListAppointment
+                    textButton={"Canceladas"}
+                    clickButton={statusLista === "cancelado"}
+                    onPress={() => setStatusLista("cancelado")}
+                />
+
+            </FilterAppointment>
+
+            <AppointmentCard/>
+                
         </Container>
     )
 

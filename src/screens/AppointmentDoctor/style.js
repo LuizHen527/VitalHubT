@@ -26,6 +26,9 @@ export const ContainerCalendar = styled.View`
     width: 100%;
 `
 
-export const ContainerFilter = styled.View`
-
+export const FilterAppointment = styled.View`
+    width: 90%;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
 `

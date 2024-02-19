@@ -15,3 +15,9 @@ export const ImageProfile = styled.Image`
     height: 360px;
     width: 100%;
 `
+
+export const ImageAppointmentProfile = styled.Image`
+    width: 77px;
+    height: 80px;
+    border-radius: 5px;
+`
