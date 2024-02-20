@@ -31,4 +31,5 @@ export const FilterAppointment = styled.View`
     flex-direction: row;
     justify-content: space-between;
     margin-top: 10px;
+    margin-bottom: 8px;
 `

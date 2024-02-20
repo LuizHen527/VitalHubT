@@ -8,6 +8,7 @@ import moment from "moment";
 import { AbsListAppointment } from "../../components/AbsListAppointment/AbsListAppointment";
 import { useState } from "react";
 import { AppointmentCard } from "../../components/AppointmentCard/AppointmentCard";
+import { ListComponent } from "../../components/List/Style";
 
 const Consultas = [
     {id: 1, nome: "Carlos", situacao: "pendente"},
@@ -117,7 +118,20 @@ export const AppointmentDoctor = () => {
 
             </FilterAppointment>
 
-            <AppointmentCard/>
+            <ListComponent
+                data={Consultas}
+                keyExtractor={(item) => item.id}
+
+                renderItem={({item}) => 
+                statusLista == item.situacao && (
+                    <AppointmentCard
+                        situacao={item.situacao}
+                    />
+                )
+            }
+            />
+
+            {/* <AppointmentCard/> */}
                 
         </Container>
     )

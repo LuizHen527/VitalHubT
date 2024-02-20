@@ -20,4 +20,6 @@ export const ImageAppointmentProfile = styled.Image`
     width: 77px;
     height: 80px;
     border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
 `
