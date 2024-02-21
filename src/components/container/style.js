@@ -50,3 +50,13 @@ export const ContainerHeader = styled(LinearGradient).attrs({
     align-items: center;
     justify-content: space-between;
 `
+
+export const ContainerModal = styled(Container)`
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 10;
+    background-color: rgba(0,0,0,0.6);
+    justify-content: center;
+    
+`

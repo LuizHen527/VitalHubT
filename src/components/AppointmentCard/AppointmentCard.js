@@ -55,7 +55,7 @@ export const AppointmentCard = ({
 
 const styles =  StyleSheet.create({
     shadow: {
-        elevation: 10,
+        elevation: 5,
         shadowColor: '#000000',
     },
 });

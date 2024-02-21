@@ -33,3 +33,9 @@ export const FilterAppointment = styled.View`
     margin-top: 10px;
     margin-bottom: 8px;
 `
+
+export const ContainerList = styled.View`
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+`

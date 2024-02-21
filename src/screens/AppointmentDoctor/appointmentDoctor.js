@@ -1,7 +1,7 @@
 import { HeaderProfile } from "../../components/HeaderProfile/HeaderProfile";
 import { Container } from "../../components/container/style";
 import CalendarStrip from 'react-native-calendar-strip';
-import { ContainerCalendar, ContainerFilter, FilterAppointment } from "./style";
+import { ContainerCalendar, ContainerFilter, ContainerList, FilterAppointment } from "./style";
 import { StyledCalendarStrip } from "../../components/StyledCalendarStrip/styledCalendarStrip";
 import { StyleSheet } from "react-native";
 import moment from "moment";
@@ -9,6 +9,7 @@ import { AbsListAppointment } from "../../components/AbsListAppointment/AbsListA
 import { useState } from "react";
 import { AppointmentCard } from "../../components/AppointmentCard/AppointmentCard";
 import { ListComponent } from "../../components/List/Style";
+import { CancelAppointmentModal } from "../../components/CancelAppointmentModal/CancelAppointmentModal";
 
 const Consultas = [
     {id: 1, nome: "Carlos", situacao: "pendente"},
@@ -19,6 +20,11 @@ const Consultas = [
 ]
 
 export const AppointmentDoctor = () => {
+
+    //State para os modais
+
+    const [showModalCancel, setShowModalCancel] = useState(false);
+    const [showModalAppointment, setShowModalAppointment] = useState(false);
 
     const[statusLista, setStatusLista] = useState("pedente"); 
 
@@ -118,6 +124,7 @@ export const AppointmentDoctor = () => {
 
             </FilterAppointment>
 
+            <ContainerList>
             <ListComponent
                 data={Consultas}
                 keyExtractor={(item) => item.id}
@@ -126,9 +133,17 @@ export const AppointmentDoctor = () => {
                 statusLista == item.situacao && (
                     <AppointmentCard
                         situacao={item.situacao}
+                        onPressCancel={() => setShowModalCancel(true)}
+                        onPressAppointment={() => setShowModalAppointment(true)}
                     />
                 )
             }
+            />
+            </ContainerList>
+
+            <CancelAppointmentModal
+                visible={showModalCancel}
+                setShowModalCancel={setShowModalCancel}
             />
 
             {/* <AppointmentCard/> */}

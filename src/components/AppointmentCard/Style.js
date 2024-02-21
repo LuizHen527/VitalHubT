@@ -5,10 +5,10 @@ export const ContainerCard = styled.View`
     height: 102px;
     flex-direction: row;
     align-items: center;
-    margin-top: 12px;
+    padding: 10px 10px;
+    margin: 6px auto;
     border-radius: 5px;
     background-color: #FFFFFF;
-    /* box-shadow: 4px 4px 15px 0px #000000; */
 `
 
 export const ContainerProfile = styled.View`
@@ -61,8 +61,6 @@ export const DateTime = styled.Text`
     font-family: Quicksand_600SemiBold;
     color: ${(props) => props.situacao == "pendente" ?
     "#49B3BA" : "#4E4B59"};
-
-    
 `
 
 export const ButtonCard = styled.TouchableOpacity`

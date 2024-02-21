@@ -7,6 +7,10 @@ export const Title = styled.Text`
  margin-bottom: 5px;
 `
 
+export const TitleModal = styled(Title)`
+    margin-top: 30px;
+`
+
 export const ButtonTitle = styled.Text`
     font-family: MontserratAlternates_700Bold;
     font-size: 14px;
@@ -34,6 +38,13 @@ export const RegularText = styled.Text`
     font-family: Quicksand_500Medium;
     font-size: 16px;
     text-align: center;
+`
+
+export const RegularTextModal = styled(RegularText)`
+    width: 83%;
+    text-align: justify;
+    line-height: 22px;
+    margin-top: 15px;
 `
 
 export const InfoTextProfile = styled(RegularText)`
