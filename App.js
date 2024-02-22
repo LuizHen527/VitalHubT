@@ -19,6 +19,7 @@ import { ResetPassword } from './src/screens/ResetPassword/resetPassword';
 import { CriarConta } from './src/screens/CriarConta/criarConta';
 import { Profile } from './src/screens/Profile/profile';
 import { AppointmentDoctor } from './src/screens/AppointmentDoctor/appointmentDoctor';
+import { AppointmentPacient } from './src/screens/AppointmentPacient/AppointmentPacient';
 
 export default function App() {
 
@@ -86,6 +87,11 @@ export default function App() {
           name='AppointmentDoctor'
           component={AppointmentDoctor}
           options={{title:'Consulta doutor'}}
+        />
+        <Stack.Screen
+          name='AppointmentPacient'
+          component={AppointmentPacient}
+          options={{title:'Consulta paciente'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -11,6 +11,10 @@ export const TitleModal = styled(Title)`
     margin-top: 30px;
 `
 
+export const TitleModalRecord = styled(TitleModal)`
+    margin-top: 20px;
+`
+
 export const ButtonTitle = styled.Text`
     font-family: MontserratAlternates_700Bold;
     font-size: 14px;
@@ -41,8 +45,8 @@ export const RegularText = styled.Text`
 `
 
 export const RegularTextModal = styled(RegularText)`
-    width: 83%;
-    text-align: justify;
+    width: 278px;
+    text-align: center;
     line-height: 22px;
     margin-top: 15px;
 `
@@ -92,4 +96,16 @@ export const NameUser = styled(InputTitle)`
     margin-top: 0px;
     width: auto;
     color: #FBFBFB;
+`
+
+export const AgeModalRecord = styled.Text`
+    font-family: Quicksand_500Medium;
+    font-size: 14px;
+    color: #4E4B59;
+`
+
+export const EmailModalRecord = styled.Text`
+    font-family: Quicksand_500Medium;
+    font-size: 14px;
+    color: #5F5C6B;
 `

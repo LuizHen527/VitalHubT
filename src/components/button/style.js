@@ -14,10 +14,15 @@ export const ButtonLogin = styled.TouchableOpacity`
 
 export const ButtonLoginVE = styled(ButtonLogin)`
     margin-top: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 27px;
+`
+
+export const ButtonModal = styled(ButtonLoginVE)`
+    width: 285px;
 `
 
 export const ButtonCancel = styled.TouchableOpacity`
+   
     
 `
 

@@ -1,16 +1,17 @@
-import { HeaderProfile } from "../../components/HeaderProfile/HeaderProfile";
+import moment from "moment";
+import { HeaderProfile } from "../../components/HeaderProfile/HeaderProfile"
 import { Container } from "../../components/container/style";
-import CalendarStrip from 'react-native-calendar-strip';
-import { ContainerCalendar, ContainerFilter, ContainerList, FilterAppointment } from "./style";
 import { StyledCalendarStrip } from "../../components/StyledCalendarStrip/styledCalendarStrip";
 import { StyleSheet } from "react-native";
-import moment from "moment";
+import { ContainerList, FilterAppointment } from "../AppointmentDoctor/style";
 import { AbsListAppointment } from "../../components/AbsListAppointment/AbsListAppointment";
 import { useState } from "react";
-import { AppointmentCard } from "../../components/AppointmentCard/AppointmentCard";
 import { ListComponent } from "../../components/List/Style";
+import { AppointmentCard } from "../../components/AppointmentCard/AppointmentCard";
 import { CancelAppointmentModal } from "../../components/CancelAppointmentModal/CancelAppointmentModal";
 import { MedicalRecordModal } from "../../components/MedicalRecordModal/MedicalRecordModal";
+import { ContainerAppointmentButton } from "./Style";
+import { FontAwesome } from '@expo/vector-icons';
 
 const Consultas = [
     {id: 1, nome: "Carlos", situacao: "pendente"},
@@ -20,91 +21,92 @@ const Consultas = [
     {id: 5, nome: "Maria", situacao: "cancelado"}
 ];
 
-const User = {id: 1, nome: "Dr Drauzio", sourceImage: '../../assets/eduProfileImage.png'};
+const User = {id: 1, nome: "Dr Drauzio", sourceImage:'../../assets/eduProfileImage.png'};
 
-export const AppointmentDoctor = () => {
-
-    //State para os modais
+export const AppointmentPacient = () => {
 
     const [showModalCancel, setShowModalCancel] = useState(false);
     const [showModalAppointment, setShowModalAppointment] = useState(false);
 
-    const[statusLista, setStatusLista] = useState("pedente"); 
+    const[statusLista, setStatusLista] = useState("pedente");
 
-    //define padrão pt-br para calendário
-    moment.updateLocale("pt-br", {
+        //define padrão pt-br para calendário
+        moment.updateLocale("pt-br", {
 
-        //meses
-        months:
-            "Janeiro_Fevereiro_Março_Abril_Maio_Junho_Julho_Agosto_Setembro_Outubro_Novembro_Dezembro".split(
-                "_"
-            ),
+            //meses
+            months:
+                "Janeiro_Fevereiro_Março_Abril_Maio_Junho_Julho_Agosto_Setembro_Outubro_Novembro_Dezembro".split(
+                    "_"
+                ),
+    
+            //abreviação de meses
+            monthsShort: "jan_fev_mar_abr_mai_jun_jul_ago_set_out_nov_dez".split("_"),
+    
+            //dias da semana
+            weekdays:
+                "domingo_segunda-feira_terça-feira_quarta-feira_quinta-feira_sexta-feira_sábado".split(
+                    "_"
+                ),
+    
+            //abreviação dias da semana
+            weekdaysShort: "Dom_Seg_Ter_Qua_Qui_Sex_Sáb".split("_"),
+    
+            //abreviação dias da semana 
+            weekdaysMin: 'dom_2ª_3ª_4ª_5ª_6ª_sáb'.split('_'),
+        });
+    
+        //instância da data atual
+        const currentDate = new Date();
+    
+        //define a data inicial como sendo o primeiro dia do mês
+        const startingDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    
+        //define a data final como sendo o último dia do mês
+        const endingDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
 
-        //abreviação de meses
-        monthsShort: "jan_fev_mar_abr_mai_jun_jul_ago_set_out_nov_dez".split("_"),
-
-        //dias da semana
-        weekdays:
-            "domingo_segunda-feira_terça-feira_quarta-feira_quinta-feira_sexta-feira_sábado".split(
-                "_"
-            ),
-
-        //abreviação dias da semana
-        weekdaysShort: "Dom_Seg_Ter_Qua_Qui_Sex_Sáb".split("_"),
-
-        //abreviação dias da semana 
-        weekdaysMin: 'dom_2ª_3ª_4ª_5ª_6ª_sáb'.split('_'),
-    });
-
-    //instância da data atual
-    const currentDate = new Date();
-
-    //define a data inicial como sendo o primeiro dia do mês
-    const startingDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-
-    //define a data final como sendo o último dia do mês
-    const endingDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
     return (
         <Container>
-            {/* Queria passar props com o nome e a URL da imagem, mas nao consegui */}
-            {/* Update: O react native nao consegue renderizar imagens dinamicamente, quero ver como o professor vai fazer isso */}
-            <HeaderProfile
-            />
+        {/* Queria passar props com o nome e a URL da imagem, mas nao consegui */}
+        {/* Update: O react native nao consegue renderizar imagens dinamicamente, quero ver como o professor vai fazer isso */}
+        <HeaderProfile
+            sourceImage={User.sourceImage}
+            name={User.nome}
+        />
 
-            <StyledCalendarStrip
-                // animação e seleção de cada data
-                calendarAnimation={{ type: "sequence", duration: 30 }}
-                daySelectionAnimation={styles.selectedAnimationStyle}
+        <StyledCalendarStrip
+        // animação e seleção de cada data
+        calendarAnimation={{ type: "sequence", duration: 30 }}
+        daySelectionAnimation={styles.selectedAnimationStyle}
 
-                // seta esquerda e direita para avançar e voltar(aqui como display none)
-                iconLeftStyle={styles.iconsStyle}
-                iconRightStyle={styles.iconsStyle}
+        // seta esquerda e direita para avançar e voltar(aqui como display none)
+        iconLeftStyle={styles.iconsStyle}
+        iconRightStyle={styles.iconsStyle}
 
-                // deixa uma marcação default - data atual
-                selectedDate={currentDate}
-                // dia que começamos a visualizar a barra
-                startingDate={moment()}
+        // deixa uma marcação default - data atual
+        selectedDate={currentDate}
+        // dia que começamos a visualizar a barra
+        startingDate={moment()}
 
-                //data min e max - início do mês e final do mês
-                minDate={startingDate}
-                maxDate={endingDate}
+        //data min e max - início do mês e final do mês
+        minDate={startingDate}
+        maxDate={endingDate}
 
-                //estilização dos itens que não estão selecionados
-                calendarHeaderStyle={styles.calendarHeaderStyle}
-                dateNumberStyle={styles.numberDateStyle}
-                dateNameStyle={styles.nameDateStyle}
+        //estilização dos itens que não estão selecionados
+        calendarHeaderStyle={styles.calendarHeaderStyle}
+        dateNumberStyle={styles.numberDateStyle}
+        dateNameStyle={styles.nameDateStyle}
 
-                // estilização do item que está selecionado - efeito do item marcado
-                highlightDateNameStyle={styles.selectedDateNameStyle}
-                highlightDateNumberStyle={styles.selectedDateNumberStyle}
-                highlightDateContainerStyle={styles.selectedContainerStyle}
+        // estilização do item que está selecionado - efeito do item marcado
+        highlightDateNameStyle={styles.selectedDateNameStyle}
+        highlightDateNumberStyle={styles.selectedDateNumberStyle}
+        highlightDateContainerStyle={styles.selectedContainerStyle}
 
-                //tamanho do container
-                iconContainer={{ flex: 0.1 }}
+        //tamanho do container
+        iconContainer={{ flex: 0.1 }}
 
-                //scroll da barra
-                scrollable={true}
-            />
+        //scroll da barra
+        scrollable={true}
+    />
 
             {/* Container */}
             <FilterAppointment>
@@ -157,14 +159,17 @@ export const AppointmentDoctor = () => {
                 setShowModalAppointment={setShowModalAppointment}
             />
 
-            {/* <AppointmentCard/> */}
-                
-        </Container>
+            <ContainerAppointmentButton>
+                <FontAwesome name="stethoscope" size={32} color="white" />
+            </ContainerAppointmentButton>
+
+
+    </Container>
+
+
     )
-
-
-
 }
+
 const styles = StyleSheet.create({
     iconsStyle: {
         display: 'none'

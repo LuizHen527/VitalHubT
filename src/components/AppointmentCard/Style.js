@@ -27,7 +27,6 @@ export const AgeProfile = styled.Text`
     font-family: Quicksand_400Regular;
     font-size: 14px;
     color: #8C8A97;
-    
 `
 
 export const TypeAppointment = styled.Text`
