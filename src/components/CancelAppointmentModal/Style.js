@@ -8,12 +8,24 @@ export const PacientModal = styled.View`
     background-color: rgba(0,0,0,0.6);
 `
 
+export const ScheduleModalView = styled(PacientModal)`
+    flex-direction: row;
+    align-items: flex-end;
+`
+
 export const ContainerBoxModal = styled.View`
     width: 92%;
     height: 310px;
     background-color: white;
     border-radius: 10px;
     align-items: center;
+`
+
+export const BoxModalSchedule = styled(ContainerBoxModal)`
+    width: 100%;
+    height: 56%;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 `
 
 export const ContainerBoxModalMedicalRecord = styled(ContainerBoxModal)`

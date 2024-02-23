@@ -109,3 +109,11 @@ export const EmailModalRecord = styled.Text`
     font-size: 14px;
     color: #5F5C6B;
 `
+
+export const ScheduleModalText = styled.Text`
+    font-family: Quicksand_600SemiBold;
+    font-size: 14px;
+    line-height: 17px;
+    color: black;
+    margin-top: 23px;
+`

@@ -17,13 +17,18 @@ export const ButtonLoginVE = styled(ButtonLogin)`
     margin-bottom: 27px;
 `
 
+export const ButtonSchedule = styled(ButtonLoginVE)`
+    width: 100%;
+    margin-bottom: 30px;
+`
+
 export const ButtonModal = styled(ButtonLoginVE)`
     width: 285px;
 `
 
 export const ButtonCancel = styled.TouchableOpacity`
-   
-    
+   width: 100%;
+   align-items: center;
 `
 
 export const ButtonGoogle = styled(ButtonLogin)`

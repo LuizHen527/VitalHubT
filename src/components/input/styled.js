@@ -23,6 +23,21 @@ export const InputDescriptionProfile = styled(Input)`
     width: 90%;
 `
 
+export const InputScheduleModal_1 = styled(Input)`
+    width: 27.8%;
+    margin-top: 0px;
+`
+
+export const InputScheduleModal_2 = styled(Input)`
+    width: 31%;
+    margin-top: 0px;
+`
+
+export const InputScheduleModal_3 = styled(Input)`
+    width: 100%;
+    margin-top: 10px;
+`
+
 export const InputDiagnosisProfile = styled(InputDescriptionProfile)`
     height: 53px;
 `

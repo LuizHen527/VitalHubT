@@ -12,6 +12,7 @@ import { CancelAppointmentModal } from "../../components/CancelAppointmentModal/
 import { MedicalRecordModal } from "../../components/MedicalRecordModal/MedicalRecordModal";
 import { ContainerAppointmentButton } from "./Style";
 import { FontAwesome } from '@expo/vector-icons';
+import { ScheduleModal } from "../../components/ScheduleModal/ScheduleModal";
 
 const Consultas = [
     {id: 1, nome: "Carlos", situacao: "pendente"},
@@ -27,7 +28,7 @@ export const AppointmentPacient = () => {
 
     const [showModalCancel, setShowModalCancel] = useState(false);
     const [showModalAppointment, setShowModalAppointment] = useState(false);
-
+    const [showModalSchedule, setShowModalSchedule] = useState(false);
     const[statusLista, setStatusLista] = useState("pedente");
 
         //define padrão pt-br para calendário
@@ -66,6 +67,7 @@ export const AppointmentPacient = () => {
 
     return (
         <Container>
+
         {/* Queria passar props com o nome e a URL da imagem, mas nao consegui */}
         {/* Update: O react native nao consegue renderizar imagens dinamicamente, quero ver como o professor vai fazer isso */}
         <HeaderProfile
@@ -159,9 +161,18 @@ export const AppointmentPacient = () => {
                 setShowModalAppointment={setShowModalAppointment}
             />
 
-            <ContainerAppointmentButton>
+            <ContainerAppointmentButton
+                onPress={() => setShowModalSchedule(true)}
+            >
                 <FontAwesome name="stethoscope" size={32} color="white" />
             </ContainerAppointmentButton>
+
+            <ScheduleModal
+                visible={showModalSchedule}
+                setShowModalSchedule={setShowModalSchedule}
+            />
+
+
 
 
     </Container>

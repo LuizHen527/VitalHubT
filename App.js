@@ -20,6 +20,7 @@ import { CriarConta } from './src/screens/CriarConta/criarConta';
 import { Profile } from './src/screens/Profile/profile';
 import { AppointmentDoctor } from './src/screens/AppointmentDoctor/appointmentDoctor';
 import { AppointmentPacient } from './src/screens/AppointmentPacient/AppointmentPacient';
+import { SelectClinic } from './src/screens/SelectClinic/SelectClinic';
 
 export default function App() {
 
@@ -92,6 +93,11 @@ export default function App() {
           name='AppointmentPacient'
           component={AppointmentPacient}
           options={{title:'Consulta paciente'}}
+        />
+        <Stack.Screen
+          name='SelectClinic'
+          component={SelectClinic}
+          options={{title:'Selecionar clinica'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

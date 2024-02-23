@@ -2,8 +2,8 @@ import { Modal } from "react-native";
 import styled from "styled-components";
 
 export const ModalMedicalRecord = styled(Modal)`
-    align-items: center;
-    justify-content: center;
+    /* align-items: center;
+    justify-content: center; */
 
     background-color: rgba(0,0,0,0.6);
 `

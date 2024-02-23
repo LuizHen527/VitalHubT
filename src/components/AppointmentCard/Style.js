@@ -11,6 +11,10 @@ export const ContainerCard = styled.View`
     background-color: #FFFFFF;
 `
 
+export const ContainerClinicCard = styled(ContainerCard)`
+    height: 84px;
+`
+
 export const ContainerProfile = styled.View`
     height: 80px;
     justify-content: space-between;
