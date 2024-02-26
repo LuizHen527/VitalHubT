@@ -21,6 +21,7 @@ import { Profile } from './src/screens/Profile/profile';
 import { AppointmentDoctor } from './src/screens/AppointmentDoctor/appointmentDoctor';
 import { AppointmentPacient } from './src/screens/AppointmentPacient/AppointmentPacient';
 import { SelectClinic } from './src/screens/SelectClinic/SelectClinic';
+import { SelectDoctor } from './src/screens/SelectDoctor/SelectDoctor';
 
 export default function App() {
 
@@ -98,6 +99,11 @@ export default function App() {
           name='SelectClinic'
           component={SelectClinic}
           options={{title:'Selecionar clinica'}}
+        />
+        <Stack.Screen
+          name='SelectDoctor'
+          component={SelectDoctor}
+          options={{title:'Selecionar medico'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

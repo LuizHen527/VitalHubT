@@ -8,7 +8,7 @@ export const Title = styled.Text`
 `
 
 export const TitleModal = styled(Title)`
-    margin-top: 30px;
+    margin: 30px 0px;
 `
 
 export const TitleModalRecord = styled(TitleModal)`
@@ -104,6 +104,10 @@ export const AgeModalRecord = styled.Text`
     color: #4E4B59;
 `
 
+export const SubtextModal = styled(AgeModalRecord)`
+    color: #8C8A97;
+`
+
 export const EmailModalRecord = styled.Text`
     font-family: Quicksand_500Medium;
     font-size: 14px;
@@ -116,4 +120,10 @@ export const ScheduleModalText = styled.Text`
     line-height: 17px;
     color: black;
     margin-top: 23px;
+`
+
+export const SubtextCard = styled(ScheduleModalText)`
+    color: #4E4B59;
+    margin-top: 5px;
+    
 `

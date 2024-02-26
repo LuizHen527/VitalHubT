@@ -13,6 +13,18 @@ export const ContainerCard = styled.View`
 
 export const ContainerClinicCard = styled(ContainerCard)`
     height: 84px;
+    width: 88%;
+    justify-content: space-between;
+    padding: 0px 18px;
+    border: ${(props) => props.border == "yes" ?
+    "2px solid #496BBA" : "0px solid "};
+`
+
+export const ContainerDoctorCard = styled(ContainerClinicCard)`
+    height: 102px;
+    padding: 0px 10px;
+    justify-content: flex-start;
+    gap: 10px;
 `
 
 export const ContainerProfile = styled.View`
