@@ -21,6 +21,10 @@ export const ContainerBoxModal = styled.View`
     align-items: center;
 `
 
+export const BoxConfirmationModal =styled(ContainerBoxModal)`
+    height: 554px;
+`
+
 export const BoxModalSchedule = styled(ContainerBoxModal)`
     width: 100%;
     height: 56%;

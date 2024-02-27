@@ -1,17 +1,38 @@
 import { DoctorCard } from "../../components/DoctorCard/DoctorCard"
 import { LinkCancel } from "../../components/Links/style"
+import { ComponentList } from "../../components/List/Style"
 import { ButtonCancel, ButtonSchedule } from "../../components/button/style"
 import { Container } from "../../components/container/style"
 import { ButtonTitle, TitleModal } from "../../components/title/style"
 import { AlignBox, ContentBox } from "../SelectClinic/Style"
 
+const Doctors = [
+    {id: 1, nome:"Dra Alessandra", especialidade:"Demartologa, Esteticista"},
+    {id: 2, nome:"Dr Kumushiro", especialidade:"Cirurgião, Cardiologista"},
+    {id: 3, nome:"Dr Rodrigo Santos", especialidade:"Clínico, Pediatra"},
+];
+
 export const SelectDoctor = () => {
     return(
         <Container>
             <ContentBox>
-                <TitleModal>Selecionar clínica</TitleModal>
+                <TitleModal>Selecionar médico</TitleModal>
 
-                <DoctorCard/>
+                <ComponentList
+                data={Doctors}
+                keyExtractor={(item) => item.id}
+
+                renderItem={({ item }) =>
+                (
+                    <DoctorCard
+                        nome={item.nome}
+                        especialidade={item.especialidade}
+                    />
+                )
+                }
+            />
+
+                
             </ContentBox>
                 
 

@@ -11,6 +11,11 @@ export const TitleModal = styled(Title)`
     margin: 30px 0px;
 `
 
+export const TitleM = styled(TitleModal)`
+    margin-top: 30px;
+    margin-bottom: 0px;
+`
+
 export const TitleModalRecord = styled(TitleModal)`
     margin-top: 20px;
 `
@@ -120,6 +125,10 @@ export const ScheduleModalText = styled.Text`
     line-height: 17px;
     color: black;
     margin-top: 23px;
+`
+
+export const DateText = styled(ScheduleModalText)`
+    margin-top: 53px;
 `
 
 export const SubtextCard = styled(ScheduleModalText)`

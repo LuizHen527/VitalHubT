@@ -31,6 +31,10 @@ export const ButtonCancel = styled.TouchableOpacity`
    align-items: center;
 `
 
+export const ButtonBox = styled(ButtonCancel)`
+    margin-bottom: 23px;
+`
+
 export const ButtonGoogle = styled(ButtonLogin)`
     background-color: white;
     border: 1px solid #496BBA;
