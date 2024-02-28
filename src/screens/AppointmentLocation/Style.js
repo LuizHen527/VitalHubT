@@ -1,0 +1,32 @@
+import styled from "styled-components";
+
+export const MapImage = styled.Image`
+    width: 100%;
+    height: 50%;
+`
+
+export const ContainerBackground = styled.View`
+    background-color: #F5F3F3;
+    width: 100%;
+    height: 100%;
+`
+
+export const ContentAL = styled.View`
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    padding-top: 10px;
+    align-items: center;
+`
+
+export const AddressBox = styled.View`
+    margin-top: 20px;
+    width: 88%;
+    align-items: start;
+`
+
+export const DoubleContentBox = styled.View`
+
+`

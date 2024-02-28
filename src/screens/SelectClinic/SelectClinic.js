@@ -8,14 +8,10 @@ import { ButtonTitle, TitleModal } from "../../components/title/style"
 import { AlignBox, ContentBox, FooterBox } from "./Style"
 
 const Clinicas = [
-    { id: 1, nome: "Clínica Natureh", local: "São Paulo, SP", rating: "4,5", agenda: "Seg-Sex" },
-    { id: 2, nome: "Diamond Pró-Mulher", local: "São Paulo, SP", rating: "4,8", agenda: "Seg-Sex" },
-    { id: 3, nome: "Clinica Villa Lobos", local: "Taboão, SP", rating: "4,2", agenda: "Seg-Sab" },
-    { id: 4, nome: "SP Oncologia Clínica", local: "Taboão, SP", rating: "4,2", agenda: "Seg-Sab" },
-    { id: 5, nome: "SP Oncologia Clínica", local: "Taboão, SP", rating: "4,2", agenda: "Seg-Sab" },
-    { id: 6, nome: "SP Oncologia Clínica", local: "Taboão, SP", rating: "4,2", agenda: "Seg-Sab" },
-    { id: 7, nome: "SP Oncologia Clínica", local: "Taboão, SP", rating: "4,2", agenda: "Seg-Sab" },
-    { id: 8, nome: "SP Oncologia Clínica", local: "Taboão, SP", rating: "4,2", agenda: "Seg-Sab" },
+    { id: 1, nome: "Clínica Natureh", local: "São Paulo, SP", rating: "4,5", agenda: "Seg-Sex", border: "yes" },
+    { id: 2, nome: "Diamond Pró-Mulher", local: "São Paulo, SP", rating: "4,8", agenda: "Seg-Sex", border: "yes" },
+    { id: 3, nome: "Clinica Villa Lobos", local: "Taboão, SP", rating: "4,2", agenda: "Seg-Sab", border: "yes" },
+    { id: 4, nome: "SP Oncologia Clínica", local: "Taboão, SP", rating: "4,2", agenda: "Seg-Sab", border: "no" },
 ];
 
 export const SelectClinic = () => {
@@ -39,6 +35,7 @@ export const SelectClinic = () => {
                         local={item.local}
                         rating={item.rating}
                         agenda={item.agenda}
+                        border={item.border}
                      />
                 )
                 }

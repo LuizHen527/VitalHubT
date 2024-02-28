@@ -45,3 +45,15 @@ export const InputDiagnosisProfile = styled(InputDescriptionProfile)`
 export const InputPrescriptionProfile = styled(InputDescriptionProfile)`
     height: 120px;
 `
+
+export const InputGrey = styled.TextInput.attrs({
+    placeholderTextColor:'#33303E',
+})`
+    width: 100%;
+    height: 53px;
+    border-radius: 5px;
+    background-color: #F5F3F3;
+    padding-left: 16px;
+    font-family: Quicksand_500Medium;
+    font-size: 14px; 
+`

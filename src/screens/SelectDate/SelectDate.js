@@ -13,11 +13,15 @@ import { CancelAppointmentModal } from "../../components/CancelAppointmentModal/
 
 export const SelectDate = () => {
     const [selected, setSelected] = useState('');
+    const [showModalConfirmation, setShowModalConfirmation] = useState(false);
     
 
     return(
         <Container>
-            <ConfirmationModal/>
+            <ConfirmationModal
+                visible={showModalConfirmation}
+                setShowModalConfirmation={setShowModalConfirmation}
+            />
             <ContentBox>
                 <TitleModal>Selecionar data</TitleModal>
 
@@ -66,7 +70,7 @@ export const SelectDate = () => {
                 
 
             <AlignBox>
-                <ButtonSchedule>
+                <ButtonSchedule onPress={() => setShowModalConfirmation(true)}>
                     <ButtonTitle>continuar</ButtonTitle>
                 </ButtonSchedule>
 

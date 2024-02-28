@@ -23,6 +23,7 @@ import { AppointmentPacient } from './src/screens/AppointmentPacient/Appointment
 import { SelectClinic } from './src/screens/SelectClinic/SelectClinic';
 import { SelectDoctor } from './src/screens/SelectDoctor/SelectDoctor';
 import { SelectDate } from './src/screens/SelectDate/SelectDate';
+import { AppointmentLocation } from './src/screens/AppointmentLocation/AppointmentLocation';
 
 export default function App() {
 
@@ -110,6 +111,11 @@ export default function App() {
           name='SelectDate'
           component={SelectDate}
           options={{title:'Selecionar data'}}
+        />
+        <Stack.Screen
+          name='AppointmentLocation'
+          component={AppointmentLocation}
+          options={{title:'Ver local'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

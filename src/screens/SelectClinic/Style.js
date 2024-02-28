@@ -13,6 +13,11 @@ export const ContentBox = styled.View`
 
 export const ContentModalConfirmationBox = styled(ContentBox)`
     height: 74%;
+    width: 85%;
+`
+
+export const ContentModalDoctor = styled(ContentModalConfirmationBox)`
+    height: 72%;
 `
 
 export const FooterBox = styled.View`

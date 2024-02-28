@@ -13,6 +13,7 @@ import { MedicalRecordModal } from "../../components/MedicalRecordModal/MedicalR
 import { ContainerAppointmentButton } from "./Style";
 import { FontAwesome } from '@expo/vector-icons';
 import { ScheduleModal } from "../../components/ScheduleModal/ScheduleModal";
+import { DoctorModal } from "../../components/DoctorModal/DoctorModal";
 
 const Consultas = [
     {id: 1, nome: "Carlos", situacao: "pendente"},
@@ -29,6 +30,8 @@ export const AppointmentPacient = () => {
     const [showModalCancel, setShowModalCancel] = useState(false);
     const [showModalAppointment, setShowModalAppointment] = useState(false);
     const [showModalSchedule, setShowModalSchedule] = useState(false);
+    // Nao sei onde colocar a ativacao desse modal, por isso esta true. 
+    const [showModalDoctor, setShowModalDoctor] = useState(true);
     const[statusLista, setStatusLista] = useState("pedente");
 
         //define padrão pt-br para calendário
@@ -154,6 +157,11 @@ export const AppointmentPacient = () => {
             <CancelAppointmentModal
                 visible={showModalCancel}
                 setShowModalCancel={setShowModalCancel}
+            />
+
+            <DoctorModal
+                visible={showModalDoctor}
+                setShowModalDoctor={setShowModalDoctor}
             />
 
             <MedicalRecordModal

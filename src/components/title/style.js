@@ -40,13 +40,16 @@ export const TitleProfile = styled(TextAccount)`
     font-size: 20px;
     color: #33303E;
     margin-top: 20px;
-
 `
 
 export const RegularText = styled.Text`
     font-family: Quicksand_500Medium;
     font-size: 16px;
     text-align: center;
+`
+
+export const ConfirmationText = styled(RegularText)`
+    margin-top: 16px;
 `
 
 export const RegularTextModal = styled(RegularText)`
@@ -89,6 +92,16 @@ export const InputTitle = styled.Text`
     font-size: 16px;
     margin-top: 24px;
     width: 90%;
+`
+
+export const TitleTextInfo = styled(InputTitle)`
+    width: 100%;
+    color: #33303E;
+    margin-top: 0px;
+`
+
+export const LabelLocal = styled(TitleTextInfo)`
+    width: auto;
 `
 
 export const TextDefault = styled.Text`
@@ -134,5 +147,8 @@ export const DateText = styled(ScheduleModalText)`
 export const SubtextCard = styled(ScheduleModalText)`
     color: #4E4B59;
     margin-top: 5px;
-    
+`
+
+export const SubtextLocal = styled(SubtextCard)`
+    margin-top: 8px;
 `

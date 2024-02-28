@@ -22,7 +22,7 @@ export const ContainerBoxModal = styled.View`
 `
 
 export const BoxConfirmationModal =styled(ContainerBoxModal)`
-    height: 554px;
+    height: 86%;
 `
 
 export const BoxModalSchedule = styled(ContainerBoxModal)`
@@ -34,6 +34,10 @@ export const BoxModalSchedule = styled(ContainerBoxModal)`
 
 export const ContainerBoxModalMedicalRecord = styled(ContainerBoxModal)`
     height: 436px;
+`
+
+export const BoxModalDoctor = styled(ContainerBoxModal)`
+    height: 68%;
 `
 
 export const ModalCancel = styled(Modal)`
