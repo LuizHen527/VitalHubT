@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const MapImage = styled.Image`
     width: 100%;
-    height: 50%;
+    height: 45%;
 `
 
 export const ContainerBackground = styled.View`
@@ -27,6 +27,6 @@ export const AddressBox = styled.View`
     align-items: start;
 `
 
-export const DoubleContentBox = styled.View`
-
+export const AlignButton = styled.View`
+    margin-top: 24px;
 `

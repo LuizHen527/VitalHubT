@@ -24,6 +24,7 @@ import { SelectClinic } from './src/screens/SelectClinic/SelectClinic';
 import { SelectDoctor } from './src/screens/SelectDoctor/SelectDoctor';
 import { SelectDate } from './src/screens/SelectDate/SelectDate';
 import { AppointmentLocation } from './src/screens/AppointmentLocation/AppointmentLocation';
+import { EditProfile } from './src/screens/EditProfile/EditProfile';
 
 export default function App() {
 
@@ -116,6 +117,11 @@ export default function App() {
           name='AppointmentLocation'
           component={AppointmentLocation}
           options={{title:'Ver local'}}
+        />
+        <Stack.Screen
+          name='EditProfile'
+          component={EditProfile}
+          options={{title:'Editar perfil'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -60,3 +60,23 @@ export const ContainerModal = styled(Container)`
     justify-content: center;
     
 `
+
+export const DoubleContentBox = styled.View`
+    flex-direction: row;
+    width: 100%;
+    gap: 32px;
+    justify-content: center;
+    margin-top: 24px;   
+`
+
+export const SmallBox = styled.View`
+    width: 40%;
+    gap: 6px;
+`
+
+
+export const AlignContainer = styled.View`
+    width: 88%;
+    justify-content: center;
+`
+

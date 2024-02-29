@@ -47,6 +47,10 @@ export const Navegation = ({navigation}) => {
                 title="Ver local"
                 onPress={() => navigation.navigate("AppointmentLocation")}
             />
+            <Button
+                title="Editar perfil"
+                onPress={() => navigation.navigate("EditProfile")}
+            />
         </View>
     );
 } 

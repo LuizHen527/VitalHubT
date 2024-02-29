@@ -1,7 +1,10 @@
-import { Container } from "../../components/container/style"
+import { View } from "react-native"
+import { LinkCancel } from "../../components/Links/style"
+import { ButtonBox } from "../../components/button/style"
+import { Container, DoubleContentBox, SmallBox } from "../../components/container/style"
 import { InputGrey } from "../../components/input/styled"
 import { LabelLocal, SubtextCard, SubtextLocal, TitleProfile, TitleTextInfo } from "../../components/title/style"
-import { AddressBox, ContainerBackground, ContentAL, DoubleContentBox, MapImage } from "./Style"
+import { AddressBox, AlignButton, ContainerBackground, ContentAL, MapImage } from "./Style"
 
 export const AppointmentLocation = () => {
     return(
@@ -13,6 +16,7 @@ export const AppointmentLocation = () => {
 
             <ContainerBackground>
                 <ContentAL>
+
                     <TitleProfile>Clínica Natureh</TitleProfile>
                     <SubtextLocal>São Paulo, SP</SubtextLocal>
 
@@ -27,13 +31,26 @@ export const AppointmentLocation = () => {
                     {/* Criar os componentes DoubleContentBox e SmallBox na pasta Container. Porque vamos usar eles dnv */}
                     <DoubleContentBox>
                         <SmallBox>
-
+                            <LabelLocal>Numero</LabelLocal>
+                            <InputGrey
+                                placeholder="578"
+                            />
                         </SmallBox>
 
                         <SmallBox>
-
+                            <LabelLocal>Bairro</LabelLocal>
+                            <InputGrey
+                                placeholder="Moema-SP"
+                            />
                         </SmallBox>
                     </DoubleContentBox>
+
+                    <AlignButton>
+                        <ButtonBox>
+                            <LinkCancel >Cancelar</LinkCancel>
+                        </ButtonBox>
+                    </AlignButton>
+
                 </ContentAL>
             </ContainerBackground>
 

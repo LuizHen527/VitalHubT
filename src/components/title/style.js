@@ -42,6 +42,10 @@ export const TitleProfile = styled(TextAccount)`
     margin-top: 20px;
 `
 
+export const ProfileName = styled(TitleProfile)`
+    text-align: center;
+`
+
 export const RegularText = styled.Text`
     font-family: Quicksand_500Medium;
     font-size: 16px;
@@ -62,6 +66,10 @@ export const RegularTextModal = styled(RegularText)`
 export const InfoTextProfile = styled(RegularText)`
     font-size: 14px;
     color: #5F5C6B;
+`
+
+export const InfoProfile = styled(InfoTextProfile)`
+    margin-top: 10px;
 `
 
 export const RegularTextVE = styled(RegularText)`
