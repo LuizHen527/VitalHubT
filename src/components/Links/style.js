@@ -21,3 +21,7 @@ export const LinkBold = styled.Text`
 export const LinkCancel = styled(LinkBold)`
     color: #344F8F;
 `
+
+export const LinkCancelProfile = styled(LinkBold)`
+    color: #C81D25;
+`

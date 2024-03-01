@@ -25,6 +25,7 @@ import { SelectDoctor } from './src/screens/SelectDoctor/SelectDoctor';
 import { SelectDate } from './src/screens/SelectDate/SelectDate';
 import { AppointmentLocation } from './src/screens/AppointmentLocation/AppointmentLocation';
 import { EditProfile } from './src/screens/EditProfile/EditProfile';
+import { EditMedicalRecord } from './src/screens/EditMedicalRecord/EditMedicalRecord';
 
 export default function App() {
 
@@ -122,6 +123,11 @@ export default function App() {
           name='EditProfile'
           component={EditProfile}
           options={{title:'Editar perfil'}}
+        />
+        <Stack.Screen
+          name='EditMedicalRecord'
+          component={EditMedicalRecord}
+          options={{title:'Editar prontuário'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

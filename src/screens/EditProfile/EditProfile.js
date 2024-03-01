@@ -5,7 +5,7 @@ import { AlignContainer, Container, DoubleContentBox, SmallBox } from "../../com
 import { ContainerInfoProfile } from "../Profile/style"
 import { DateBox, DoubleContentBoxEP } from "./Style"
 import { InputGrey } from "../../components/input/styled"
-import { ButtonLoginVE } from "../../components/button/style"
+import { ButtonEdit, ButtonLeave, ButtonLoginVE } from "../../components/button/style"
 
 export const EditProfile = () => {
     return(
@@ -56,13 +56,17 @@ export const EditProfile = () => {
                         </SmallBox>
                     </DoubleContentBoxEP>
 
-                    <ButtonLoginVE>
+                    <ButtonEdit>
                         <ButtonTitle>SALVAR</ButtonTitle>
-                    </ButtonLoginVE>
+                    </ButtonEdit>
 
-                    <ButtonLoginVE>
+                    <ButtonEdit>
                         <ButtonTitle>Editar</ButtonTitle>
-                    </ButtonLoginVE>
+                    </ButtonEdit>
+
+                    <ButtonLeave>
+                        <ButtonTitle>sair do app</ButtonTitle>
+                    </ButtonLeave>
                 </AlignContainer>
             </Container>
         </ScrollView>

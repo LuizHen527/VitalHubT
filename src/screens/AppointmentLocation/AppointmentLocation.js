@@ -47,7 +47,7 @@ export const AppointmentLocation = () => {
 
                     <AlignButton>
                         <ButtonBox>
-                            <LinkCancel >Cancelar</LinkCancel>
+                            <LinkCancel >Voltar</LinkCancel>
                         </ButtonBox>
                     </AlignButton>
 

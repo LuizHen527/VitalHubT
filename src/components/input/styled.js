@@ -38,6 +38,8 @@ export const InputScheduleModal_3 = styled(Input)`
     margin-top: 10px;
 `
 
+
+
 export const InputDiagnosisProfile = styled(InputDescriptionProfile)`
     height: 53px;
 `
@@ -56,4 +58,13 @@ export const InputGrey = styled.TextInput.attrs({
     padding-left: 16px;
     font-family: Quicksand_500Medium;
     font-size: 14px; 
+    
+`
+
+export const InputBigProfile = styled(InputGrey)`
+    height: 121px;
+`
+
+export const InputResultProfile = styled(InputGrey)`
+    height: 103px;
 `

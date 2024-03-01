@@ -51,6 +51,10 @@ export const Navegation = ({navigation}) => {
                 title="Editar perfil"
                 onPress={() => navigation.navigate("EditProfile")}
             />
+            <Button
+                title="Editar prontuário"
+                onPress={() => navigation.navigate("EditMedicalRecord")}
+            />
         </View>
     );
 } 

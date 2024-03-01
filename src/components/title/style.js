@@ -160,3 +160,10 @@ export const SubtextCard = styled(ScheduleModalText)`
 export const SubtextLocal = styled(SubtextCard)`
     margin-top: 8px;
 `
+
+export const TextPhoto = styled.Text`
+    font-family: MontserratAlternates_500Medium;
+    font-size: 14px;
+    line-height: 20px;
+    color: #4E4B59;
+`

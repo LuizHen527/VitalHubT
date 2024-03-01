@@ -30,3 +30,7 @@ export const AddressBox = styled.View`
 export const AlignButton = styled.View`
     margin-top: 24px;
 `
+
+export const AlingnButtonProfile = styled.View`
+    margin: 30px 0px;
+`

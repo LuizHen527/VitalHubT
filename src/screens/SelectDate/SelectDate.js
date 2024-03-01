@@ -10,6 +10,29 @@ import { Select } from "../../components/Select/Select"
 import { ConfirmationModal } from "../../components/ConfimationModal/ConfirmationModal"
 import { CancelAppointmentModal } from "../../components/CancelAppointmentModal/CancelAppointmentModal"
 
+LocaleConfig.locales['pt'] = {
+    monthNames: [
+        'Janeiro',
+        'Fevereiro',
+        'Março',
+        'Abril',
+        'Maio',
+        'Junho',
+        'Julho',
+        'Agosto',
+        'Setembro',
+        'Outubro',
+        'Novembro',
+        'Dezembro'
+    ],
+      monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul.', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+      dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado'],
+      dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+      today: "Hoje"
+};
+
+LocaleConfig.defaultLocale = 'pt';
+
 
 export const SelectDate = () => {
     const [selected, setSelected] = useState('');
@@ -28,6 +51,8 @@ export const SelectDate = () => {
                 <BoxCalendar>
                     <Calendar
 
+                    hideArrows={true}
+
                     style={{
                         height: 249,
                         fontFamily: 'MontserratAlternates_600SemiBold',
@@ -39,13 +64,20 @@ export const SelectDate = () => {
                     }}
 
                     theme={{
-                        backgroundColor: '#ffffff',
-                        calendarBackground: '#ffffff',
+                        backgroundColor: '#FAFAFA',
+                        calendarBackground: '#FAFAFA',
                         textSectionTitleColor: '#b6c1cd',
                         selectedDayBackgroundColor: '#49B3BA',
                         selectedDayTextColor: '#ffffff',
                         todayTextColor: '#00adf5',
                         dayTextColor: '#2d4150',
+                        textDayFontFamily: 'Quicksand_600SemiBold', 
+                        textDayHeaderFontFamily: 'Quicksand_600SemiBold',
+                        textMonthFontFamily: 'MontserratAlternates_600SemiBold',
+                        textMonthFontSize: 20,
+                        textDayHeaderFontSize: 12,
+
+
             
                     }}
 

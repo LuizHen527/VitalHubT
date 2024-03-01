@@ -17,6 +17,26 @@ export const ButtonLoginVE = styled(ButtonLogin)`
     margin-bottom: 27px;
 `
 
+export const ButtonEdit = styled(ButtonLogin)`
+    margin-top: 30px;
+    width: 100%;
+`
+export const ButtonSendProfile = styled(ButtonLogin)`
+    width: 53.7%;
+    background-color: #49B3BA;
+    border: none;
+    flex-direction: row;
+    gap: 10px;
+    margin: 0px;
+`
+
+export const ButtonLeave = styled(ButtonLogin)`
+    margin-top: 30px;
+    width: 59%;
+    background-color: #ACABB7;
+    border: none;
+`
+
 export const ButtonSchedule = styled(ButtonLoginVE)`
     width: 100%;
     margin-bottom: 30px;
@@ -29,6 +49,13 @@ export const ButtonModal = styled(ButtonLoginVE)`
 export const ButtonCancel = styled.TouchableOpacity`
    width: 100%;
    align-items: center;
+`
+
+export const ButtonCancelProfile = styled.TouchableOpacity`
+    width: 50%;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
 `
 
 export const ButtonBox = styled(ButtonCancel)`

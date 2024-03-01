@@ -78,5 +78,6 @@ export const SmallBox = styled.View`
 export const AlignContainer = styled.View`
     width: 88%;
     justify-content: center;
+    align-items: center;
 `
 
