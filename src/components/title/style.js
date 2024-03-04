@@ -150,6 +150,7 @@ export const ScheduleModalText = styled.Text`
 
 export const DateText = styled(ScheduleModalText)`
     margin-top: 53px;
+    
 `
 
 export const SubtextCard = styled(ScheduleModalText)`

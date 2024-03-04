@@ -6,6 +6,6 @@ export const BoxCalendar = styled.View`
 `
 
 export const BoxSelect = styled.View`
-    margin-top: 40px;
+    margin-top: 75px;
     width: 88%;
 `
