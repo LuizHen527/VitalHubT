@@ -5,7 +5,7 @@ import { Logo } from "../../components/images/style"
 import { Input } from "../../components/input/styled"
 import { ButtonTitle, RegularTextRP, Title } from "../../components/title/style"
 
-export const CriarConta = () => {
+export const CriarConta = ({navigation}) => {
     return(
         <Container>
             <ContainerLogoTipo>
@@ -31,11 +31,17 @@ export const CriarConta = () => {
             placeholder="Confirmar senha"
             secureTextEntry={true}
             />
-            <ButtonLoginVE>
+            <ButtonLoginVE
+                title='Volta para login'
+                onPress={() => navigation.navigate('Login')}
+            >
                 <ButtonTitle>CADASTRAR</ButtonTitle>
             </ButtonLoginVE>
 
-            <LinkCancel>Cancelar</LinkCancel>
+            <LinkCancel
+                title='Volta para login'
+                onPress={() => navigation.navigate('Login')}
+            >Cancelar</LinkCancel>
             
         </Container>
     )

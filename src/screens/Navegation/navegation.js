@@ -8,6 +8,10 @@ export const Navegation = ({navigation}) => {
                 onPress={() => navigation.navigate("Login")}
             />
             <Button
+                title="Recuperar senha"
+                onPress={() => navigation.navigate("RecuperarSenha")}
+            />
+            <Button
                 title="Verificar Email"
                 onPress={() => navigation.navigate("VerifyEmail")}
             />

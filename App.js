@@ -26,6 +26,7 @@ import { SelectDate } from './src/screens/SelectDate/SelectDate';
 import { AppointmentLocation } from './src/screens/AppointmentLocation/AppointmentLocation';
 import { EditProfile } from './src/screens/EditProfile/EditProfile';
 import { EditMedicalRecord } from './src/screens/EditMedicalRecord/EditMedicalRecord';
+import { Main } from './src/screens/Main/Main';
 
 export default function App() {
 
@@ -51,16 +52,22 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
 
-        <Stack.Screen
+
+        {/* <Stack.Screen
           name='Navegacao'
           component={Navegation}
           options={{title:'Navegacao'}}
-        />
+        /> */}
 
         <Stack.Screen
           name='Login'
           component={Login}
           options={{title:'Login'}}
+        />
+
+        <Stack.Screen
+          name='Main'
+          component={Main}
         />
 
         <Stack.Screen

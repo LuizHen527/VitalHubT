@@ -5,13 +5,16 @@ import { ButtonLogin, ButtonLoginVE } from "../../components/button/style"
 import { Container, ContainerBanner, ContainerLogo, ContentRP } from "../../components/container/style"
 import { Logo } from "../../components/images/style"
 import { ButtonTitle, RegularText, RegularTextBlue, RegularTextVE, Title } from "../../components/title/style"
+import { ButtonArrow } from "../RecoverPassword/style"
 
-export const VerifyEmail = () => {
+export const VerifyEmail = ({navigation}) => {
     return (
 
         <Container>
             <ContainerBanner>
-                <CancelIcon />
+                <ButtonArrow onPress={ () => navigation.navigate('RecuperarSenha')}>
+                    <CancelIcon />
+                </ButtonArrow>
                 <ContainerLogo>
                     <Logo
                         source={require('../../assets/logo.png')}
@@ -26,7 +29,10 @@ export const VerifyEmail = () => {
 
             <OtpInput />
 
-            <ButtonLoginVE>
+            <ButtonLoginVE
+                title='Vai para Redefinir senha'
+                onPress={() => navigation.navigate('ResetPassword')}
+            >
                 <ButtonTitle>ENTRAR</ButtonTitle>
             </ButtonLoginVE>
 

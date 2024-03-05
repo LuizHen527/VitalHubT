@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 export const ContainerIcon = styled.View`
     padding: 20px;
-    margin-left: 5.5%;
+    margin-left: 0%;
 `
 
 export const Icon = styled.View`

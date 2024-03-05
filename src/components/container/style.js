@@ -12,11 +12,16 @@ export const ContainerBanner = styled.View`
     margin-top: 20px;
     margin-bottom: 25px;
     width: 100%;
+    padding-left: 20px;
 `
 
 export const ContainerLogo = styled.View`
     width: 100%;
     margin-left: 5.5%;
+`
+
+export const LogoContainer = styled.View`
+    width: 100%;
 `
 
 export const ContainerLogoTipo = styled.View`

@@ -4,12 +4,17 @@ import { Container, ContainerBanner, ContainerInput, ContainerInputRP, Container
 import { Logo } from "../../components/images/style"
 import { Input } from "../../components/input/styled"
 import { ButtonTitle, RegularTextRP, Title } from "../../components/title/style"
+import { ButtonArrow } from "../RecoverPassword/style"
 
-export const ResetPassword = () => {
+export const ResetPassword = ({navigation}) => {
     return (
         <Container>
             <ContainerBanner>
-                <CancelIcon />
+
+                <ButtonArrow onPress={ () => navigation.navigate('VerifyEmail')}>
+                    <CancelIcon />
+                </ButtonArrow>
+
                 <ContainerLogo>
                     <Logo
                         source={require('../../assets/logo.png')}
@@ -33,7 +38,10 @@ export const ResetPassword = () => {
                 />
             </ContainerInputRP>
 
-            <ButtonLoginVE>
+            <ButtonLoginVE
+                title='Volta para login'
+                onPress={() => navigation.navigate('Login')}
+            >
                 <ButtonTitle>CONFIRMAR NOVA SENHA</ButtonTitle>
             </ButtonLoginVE>
         </Container>

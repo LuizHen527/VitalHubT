@@ -9,6 +9,10 @@ import { AntDesign } from '@expo/vector-icons';
 import { ContainerLogo, ContentAccount } from "./style"
 
 export const Login = ({navigation}) => {
+
+    async function Login() {
+        navigation.navigate("Main")
+    }
     return(
         <Container>
             <ContainerLogo>
@@ -30,7 +34,7 @@ export const Login = ({navigation}) => {
 
             <LinkMedium onPress={() => navigation.navigate("RecuperarSenha")}>Esqueceu sua senha?</LinkMedium>
 
-            <ButtonLogin>
+            <ButtonLogin onPress={() => Login()}>
                 <ButtonTitle>Entrar</ButtonTitle>
             </ButtonLogin>
 
@@ -41,7 +45,7 @@ export const Login = ({navigation}) => {
 
             <ContentAccount>
                 <TextAccount>Nao tem conta?</TextAccount>
-                <LinkBold>Crie uma conta agora!</LinkBold>
+                <LinkBold onPress={() => navigation.navigate('CriarConta')}>Crie uma conta agora!</LinkBold>
             </ContentAccount>
         </Container>
     )
