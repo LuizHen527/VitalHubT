@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native"
 import { BoxModalSchedule, PacientModal, ScheduleModalView } from "../CancelAppointmentModal/Style"
 import { LinkCancel } from "../Links/style"
 import { ModalMedicalRecord } from "../MedicalRecordModal/Style"
@@ -9,6 +10,7 @@ import { BoxContent, BoxInput, ContainerBoxAlign } from "./Style"
 export const ScheduleModal = ({
     visible, setShowModalSchedule, ...rest
 }) => {
+    const navigation = useNavigation();
     return(
         <ModalMedicalRecord {...rest} visible={visible} transparent={true} animationType="fade">
             <ScheduleModalView>
@@ -37,7 +39,7 @@ export const ScheduleModal = ({
                                 placeholder="Informe a localização"
                             />
 
-                            <ButtonSchedule>
+                            <ButtonSchedule onPress={() => navigation.navigate("SelectClinic") & setShowModalSchedule(false)}>
                                 <ButtonTitle>continuar</ButtonTitle>
                             </ButtonSchedule>
 

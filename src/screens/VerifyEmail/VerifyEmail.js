@@ -12,7 +12,7 @@ export const VerifyEmail = ({navigation}) => {
 
         <Container>
             <ContainerBanner>
-                <ButtonArrow onPress={ () => navigation.navigate('RecuperarSenha')}>
+                <ButtonArrow onPress={ () => navigation.navigate('Login')}>
                     <CancelIcon />
                 </ButtonArrow>
                 <ContainerLogo>

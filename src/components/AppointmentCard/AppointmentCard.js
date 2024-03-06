@@ -2,14 +2,18 @@ import { ImageAppointmentProfile } from "../images/style"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AgeProfile, ButtonCard, ButtonText, ButtonTextPront, ContainerCard, ContainerProfile, ContainerTime, DataProfileCard, DateTime, NameProfile, TypeAppointment, ViewRow } from "./Style"
 import { StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 export const AppointmentCard = ({
     situacao = "realizado",
     onPressCancel,
     onPressAppointment,
+    onPressDoctorModal,
+
 }) => {
+    const navigation = useNavigation();
     return(
-        <ContainerCard style={styles.shadow}>
+        <ContainerCard onPress={onPressDoctorModal} style={styles.shadow}>
                 <ImageAppointmentProfile
                     source={require('../../assets/eduProfileImage.png')}
                 />

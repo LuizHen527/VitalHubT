@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const ContainerCard = styled.View`
+export const ContainerCard = styled.TouchableOpacity`
     width: 90%;
     height: 102px;
     flex-direction: row;

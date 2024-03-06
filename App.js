@@ -27,6 +27,7 @@ import { AppointmentLocation } from './src/screens/AppointmentLocation/Appointme
 import { EditProfile } from './src/screens/EditProfile/EditProfile';
 import { EditMedicalRecord } from './src/screens/EditMedicalRecord/EditMedicalRecord';
 import { Main } from './src/screens/Main/Main';
+import { ScheduleModal } from './src/components/ScheduleModal/ScheduleModal';
 
 export default function App() {
 
@@ -136,6 +137,12 @@ export default function App() {
           component={EditMedicalRecord}
           options={{title:'Editar prontuário'}}
         />
+        <Stack.Screen
+          name='ScheduleModal'
+          component={ScheduleModal}
+          options={{title:'Agendar consulta'}}
+        />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

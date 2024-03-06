@@ -1,9 +1,9 @@
 import moment from "moment";
 import { HeaderProfile } from "../../components/HeaderProfile/HeaderProfile"
-import { Container } from "../../components/container/style";
+import { Container, ContainerHeader } from "../../components/container/style";
 import { StyledCalendarStrip } from "../../components/StyledCalendarStrip/styledCalendarStrip";
 import { StyleSheet } from "react-native";
-import { ContainerList, FilterAppointment } from "../AppointmentDoctor/style";
+import { BoxBell, BoxUser, ContainerList, DataUser, FilterAppointment, ImageUser } from "../AppointmentDoctor/style";
 import { AbsListAppointment } from "../../components/AbsListAppointment/AbsListAppointment";
 import { useState } from "react";
 import { ListComponent } from "../../components/List/Style";
@@ -14,6 +14,8 @@ import { ContainerAppointmentButton } from "./Style";
 import { FontAwesome } from '@expo/vector-icons';
 import { ScheduleModal } from "../../components/ScheduleModal/ScheduleModal";
 import { DoctorModal } from "../../components/DoctorModal/DoctorModal";
+import { NameUser, TextDefault } from "../../components/title/style";
+import { Octicons } from '@expo/vector-icons';
 
 const Consultas = [
     {id: 1, nome: "Carlos", situacao: "pendente"},
@@ -25,13 +27,13 @@ const Consultas = [
 
 const User = {id: 1, nome: "Dr Drauzio", sourceImage:'../../assets/eduProfileImage.png'};
 
-export const AppointmentPacient = () => {
+export const AppointmentPacient = ({navigation}) => {
 
     const [showModalCancel, setShowModalCancel] = useState(false);
     const [showModalAppointment, setShowModalAppointment] = useState(false);
     const [showModalSchedule, setShowModalSchedule] = useState(false);
     // Nao sei onde colocar a ativacao desse modal, por isso esta true. 
-    const [showModalDoctor, setShowModalDoctor] = useState(true);
+    const [showModalDoctor, setShowModalDoctor] = useState(false);
     const[statusLista, setStatusLista] = useState("pedente");
 
         //define padrão pt-br para calendário
@@ -73,10 +75,12 @@ export const AppointmentPacient = () => {
 
         {/* Queria passar props com o nome e a URL da imagem, mas nao consegui */}
         {/* Update: O react native nao consegue renderizar imagens dinamicamente, quero ver como o professor vai fazer isso */}
-        <HeaderProfile
+        {/* <HeaderProfile
             sourceImage={User.sourceImage}
             name={User.nome}
-        />
+        /> */}
+
+        <HeaderProfile/>
 
         <StyledCalendarStrip
         // animação e seleção de cada data
@@ -147,7 +151,9 @@ export const AppointmentPacient = () => {
                     <AppointmentCard
                         situacao={item.situacao}
                         onPressCancel={() => setShowModalCancel(true)}
-                        onPressAppointment={() => setShowModalAppointment(true)}
+                        onPressAppointment={() => navigation.navigate("EditMedicalRecord")}
+                        onPressDoctorModal={() => setShowModalDoctor(true)}
+
                     />
                 )
             }
@@ -157,11 +163,13 @@ export const AppointmentPacient = () => {
             <CancelAppointmentModal
                 visible={showModalCancel}
                 setShowModalCancel={setShowModalCancel}
+                onPressConfirmation={() => setShowModalCancel(false)}
             />
 
             <DoctorModal
                 visible={showModalDoctor}
                 setShowModalDoctor={setShowModalDoctor}
+                onPressLocal={() => navigation.navigate("AppointmentLocation") & setShowModalDoctor(false)}
             />
 
             <MedicalRecordModal

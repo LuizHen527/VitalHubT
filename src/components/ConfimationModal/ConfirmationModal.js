@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native"
 import { ContentModalConfirmationBox } from "../../screens/SelectClinic/Style"
 import { BoxConfirmationModal, ContainerBoxModal, PacientModal } from "../CancelAppointmentModal/Style"
 import { LinkCancel } from "../Links/style"
@@ -8,6 +9,7 @@ import { AlignBoxModal, DateBox, DoctorBox, ModalConfirmation } from "./Style"
 export const ConfirmationModal = ({
     visible, setShowModalConfirmation, ...rest
 }) => {
+    const navigation = useNavigation();
     return(
         <ModalConfirmation {...rest} visible={visible} transparent={true} animationType="fade">
 
@@ -42,11 +44,11 @@ export const ConfirmationModal = ({
                 </ContentModalConfirmationBox>
 
                 <AlignBoxModal>
-                    <ButtonSchedule>
+                    <ButtonSchedule onPress={() => navigation.pop(3) & setShowModalConfirmation(false)}>
                         <ButtonTitle>Confirmar</ButtonTitle>
                     </ButtonSchedule>
 
-                    <ButtonCancel onPress={() => setShowModalConfirmation(false)}>
+                    <ButtonCancel onPress={() => navigation.pop(3) & setShowModalConfirmation(false)}>
                         <LinkCancel >Cancelar</LinkCancel>
                     </ButtonCancel>
                 </AlignBoxModal>

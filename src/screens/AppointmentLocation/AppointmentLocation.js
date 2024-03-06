@@ -6,7 +6,7 @@ import { InputGrey } from "../../components/input/styled"
 import { LabelLocal, SubtextCard, SubtextLocal, TitleProfile, TitleTextInfo } from "../../components/title/style"
 import { AddressBox, AlignButton, ContainerBackground, ContentAL, MapImage } from "./Style"
 
-export const AppointmentLocation = () => {
+export const AppointmentLocation = ({navigation}) => {
     return(
         <Container>
 
@@ -46,7 +46,7 @@ export const AppointmentLocation = () => {
                     </DoubleContentBox>
 
                     <AlignButton>
-                        <ButtonBox>
+                        <ButtonBox onPress={() => navigation.pop(1)}>
                             <LinkCancel >Voltar</LinkCancel>
                         </ButtonBox>
                     </AlignButton>

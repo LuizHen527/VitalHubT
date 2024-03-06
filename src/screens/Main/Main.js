@@ -1,4 +1,4 @@
-
+import { ContentIcon, TextIcon } from "./Style"
 
 //Importar recursos do bottom tabs
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
@@ -6,6 +6,7 @@ import { AppointmentDoctor } from "../AppointmentDoctor/appointmentDoctor"
 import { Profile } from "../Profile/profile"
 
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'
+import { AppointmentPacient } from "../AppointmentPacient/AppointmentPacient"
 const BottomTab = createBottomTabNavigator()
 
 export const Main = () => {
@@ -22,10 +23,22 @@ export const Main = () => {
                 tabBarIcon: ({ focused }) => {
                     if(route.name === "Home"){
                         return(
-                            <></>
+                            <ContentIcon
+                                tabBarActiveBackgroundColor = { focused ? "#ECF2FF" : "tranparent"}
+                            >
+                                <FontAwesome name="calendar" size={18} color="#4E4B59"/>
+                                { focused && <TextIcon>Agenda</TextIcon>}
+                            </ContentIcon>
                         )
                     }else{
-
+                        return(
+                            <ContentIcon
+                                tabBarActiveBackgroundColor = { focused ? "#ECF2FF" : "tranparent"}
+                            >
+                                <FontAwesome name="user-circle" size={18} color="#4E4B59"/>
+                                { focused && <TextIcon>Perfil</TextIcon>}
+                            </ContentIcon>
+                        )
                     }
                 }
             })}
@@ -33,7 +46,7 @@ export const Main = () => {
             {/* Criar a rota da home */}
             <BottomTab.Screen
                 name='Home'
-                component={ AppointmentDoctor }
+                component={ AppointmentPacient }
             />
 
             {/* Criar rota do perfil */}

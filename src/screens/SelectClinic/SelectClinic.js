@@ -14,7 +14,10 @@ const Clinicas = [
     { id: 4, nome: "SP Oncologia Clínica", local: "Taboão, SP", rating: "4,2", agenda: "Seg-Sab", border: "no" },
 ];
 
-export const SelectClinic = () => {
+export const SelectClinic = ({navigation}) => {
+    async function Login() {
+        navigation.replace("Main")
+    }
     return (
 
         // Falta colocar a lista em uma scroll view, tive um erro. por isso vou deixar pra depois
@@ -44,11 +47,11 @@ export const SelectClinic = () => {
                 
 
             <AlignBox>
-                <ButtonSchedule>
+                <ButtonSchedule onPress={() => navigation.navigate("SelectDoctor")}>
                     <ButtonTitle>continuar</ButtonTitle>
                 </ButtonSchedule>
 
-                <ButtonCancel>
+                <ButtonCancel onPress={() => navigation.goBack("Main")}>
                     <LinkCancel>Cancelar</LinkCancel>
                 </ButtonCancel>
             </AlignBox>

@@ -12,7 +12,7 @@ const Doctors = [
     {id: 3, nome:"Dr Rodrigo Santos", especialidade:"Clínico, Pediatra"},
 ];
 
-export const SelectDoctor = () => {
+export const SelectDoctor = ({navigation}) => {
     return(
         <Container>
             <ContentBox>
@@ -37,11 +37,11 @@ export const SelectDoctor = () => {
                 
 
             <AlignBox>
-                <ButtonSchedule>
+                <ButtonSchedule onPress={() => navigation.navigate("SelectDate")}>
                     <ButtonTitle>continuar</ButtonTitle>
                 </ButtonSchedule>
 
-                <ButtonCancel>
+                <ButtonCancel onPress={() => navigation.pop(2)}>
                     <LinkCancel>Cancelar</LinkCancel>
                 </ButtonCancel>
             </AlignBox>

@@ -11,7 +11,7 @@ import { ContainerLogo, ContentAccount } from "./style"
 export const Login = ({navigation}) => {
 
     async function Login() {
-        navigation.navigate("Main")
+        navigation.replace("Main")
     }
     return(
         <Container>

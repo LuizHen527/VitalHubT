@@ -12,7 +12,7 @@ import { ButtonBox, ButtonCancel, ButtonCancelProfile, ButtonEdit, ButtonSendPro
 import { LinkCancel, LinkCancelProfile } from "../../components/Links/style"
 import { AlignButton, AlingnButtonProfile } from "../AppointmentLocation/Style"
 
-export const EditMedicalRecord = () => {
+export const EditMedicalRecord = ({navigation}) => {
     return(
         <ScrollContainer>
 
@@ -91,7 +91,7 @@ export const EditMedicalRecord = () => {
                     </InputProfileBox>
 
                     <AlingnButtonProfile>
-                        <ButtonBox>
+                        <ButtonBox onPress={() => navigation.goBack()}>
                             <LinkCancel >Voltar</LinkCancel>
                         </ButtonBox>
                     </AlingnButtonProfile>

@@ -6,7 +6,7 @@ import { ButtonTitle, RegularText, RegularTextModal, Title, TitleM, TitleModal }
 import { ContainerBoxModal, ModalCancel, PacientModal } from "./Style"
 
 export const CancelAppointmentModal = ({
-    visible, setShowModalCancel, ...rest
+    visible, setShowModalCancel, onPressConfirmation, ...rest
 }) => {
     return(
         
@@ -16,7 +16,7 @@ export const CancelAppointmentModal = ({
                 <ContainerBoxModal>
                     <TitleM>Cancelar consulta</TitleM>
                     <RegularTextModal>Ao cancelar essa consulta, abrirá uma possível disponibilidade no seu horário, deseja mesmo cancelar essa consulta?</RegularTextModal>
-                    <ButtonModal>
+                    <ButtonModal onPress={onPressConfirmation}>
                         <ButtonTitle>Confirmar</ButtonTitle>
                     </ButtonModal>
 

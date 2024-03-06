@@ -7,7 +7,7 @@ import { ButtonTitle, InfoTextProfile, TitleProfile } from "../title/style"
 import { BoxInfoDoctor, DoctorImage } from "./Style"
 
 export const DoctorModal = ({
-    visible, setShowModalDoctor, ...rest
+    visible, setShowModalDoctor, onPressLocal, ...rest
 }) => {
     return(
         <ModalConfirmation {...rest} visible={visible} transparent={true} animationType="fade">
@@ -30,7 +30,7 @@ export const DoctorModal = ({
 
 
                     <AlignButton>
-                        <ButtonSchedule>
+                        <ButtonSchedule onPress={onPressLocal}>
                             <ButtonTitle>Ver local da consulta</ButtonTitle>
                         </ButtonSchedule>
 

@@ -34,7 +34,7 @@ LocaleConfig.locales['pt'] = {
 LocaleConfig.defaultLocale = 'pt';
 
 
-export const SelectDate = () => {
+export const SelectDate = ({navigation}) => {
     const [selected, setSelected] = useState('');
     const [showModalConfirmation, setShowModalConfirmation] = useState(false);
     
@@ -106,7 +106,7 @@ export const SelectDate = () => {
                     <ButtonTitle>continuar</ButtonTitle>
                 </ButtonSchedule>
 
-                <ButtonCancel>
+                <ButtonCancel onPress={() => navigation.pop(3)}>
                     <LinkCancel>Cancelar</LinkCancel>
                 </ButtonCancel>
             </AlignBox>

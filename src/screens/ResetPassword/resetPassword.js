@@ -11,7 +11,7 @@ export const ResetPassword = ({navigation}) => {
         <Container>
             <ContainerBanner>
 
-                <ButtonArrow onPress={ () => navigation.navigate('VerifyEmail')}>
+                <ButtonArrow onPress={ () => navigation.navigate('Login')}>
                     <CancelIcon />
                 </ButtonArrow>
 
