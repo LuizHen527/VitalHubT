@@ -3,17 +3,25 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AgeProfile, ButtonCard, ButtonText, ButtonTextPront, ContainerCard, ContainerProfile, ContainerTime, DataProfileCard, DateTime, NameProfile, TypeAppointment, ViewRow } from "./Style"
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
 
 export const AppointmentCard = ({
     situacao = "realizado",
     onPressCancel,
     onPressAppointment,
     onPressDoctorModal,
+    onPressDoctorInsert,
 
 }) => {
     const navigation = useNavigation();
+
+    const [ profile, setProfile ] = useState("paciente")
+
+    async function openLocalModal(){
+        
+    }
     return(
-        <ContainerCard onPress={onPressDoctorModal} style={styles.shadow}>
+        <ContainerCard onPress={situacao === "pendente" ? onPressDoctorModal : null} style={styles.shadow}>
                 <ImageAppointmentProfile
                     source={require('../../assets/eduProfileImage.png')}
                 />
@@ -45,7 +53,7 @@ export const AppointmentCard = ({
                                 <ButtonText situacao={situacao}>Cancelar</ButtonText>
                             </ButtonCard>
                         ) : (
-                            <ButtonCard onPress={onPressAppointment}>
+                            <ButtonCard onPress={profile === "paciente" ? onPressAppointment : onPressDoctorInsert}>
                                 <ButtonTextPront situacao={situacao}>Ver Prontuario</ButtonTextPront>
                             </ButtonCard>
                         )

@@ -1,14 +1,18 @@
 import { ScrollView } from "react-native"
 import { Container } from "../../components/container/style"
 import { ImageProfile } from "../../components/images/style"
-import { InputDescriptionProfile, InputDiagnosisProfile, InputPrescriptionProfile } from "../../components/input/styled"
+import { InputDescriptionEdit, InputDescriptionProfile, InputDiagnosisEdit, InputDiagnosisProfile, InputPrescriptionEdit, InputPrescriptionProfile } from "../../components/input/styled"
 import { ButtonTitle, InfoTextProfile, InputTitle, TitleProfile } from "../../components/title/style"
-import { ContainerInfoProfile, ContainerInput, ContainerInputProfile, TextInput } from "./style"
-import { ButtonLoginVE } from "../../components/button/style"
+import { ContainerInfoProfile, ContainerInput, ContainerInputProfile, TextInput, TextInputEdit } from "./style"
+import { ButtonBlue, ButtonCancel, ButtonGrayEdit, ButtonLoginVE } from "../../components/button/style"
 import { LinkCancel } from "../../components/Links/style"
+import { useState } from "react"
 
 
-export const Profile = () => {
+export const Profile = ({navigation}) => {
+
+    const [ editInput, setEditInput ] = useState(false);
+
     return(
         <ScrollView>
             <Container>
@@ -26,32 +30,82 @@ export const Profile = () => {
                 <ContainerInputProfile>
                     <InputTitle>Descrição da consulta</InputTitle>
 
-                    <InputDescriptionProfile>
-                            <TextInput>Descrição</TextInput>
-                    </InputDescriptionProfile>
+                    {
+                        editInput == false ? (
+                            <InputDescriptionProfile>
+                                <TextInput>Descrição</TextInput>
+                            </InputDescriptionProfile>
+                        ) :
+                        (
+                            <InputDescriptionEdit>
+                                <TextInputEdit multiline={true}>O paciente possuí uma infecção no 
+                                ouvido. Necessário repouse de 2 dias 
+                                e acompanhamento médico constante</TextInputEdit>
+                            </InputDescriptionEdit>
+                        )
+                    }
                 </ContainerInputProfile>
 
                 <ContainerInputProfile>
                     <InputTitle>Diagnostico do paciente</InputTitle>
 
-                    <InputDiagnosisProfile>
-                            <TextInput>Diagnostico</TextInput>
-                    </InputDiagnosisProfile>
+                    {
+                        editInput == false ? (
+                            <InputDiagnosisProfile>
+                                <TextInput>Diagnostico</TextInput>
+                            </InputDiagnosisProfile>
+                        ):
+
+                        (
+                            <InputDiagnosisEdit>
+                                <TextInputEdit>Infecção no ouvido</TextInputEdit>
+                            </InputDiagnosisEdit>
+                        )
+                    }
                 </ContainerInputProfile>
 
                 <ContainerInputProfile>
-                    <InputTitle>Diagnostico do paciente</InputTitle>
+                    <InputTitle>Prescrição médica</InputTitle>
 
-                    <InputPrescriptionProfile>
-                            <TextInput>Diagnostico</TextInput>
-                    </InputPrescriptionProfile>
+                    {
+                        editInput == false ? (
+                            <InputPrescriptionProfile>
+                                <TextInput>Prescrição medica</TextInput>
+                            </InputPrescriptionProfile>
+                        ):(
+                            <InputPrescriptionEdit>
+                                <TextInputEdit>Medicamento: Advil 
+                                    Dosagem: 50 mg 
+                                    Frequência: 3 vezes ao dia 
+                                    Duração: 3 dias</TextInputEdit>
+                            </InputPrescriptionEdit>
+                        )
+                    }
+
+
                 </ContainerInputProfile>
 
                 <ButtonLoginVE>
                     <ButtonTitle>SALVAR</ButtonTitle>
                 </ButtonLoginVE>
 
-                <LinkCancel>Cancelar</LinkCancel>
+                {
+                    editInput == false ? (
+                        <ButtonGrayEdit onPress={() => setEditInput(true)}>
+                            <ButtonTitle>EDITAR</ButtonTitle>
+                        </ButtonGrayEdit>
+                    ):
+                    (
+                        <ButtonBlue onPress={() => setEditInput(false)}>
+                            <ButtonTitle>EDITAR</ButtonTitle>
+                        </ButtonBlue>
+                    )
+                }
+
+
+                <ButtonCancel onPress={() => navigation.pop(1)}>
+                    <LinkCancel>Cancelar</LinkCancel>
+                </ButtonCancel>
 
             </Container>
         </ScrollView>

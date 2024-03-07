@@ -17,6 +17,16 @@ export const ButtonLoginVE = styled(ButtonLogin)`
     margin-bottom: 27px;
 `
 
+export const ButtonGrayEdit = styled(ButtonLoginVE)`
+    margin-top: 0px;
+    background-color: #ACABB7;
+    border: 0px;
+`
+
+export const ButtonBlue = styled(ButtonGrayEdit)`
+    background-color: #496BBA;
+`
+
 export const ButtonEdit = styled(ButtonLogin)`
     margin-top: 30px;
     width: 100%;

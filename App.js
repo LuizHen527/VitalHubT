@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Navegation } from './src/screens/Navegation/navegation';
 import { Login } from './src/screens/login/login';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { MainDoctor } from "./src/screens/MainDoctor/MainDoctor"
 
 //Instancia do stack navigator
 const Stack = createNativeStackNavigator();
@@ -69,6 +70,11 @@ export default function App() {
         <Stack.Screen
           name='Main'
           component={Main}
+        />
+
+        <Stack.Screen
+          name='MainDoctor'
+          component={MainDoctor}
         />
 
         <Stack.Screen

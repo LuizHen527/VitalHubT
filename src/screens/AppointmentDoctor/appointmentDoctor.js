@@ -22,7 +22,7 @@ const Consultas = [
 
 const User = {id: 1, nome: "Dr Drauzio", sourceImage: '../../assets/eduProfileImage.png'};
 
-export const AppointmentDoctor = () => {
+export const AppointmentDoctor = ({navigation}) => {
 
     //State para os modais
 
@@ -149,6 +149,7 @@ export const AppointmentDoctor = () => {
 
             <CancelAppointmentModal
                 visible={showModalCancel}
+                onPressConfirmation={() => setShowModalCancel(false)}
                 setShowModalCancel={setShowModalCancel}
             />
 

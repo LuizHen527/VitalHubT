@@ -150,9 +150,12 @@ export const AppointmentPacient = ({navigation}) => {
                 statusLista == item.situacao && (
                     <AppointmentCard
                         situacao={item.situacao}
+                        perfil="paciente"
                         onPressCancel={() => setShowModalCancel(true)}
                         onPressAppointment={() => navigation.navigate("EditMedicalRecord")}
                         onPressDoctorModal={() => setShowModalDoctor(true)}
+                        // apagar depois (Fiz so pra testar validacao)
+                        onPressDoctorInsert={() => setShowModalAppointment(true)}
 
                     />
                 )

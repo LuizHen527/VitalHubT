@@ -12,6 +12,11 @@ export const TextInput = styled.Text`
     font-family: MontserratAlternates_600SemiBold;
 `
 
+export const TextInputEdit = styled.Text`
+    color: #4E4B59;
+    font-family: MontserratAlternates_500Medium;
+`
+
 export const ContainerInput = styled.View`
     width: 100%;
     height: 100%;

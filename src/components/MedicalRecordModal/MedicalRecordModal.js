@@ -5,12 +5,22 @@ import { AgeModalRecord, ButtonTitle, EmailModalRecord, TitleModal, TitleModalRe
 import { AgeProfile, TypeAppointment } from "../AppointmentCard/Style"
 import { ButtonCancel, ButtonModal } from "../button/style"
 import { LinkCancel } from "../Links/style"
+import { useNavigation } from "@react-navigation/native"
 
 export const MedicalRecordModal = ({
-    visible, setShowModalAppointment, ...rest
+    visible, setShowModalAppointment, goToMedicalRecord, ...rest
 }) => {
+
+    const navigation = useNavigation();
+
+    async function handlerContinue(){
+        await setShowModalAppointment(false)
+
+        navigation.navigate("Profile")
+    }
+    
     return(
-        <ModalMedicalRecord {...rest} visible={visible} transparent={true} animationType="fade">
+        <ModalMedicalRecord {...rest} visible={visible} transparent={true} animationType="fade" animationOutTiming={0}>
             <PacientModal>
                 <ContainerBoxModalMedicalRecord>
 
@@ -24,7 +34,7 @@ export const MedicalRecordModal = ({
                         <EmailModalRecord>brksedu.123@gmail.com</EmailModalRecord>
                     </ContainerData>
 
-                    <ButtonModal>
+                    <ButtonModal onPress={() => handlerContinue()}>
                         <ButtonTitle>Inserir prontuario</ButtonTitle>
                     </ButtonModal>
 

@@ -4,13 +4,14 @@ import { ContentIcon, TextIcon } from "./Style"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { AppointmentDoctor } from "../AppointmentDoctor/appointmentDoctor"
 import { Profile } from "../Profile/profile"
-import { EditProfile } from "../EditProfile/EditProfile"
+import { EditMedicalRecord } from "../EditMedicalRecord/EditMedicalRecord"
 
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'
 import { AppointmentPacient } from "../AppointmentPacient/AppointmentPacient"
+import { EditProfile } from "../EditProfile/EditProfile"
 const BottomTab = createBottomTabNavigator()
 
-export const Main = () => {
+export const MainDoctor = () => {
     return(
 
         <BottomTab.Navigator
@@ -47,7 +48,7 @@ export const Main = () => {
             {/* Criar a rota da home */}
             <BottomTab.Screen
                 name='Home'
-                component={ AppointmentPacient }
+                component={ AppointmentDoctor }
             />
 
             {/* Criar rota do perfil */}

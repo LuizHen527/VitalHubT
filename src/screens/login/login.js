@@ -13,6 +13,9 @@ export const Login = ({navigation}) => {
     async function Login() {
         navigation.replace("Main")
     }
+    async function LoginDoctor() {
+        navigation.replace("MainDoctor")
+    }
     return(
         <Container>
             <ContainerLogo>
@@ -38,7 +41,7 @@ export const Login = ({navigation}) => {
                 <ButtonTitle>Entrar</ButtonTitle>
             </ButtonLogin>
 
-            <ButtonGoogle>
+            <ButtonGoogle onPress={() => LoginDoctor()}>
             <AntDesign name="google" size={18} color="#496BBA" />
                 <ButtonTitleGoogle>Entrar com google</ButtonTitleGoogle>
             </ButtonGoogle>

@@ -23,6 +23,13 @@ export const InputDescriptionProfile = styled(Input)`
     width: 90%;
 `
 
+export const InputDescriptionEdit = styled(InputDescriptionProfile)`
+    border: none;
+    background-color: #F5F3F3;
+    font-family: MontserratAlternates_500Medium;
+    font-size: 14px;
+`
+
 export const InputScheduleModal_1 = styled(Input)`
     width: 27.8%;
     margin-top: 0px;
@@ -44,8 +51,16 @@ export const InputDiagnosisProfile = styled(InputDescriptionProfile)`
     height: 53px;
 `
 
+export const InputDiagnosisEdit = styled(InputDescriptionEdit)`
+    height: 53px;
+`
+
 export const InputPrescriptionProfile = styled(InputDescriptionProfile)`
     height: 120px;
+`
+
+export const InputPrescriptionEdit = styled(InputDescriptionEdit)`
+    height: 120px;  
 `
 
 export const InputGrey = styled.TextInput.attrs({
