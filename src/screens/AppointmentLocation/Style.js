@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const MapImage = styled.Image`
     width: 100%;
@@ -6,13 +6,23 @@ export const MapImage = styled.Image`
 `
 
 export const ContainerBackground = styled.View`
-    background-color: #F5F3F3;
+    ${props => props.darkTheme ? css`
+        background-color: #121212;
+    ` : css`
+        background-color: #F5F3F3;
+    `}
+    
     width: 100%;
     height: 100%;
 `
 
 export const ContentAL = styled.View`
-    background-color: white;
+    ${props => props.darkTheme ? css`
+        background-color: #121212;
+    ` : css`
+        background-color: white;
+    `}
+    
     width: 100%;
     height: 100%;
     border-top-right-radius: 10px;

@@ -25,6 +25,7 @@ export const AppointmentLocation = ({navigation}) => {
         latitude: -23.5329,
         longitude: -46.7926
     })
+    const [ darkTheme, setDarkTheme ] = useState(false);
 
     //Funcao que pede a permissao para a localizacao e guarda a posicao do dispositivo
     async function CapturarLocalizacao(){
@@ -38,7 +39,7 @@ export const AppointmentLocation = ({navigation}) => {
         }
     }
 
-    //Funcao que recarrega o mapa com
+    //Funcao que recarrega o mapa com as novas informacoes
     async function RecarregarVizualizacaoMapa(){
         if( mapReference.current && initialPosition){
             await mapReference.current.fitToCoordinates(
@@ -91,7 +92,7 @@ export const AppointmentLocation = ({navigation}) => {
                     longitudeDelta: 0.005
                 }}
                 provider={PROVIDER_GOOGLE}
-                customMapStyle={grayMapStyle}
+                customMapStyle={darkMapStyle}
             >
                 <Marker
                     coordinate={{
@@ -136,15 +137,20 @@ export const AppointmentLocation = ({navigation}) => {
             }
 
 
-            <ContainerBackground>
-                <ContentAL>
+            <ContainerBackground
+              darkTheme={darkTheme}
+            >
+                <ContentAL
+                  darkTheme={darkTheme}
+                >
 
-                    <TitleProfile>Clínica Natureh</TitleProfile>
-                    <SubtextLocal>São Paulo, SP</SubtextLocal>
+                    <TitleProfile darkTheme={darkTheme}>Clínica Natureh</TitleProfile>
+                    <SubtextLocal darkTheme={darkTheme}>São Paulo, SP</SubtextLocal>
 
                     <AddressBox>
-                        <LabelLocal>Endereço</LabelLocal>
+                        <LabelLocal darkTheme={darkTheme}>Endereço</LabelLocal>
                         <InputGrey
+                            darkTheme={darkTheme}
                             placeholder="Rua Vicenso Silva, 987"
                         />
                     </AddressBox>
@@ -153,8 +159,9 @@ export const AppointmentLocation = ({navigation}) => {
                     {/* Criar os componentes DoubleContentBox e SmallBox na pasta Container. Porque vamos usar eles dnv */}
                     <DoubleContentBox>
                         <SmallBox>
-                            <LabelLocal>Numero</LabelLocal>
+                            <LabelLocal darkTheme={darkTheme}>Numero</LabelLocal>
                             <InputGrey
+                                darkTheme={darkTheme}
                                 placeholder="578"
                             />
                         </SmallBox>
@@ -407,6 +414,233 @@ const grayMapStyle = [
       stylers: [
         {
           color: "#fbfbfb",
+        },
+      ],
+    },
+  ];
+
+// --------------------------------------------------
+// ---------------- Estilo Dark ---------------------
+// --------------------------------------------------
+
+const darkMapStyle = [
+    {
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#121212",
+        },
+      ],
+    },
+    {
+      elementType: "geometry.fill",
+      stylers: [
+        {
+          saturation: -5,
+        },
+        {
+          lightness: -5,
+        },
+      ],
+    },
+    {
+      elementType: "labels.icon",
+      stylers: [
+        {
+          visibility: "on",
+        },
+      ],
+    },
+    {
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#AAC5FF",
+        },
+      ],
+    },
+    {
+      elementType: "labels.text.stroke",
+      stylers: [
+        {
+          color: "#33303E",
+        },
+      ],
+    },
+    {
+      featureType: "administrative",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#fbfbfb",
+        },
+      ],
+    },
+    {
+      featureType: "administrative.country",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#AAC5FF",
+        },
+      ],
+    },
+    {
+      featureType: "administrative.land_parcel",
+      stylers: [
+        {
+          visibility: "on",
+        },
+      ],
+    },
+    {
+      featureType: "administrative.locality",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#AAC5FF",
+        },
+      ],
+    },
+    {
+      featureType: "poi",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#AAC5FF",
+        },
+      ],
+    },
+    {
+      featureType: "poi.business",
+      stylers: [
+        {
+          visibility: "on",
+        },
+      ],
+    },
+    {
+      featureType: "poi.park",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#002800",
+        },
+      ],
+    },
+    {
+      featureType: "poi.park",
+      elementType: "labels.text",
+      stylers: [
+        {
+          visibility: "on",
+        },
+      ],
+    },
+    {
+      featureType: "poi.park",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#AAC5FF",
+        },
+      ],
+    },
+    {
+      featureType: "poi.park",
+      elementType: "labels.text.stroke",
+      stylers: [
+        {
+          color: "#1B1B1B",
+        },
+      ],
+    },
+    {
+      featureType: "road",
+      stylers: [
+        {
+          visibility: "on",
+        },
+      ],
+    },
+    {
+      featureType: "road",
+      elementType: "geometry.fill",
+      stylers: [
+        {
+          color: "#3b3b3b",
+        },
+      ],
+    },
+    {
+      featureType: "road",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#AAC5FF",
+        },
+      ],
+    },
+    {
+      featureType: "road.arterial",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#3b3b3b",
+        },
+      ],
+    },
+    {
+      featureType: "road.highway",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#636363",
+        },
+      ],
+    },
+    {
+      featureType: "road.highway.controlled_access",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#636363",
+        },
+      ],
+    },
+    {
+      featureType: "road.local",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#AAC5FF",
+        },
+      ],
+    },
+    {
+      featureType: "transit",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#AAC5FF",
+        },
+      ],
+    },
+    {
+      featureType: "water",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#152238",
+        },
+      ],
+    },
+    {
+      featureType: "water",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#AAC5FF",
         },
       ],
     },

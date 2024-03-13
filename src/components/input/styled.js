@@ -66,6 +66,7 @@ export const InputPrescriptionEdit = styled(InputDescriptionEdit)`
 export const InputGrey = styled.TextInput.attrs({
     placeholderTextColor:'#33303E',
 })`
+
     width: 100%;
     height: 53px;
     border-radius: 5px;

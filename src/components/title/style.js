@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 export const Title = styled.Text`
  font-size: 20px;
@@ -38,7 +38,13 @@ export const TextAccount = styled.Text`
 
 export const TitleProfile = styled(TextAccount)`
     font-size: 20px;
-    color: #33303E;
+    ${props => props.darkTheme ? css`
+        color: #FFFFFF;
+        opacity: 0.8;
+    ` : css`
+        color: #33303E;
+    `}
+    
     margin-top: 20px;
 `
 
@@ -109,6 +115,12 @@ export const TitleTextInfo = styled(InputTitle)`
 `
 
 export const LabelLocal = styled(TitleTextInfo)`
+    ${props => props.darkTheme ? css`
+        color: #FFFFFF;
+        opacity: 0.6;
+    ` : css`
+        
+    `}
     width: auto;
 `
 
@@ -159,6 +171,12 @@ export const SubtextCard = styled(ScheduleModalText)`
 `
 
 export const SubtextLocal = styled(SubtextCard)`
+    ${props => props.darkTheme ? css`
+        color: #FFFFFF;
+        opacity: 0.6;
+    ` : css`
+        
+    `}
     margin-top: 8px;
 `
 
