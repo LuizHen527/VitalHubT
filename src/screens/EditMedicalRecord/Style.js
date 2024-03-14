@@ -22,3 +22,19 @@ export const ContainerPhoto = styled.View`
     gap: 9px;
 `
 
+export const ButtonPhoto = styled.TouchableOpacity`
+    width: 100%;
+    height: 111px;
+    background-color: #F5F3F3;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 9px;
+`
+
+export const ContentView = styled.View`
+    flex: 1;
+    width: 100%;
+    height: 100%;
+`
