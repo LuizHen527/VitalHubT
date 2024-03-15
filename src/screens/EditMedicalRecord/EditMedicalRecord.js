@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View } from "react-native"
+import { Image, ScrollView, StyleSheet, View } from "react-native"
 import { AlignContainer, Container } from "../../components/container/style"
 import { ImageProfile } from "../../components/images/style"
 import { ButtonTitle, InfoTextProfile, LabelLocal, ProfileName, TextPhoto } from "../../components/title/style"
@@ -17,13 +17,18 @@ import { useState } from "react"
 export const EditMedicalRecord = ({navigation}) => {
 
     const [ showCamera, setShowCamera ] = useState(false);
+    const [ uriCameraCapture, setUriCameraCapture ] = useState(null);
 
     return(
         
         <ContentView>
             {
                 showCamera == true ? (
-                    <CameraComp/>
+                    <CameraComp
+                        setShowCameraModal={setShowCamera}
+                        showCameraModal={showCamera}
+                        setUriCameraCapture={setUriCameraCapture}
+                    />
                 ) : (
                     <ScrollContainer>
                     <Container>
@@ -73,10 +78,21 @@ export const EditMedicalRecord = ({navigation}) => {
 
                             <InputProfileBox>
                                 <LabelLocal>Exames médicos</LabelLocal>
-                                <ButtonPhoto onPress={() => setShowCamera(true)}>
-                                    <AntDesign name="exclamationcircle" size={20} color="#4E4B59" />
-                                    <TextPhoto>Nenhuma foto informada</TextPhoto>
-                                </ButtonPhoto>
+                                {
+                                    uriCameraCapture == null ? (
+                                        <ButtonPhoto onPress={() => setShowCamera(true)}>
+                                            <AntDesign name="exclamationcircle" size={20} color="#4E4B59" />
+                                            <TextPhoto>Nenhuma foto informada</TextPhoto>
+                                        </ButtonPhoto> 
+                                    ) : (
+                                        <ButtonPhoto>
+                                            <Image
+                                                style={{ width: '100%', height: '100%', borderRadius: 5}}
+                                                source={{uri : uriCameraCapture}}
+                                            />
+                                        </ButtonPhoto>
+                                    )
+                                }
                             </InputProfileBox>
 
                             <DoubleContentBoxEP>
