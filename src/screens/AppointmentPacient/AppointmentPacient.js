@@ -17,6 +17,20 @@ import { DoctorModal } from "../../components/DoctorModal/DoctorModal";
 import { NameUser, TextDefault } from "../../components/title/style";
 import { Octicons } from '@expo/vector-icons';
 
+import * as Notifications from 'expo-notifications';
+
+Notifications.requestPermissionsAsync();
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+
+        shouldPlaySound: false,
+
+        shouldSetBadge: false,
+    })
+});
+
 const Consultas = [
     {id: 1, nome: "Carlos", situacao: "pendente"},
     {id: 2, nome: "Luiz", situacao: "realizado"},
@@ -28,6 +42,24 @@ const Consultas = [
 const User = {id: 1, nome: "Dr Drauzio", sourceImage:'../../assets/eduProfileImage.png'};
 
 export const AppointmentPacient = ({navigation}) => {
+
+    const handleCallNotifications = async () => {
+
+        const {status} = await Notifications.getPermissionsAsync();
+
+        if(status != "granted") {
+            alert('Voce precisa permitir as notificacoes');
+            return;
+        };
+
+        await Notifications.scheduleNotificationAsync({
+            content:{
+                title: "Consulta cancelada",
+                body: "Uma de suas consultas foi cancelada. Entre para saber mais."
+            },
+            trigger: null
+        })
+    }
 
     const [showModalCancel, setShowModalCancel] = useState(false);
     const [showModalAppointment, setShowModalAppointment] = useState(false);
@@ -166,7 +198,7 @@ export const AppointmentPacient = ({navigation}) => {
             <CancelAppointmentModal
                 visible={showModalCancel}
                 setShowModalCancel={setShowModalCancel}
-                onPressConfirmation={() => setShowModalCancel(false)}
+                onPressConfirmation={() => setShowModalCancel(false) & handleCallNotifications()}
             />
 
             <DoctorModal

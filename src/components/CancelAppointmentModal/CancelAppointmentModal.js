@@ -5,9 +5,45 @@ import { ContainerModal } from "../container/style"
 import { ButtonTitle, RegularText, RegularTextModal, Title, TitleM, TitleModal } from "../title/style"
 import { ContainerBoxModal, ModalCancel, PacientModal } from "./Style"
 
+import * as Notifications from 'expo-notifications';
+
+Notifications.requestPermissionsAsync();
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+
+        shouldPlaySound: false,
+
+        shouldSetBadge: false,
+    })
+});
+
 export const CancelAppointmentModal = ({
     visible, setShowModalCancel, onPressConfirmation, ...rest
 }) => {
+
+    const handleCallNotifications = async () => {
+
+        const {status} = await Notifications.getPermissionsAsync();
+
+        if(status != "granted") {
+            alert('Voce precisa permitir as notificacoes');
+            return;
+        };
+
+        await Notifications.scheduleNotificationAsync({
+            content:{
+                title: "Consulta cancelada",
+                body: "Uma de suas consultas foi cancelada. Entre para saber mais."
+            }
+        })
+    }
+
+    async function NotificationCancel(){
+
+    }
+
     return(
         
         
