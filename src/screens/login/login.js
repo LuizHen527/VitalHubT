@@ -6,7 +6,11 @@ import { Input } from "../../components/input/styled"
 import { LinkBold, LinkMedium } from "../../components/Links/style"
 import { ButtonGoogle, ButtonLogin } from "../../components/button/style"
 import { AntDesign } from '@expo/vector-icons';
-import { ContainerLogo, ContentAccount } from "./style"
+import { ContainerLogo, ContentAccount } from "./style";
+
+//Import das bibliotecas para a biometria
+import * as LocalAuthentication from 'expo-local-authentication';
+
 
 export const Login = ({navigation}) => {
 
