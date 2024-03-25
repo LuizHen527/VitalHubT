@@ -4,10 +4,34 @@ import { BoxBell, BoxUser, DataUser, ImageUser } from '../../screens/Appointment
 import { NameUser, TextDefault } from '../title/style';
 import { useNavigation } from '@react-navigation/native';
 
+import { userDecodeToken } from '../../utils/Auth';
+import { useEffect, useState } from 'react';
+
 //Queria passar props com o nome e a URL da imagem, mas nao consegui
 //Update: O react native nao consegue renderizar imagens dinamicamente, quero ver como o professor vai fazer isso
 
 export const HeaderProfile = () => {
+
+   const [nome,setNome] = useState('')
+
+
+    //função de carregamento do perfil no header decodificando token armazenado no asyncStorage
+    async function profileLoad(){
+
+        const token = await userDecodeToken();
+
+        setNome(token.name)
+
+
+        console.log(token);
+    }
+
+    useEffect(() => {
+        profileLoad();
+    },[]);
+
+
+
     const navigation = useNavigation();
     return(
         <ContainerHeader>
@@ -18,7 +42,7 @@ export const HeaderProfile = () => {
 
                 <DataUser>
                     <TextDefault>Bem vindo</TextDefault>
-                    <NameUser>Dr Drauzio</NameUser>
+                    <NameUser>{nome}</NameUser>
                 </DataUser>
 
                 

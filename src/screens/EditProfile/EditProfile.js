@@ -6,8 +6,48 @@ import { ContainerInfoProfile } from "../Profile/style"
 import { DateBox, DoubleContentBoxEP } from "./Style"
 import { InputGrey } from "../../components/input/styled"
 import { ButtonEdit, ButtonLeave, ButtonLoginVE } from "../../components/button/style"
+import { useEffect, useState } from "react"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { userDecodeToken } from "../../utils/Auth"
 
-export const EditProfile = () => {
+export const EditProfile = ({navigation}) => {
+
+    const [nome,setNome] = useState('')
+    const [email,setEmail] = useState('')
+
+    async function profileLoad(){
+
+        const token = await userDecodeToken();
+
+        setNome(token.name)
+        setEmail(token.email)
+
+
+        console.log(token);
+    }
+
+    useEffect(() => {
+        profileLoad();
+    },[]);
+
+    async function logOff() {
+
+
+try {
+    
+    const token = await AsyncStorage.removeItem('token')
+
+    console.log(token);
+} catch (error) {
+    console.log(error);
+}
+
+
+        navigation.replace("Login")
+    }
+
+
+
     return(
         <ScrollView>
             <Container>
@@ -15,9 +55,9 @@ export const EditProfile = () => {
                     source={require('../../assets/profilePic.jpg')}
                 />
                 <AlignContainer>
-                    <ProfileName>Richard Kosta</ProfileName>
+                    <ProfileName>{nome}</ProfileName>
 
-                    <InfoProfile>richard.kosta@gmail.com</InfoProfile>
+                    <InfoProfile>{email}</InfoProfile>
 
                     <DateBox>
                         <LabelLocal>Data de nascimento:</LabelLocal>
@@ -64,7 +104,9 @@ export const EditProfile = () => {
                         <ButtonTitle>Editar</ButtonTitle>
                     </ButtonEdit>
 
-                    <ButtonLeave>
+                    <ButtonLeave 
+                     onPress={() => logOff()}
+                    >
                         <ButtonTitle>sair do app</ButtonTitle>
                     </ButtonLeave>
                 </AlignContainer>
