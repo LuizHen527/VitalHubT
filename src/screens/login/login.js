@@ -8,14 +8,30 @@ import { ButtonGoogle, ButtonLogin } from "../../components/button/style"
 import { AntDesign } from '@expo/vector-icons';
 import { ContainerLogo, ContentAccount } from "./style";
 
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import api from "../../service/service"
+
 //Import das bibliotecas para a biometria
 import * as LocalAuthentication from 'expo-local-authentication';
+import { useState } from "react"
 
 
 export const Login = ({navigation}) => {
 
+    const [email, setEmail] = useState('l@gmail.com');
+    const [senha, setSenha] = useState('123456');
+
     async function Login() {
-        navigation.replace("Main")
+
+        //Chamar api de Login
+        const response = await api.post('http://192.168.19.125:4466/api/login', {
+            email: email,
+            senha: senha
+        });
+
+        await AsyncStorage.setItem('token', JSON.stringify(response.data));
+
+        navigation.replace("Main");
     }
     async function LoginDoctor() {
         navigation.replace("MainDoctor")
@@ -33,10 +49,15 @@ export const Login = ({navigation}) => {
 
             <Input
             placeholder="Usuario ou Email"
+            value={email}
+            onChangeText={(txt) => setEmail(txt)}
+            // onChange={event => event.nativeEvent.text}
             />
             <Input
             placeholder="Senha"
             secureTextEntry={true}
+            value={senha}
+            onChangeText={(txt) => setSenha(txt)}
             />
 
             <LinkMedium onPress={() => navigation.navigate("RecuperarSenha")}>Esqueceu sua senha?</LinkMedium>

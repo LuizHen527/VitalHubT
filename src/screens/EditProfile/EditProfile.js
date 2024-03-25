@@ -7,7 +7,36 @@ import { DateBox, DoubleContentBoxEP } from "./Style"
 import { InputGrey } from "../../components/input/styled"
 import { ButtonEdit, ButtonLeave, ButtonLoginVE } from "../../components/button/style"
 
-export const EditProfile = () => {
+import { userDecodeToken } from '../../utils/Auth'; 
+import { useEffect, useState } from "react"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+
+export const EditProfile = ({navigation}) => {
+
+    const [ nome, setNome ] = useState('');
+    const [ email, setEmail ] = useState('');
+
+    async function logoff(){
+        try {
+            await AsyncStorage.removeItem('token');
+        } catch (e) {
+            console.log(e);
+        }
+
+        navigation.replace("Login");
+    }
+
+    async function profileLoad(){
+        const token = await userDecodeToken();
+
+        setNome(token.name);
+        setEmail(token.email);
+    }
+
+    useEffect(() => {
+        profileLoad();
+    }, []);
+
     return(
         <ScrollView>
             <Container>
@@ -15,9 +44,9 @@ export const EditProfile = () => {
                     source={require('../../assets/profilePic.jpg')}
                 />
                 <AlignContainer>
-                    <ProfileName>Richard Kosta</ProfileName>
+                    <ProfileName>{nome}</ProfileName>
 
-                    <InfoProfile>richard.kosta@gmail.com</InfoProfile>
+                    <InfoProfile>{email}</InfoProfile>
 
                     <DateBox>
                         <LabelLocal>Data de nascimento:</LabelLocal>
@@ -64,7 +93,9 @@ export const EditProfile = () => {
                         <ButtonTitle>Editar</ButtonTitle>
                     </ButtonEdit>
 
-                    <ButtonLeave>
+                    <ButtonLeave
+                        onPress={() => logoff()}
+                    >
                         <ButtonTitle>sair do app</ButtonTitle>
                     </ButtonLeave>
                 </AlignContainer>
