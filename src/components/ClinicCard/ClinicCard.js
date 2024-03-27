@@ -6,18 +6,22 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export const ClinicCard = ({
-    border="",
+    border,
     nome="",
     local="",
-    rating="",
-    agenda="",
+    rating="5",
+    agenda="Seg-Sex",
+    clinica,
+    onPress,
 }) => {
-    return(
-        <ContainerClinicCard border={border}  style={styles.shadow}>
-            <BoxText>
-                <NameProfile>{nome}</NameProfile>
 
-                <SubtextCard>{local}</SubtextCard>
+
+    return(
+        <ContainerClinicCard  border={border}  style={styles.shadow}>
+            <BoxText>
+                <NameProfile allowFontScaling={true}>{clinica.nomeFantasia}</NameProfile>
+
+                <SubtextCard>{clinica.endereco.logradouro}</SubtextCard>
             </BoxText>
 
             <BoxInfo>

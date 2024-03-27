@@ -16,7 +16,7 @@ export const ContainerClinicCard = styled(ContainerCard)`
     width: 88%;
     justify-content: space-between;
     padding: 0px 18px;
-    border: ${(props) => props.border == "yes" ?
+    border: ${(props) => props.border === true ?
     "2px solid #496BBA" : "0px solid "};
 `
 
