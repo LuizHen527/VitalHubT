@@ -18,7 +18,7 @@ import { useEffect, useState } from "react"
 
 export const Login = ({navigation}) => {
 
-    const [email, setEmail] = useState('s@gmail');
+    const [email, setEmail] = useState('lucas@gmail.com');
     const [senha, setSenha] = useState('123456');
     const [loadingIcon, setLoadingIcon] = useState(false);
     const [errors, setErrors] = useState({});
@@ -38,8 +38,6 @@ export const Login = ({navigation}) => {
 
     async function Login() {
 
-        console.log('apertei');
-
         setLoadingIcon(true);
 
         //Chamar api de Login
@@ -47,8 +45,6 @@ export const Login = ({navigation}) => {
             email: email,
             senha: senha
         });
-
-        console.log('banana');
 
         await AsyncStorage.setItem('token', JSON.stringify(response.data));
 

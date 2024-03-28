@@ -22,7 +22,6 @@ export const userDecodeToken = async () => {
     //Descriptografando token
     const decoded = jwtDecode(token);
 
-    console.log('Descriptografou');
     console.log(decoded);
 
     return {

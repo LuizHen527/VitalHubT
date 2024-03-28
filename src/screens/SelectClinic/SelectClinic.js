@@ -43,8 +43,6 @@ export const SelectClinic = ({navigation}) => {
             <ContentBox>
             <TitleModal>Selecionar clínica</TitleModal>
 
-
-            
             <ComponentList
                 data={clinicasLista}
                 keyExtractor={(item) => item.id}
