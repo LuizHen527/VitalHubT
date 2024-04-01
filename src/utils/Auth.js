@@ -18,7 +18,7 @@ export const userDecodeToken = async () => {
     if( token === null){
         return null;
     }
-    console.log(token.token);
+    //console.log(token.token);
     //Descriptografando token
     const decoded = jwtDecode(token);
 
@@ -27,7 +27,8 @@ export const userDecodeToken = async () => {
     return {
         role : decoded.role,
         name : decoded.name,
-        email : decoded.email
+        email : decoded.email,
+        idUsuario : decoded.jti
     }
 
 }

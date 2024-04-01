@@ -5,7 +5,7 @@ import { StyledCalendarStrip } from "../../components/StyledCalendarStrip/styled
 import { StyleSheet } from "react-native";
 import { BoxBell, BoxUser, ContainerList, DataUser, FilterAppointment, ImageUser } from "../AppointmentDoctor/style";
 import { AbsListAppointment } from "../../components/AbsListAppointment/AbsListAppointment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ListComponent } from "../../components/List/Style";
 import { AppointmentCard } from "../../components/AppointmentCard/AppointmentCard";
 import { CancelAppointmentModal } from "../../components/CancelAppointmentModal/CancelAppointmentModal";
@@ -16,6 +16,7 @@ import { ScheduleModal } from "../../components/ScheduleModal/ScheduleModal";
 import { DoctorModal } from "../../components/DoctorModal/DoctorModal";
 import { NameUser, TextDefault } from "../../components/title/style";
 import { Octicons } from '@expo/vector-icons';
+import api from "../../service/service"
 
 import * as Notifications from 'expo-notifications';
 
@@ -42,6 +43,37 @@ const Consultas = [
 const User = {id: 1, nome: "Dr Drauzio", sourceImage:'../../assets/eduProfileImage.png'};
 
 export const AppointmentPacient = ({navigation}) => {
+    const [consultasMedico, setConsultasMedico] = useState([]);
+    const [idUser, setIdUser] = useState();
+
+    async function profileLoad(){
+        const token = await userDecodeToken();
+
+        setIdUser(token.jti);
+
+        console.log(idUser);
+    }
+
+    async function ListarConsultasMedico(){
+        const token = await userDecodeToken();
+
+        await setIdUser(token.idUsuario);
+
+        await api.get(`/Medicos/BuscarPorId?id=${idUser}`)
+        .then(response => {
+            console.log(response);
+        }).catch(error => {
+            console.log(error);
+        });
+
+        await api.get(`/Consultas/ConsultasMedico?id=${idMedico}`)
+        .then(response => {
+            setConsultasMedico(response.data);
+            console.log(consultasMedico);
+        }).catch(error => {
+            console.log(error);
+        })
+    }
 
     const handleCallNotifications = async () => {
 
@@ -60,6 +92,12 @@ export const AppointmentPacient = ({navigation}) => {
             trigger: null
         })
     }
+
+    useEffect(() => {
+        //profileLoad();
+
+        ListarConsultasMedico();
+    }, [])
 
     const [showModalCancel, setShowModalCancel] = useState(false);
     const [showModalAppointment, setShowModalAppointment] = useState(false);
