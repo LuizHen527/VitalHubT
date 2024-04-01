@@ -43,6 +43,8 @@ const User = {id: 1, nome: "Dr Drauzio", sourceImage:'../../assets/eduProfileIma
 
 export const AppointmentPacient = ({navigation}) => {
 
+
+
     const handleCallNotifications = async () => {
 
         const {status} = await Notifications.getPermissionsAsync();

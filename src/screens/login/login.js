@@ -17,13 +17,15 @@ import { useState } from "react"
 
 export const Login = ({navigation}) => {
 
-    const [email,setEmail] = useState('lu@gmail.com')
-    const [senha,setSenha] = useState('12345')
+    const [email,setEmail] = useState('lucas.portal@gmail.com')
+    const [senha,setSenha] = useState('medico123')
 
     async function Login() {
 
+        console.log( email + "     " + senha)
+
         //Chamar a api de Login
-        const response = await api.post('/Login',{
+        const response = await api.post('/Login', {
             email:email,
             senha:senha
         })
@@ -34,9 +36,11 @@ export const Login = ({navigation}) => {
 
         navigation.replace("Main")
     }
+
     async function LoginDoctor() {
         navigation.replace("MainDoctor")
     }
+
     return(
         <Container>
             <ContainerLogo>

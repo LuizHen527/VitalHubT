@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { DoctorCard } from "../../components/DoctorCard/DoctorCard"
 import { LinkCancel } from "../../components/Links/style"
 import { ComponentList } from "../../components/List/Style"
@@ -13,6 +14,9 @@ const Doctors = [
 ];
 
 export const SelectDoctor = ({navigation}) => {
+
+    const [selectDoctor,setSelectDoctor] = useState([])
+
     return(
         <Container>
             <ContentBox>

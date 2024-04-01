@@ -9,15 +9,16 @@ export const ClinicCard = ({
     border="",
     nome="",
     local="",
-    rating="",
-    agenda="",
+    rating="5",
+    agenda="Seg-Sex",
+    clinica
 }) => {
     return(
         <ContainerClinicCard border={border}  style={styles.shadow}>
             <BoxText>
-                <NameProfile>{nome}</NameProfile>
+                <NameProfile allowFontScaling={true}>{clinica.nomeFantasia}</NameProfile>
 
-                <SubtextCard>{local}</SubtextCard>
+                <SubtextCard>{clinica.endereco.logradouro}</SubtextCard>
             </BoxText>
 
             <BoxInfo>

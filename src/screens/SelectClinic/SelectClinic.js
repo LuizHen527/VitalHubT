@@ -6,6 +6,8 @@ import { ButtonCancel, ButtonSchedule } from "../../components/button/style"
 import { Container } from "../../components/container/style"
 import { ButtonTitle, TitleModal } from "../../components/title/style"
 import { AlignBox, ContentBox, FooterBox } from "./Style"
+import { useEffect, useState } from "react"
+import api from "../../service/Service"
 
 const Clinicas = [
     { id: 1, nome: "Clínica Natureh", local: "São Paulo, SP", rating: "4,5", agenda: "Seg-Sex", border: "yes" },
@@ -15,9 +17,30 @@ const Clinicas = [
 ];
 
 export const SelectClinic = ({navigation}) => {
+
+    const [clinicList,setClinicList] = useState([])
+
+    async function ListarClinicas(){
+        await api.get('/Clinica/ListarTodas')
+        .then(response => {
+            setClinicList(response.data)
+            console.log(clinicList)
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
     async function Login() {
         navigation.replace("Main")
     }
+
+    useEffect(() => {
+        console.log(clinicList);
+      ListarClinicas()
+    }, [])
+    
+
+
     return (
 
         // Falta colocar a lista em uma scroll view, tive um erro. por isso vou deixar pra depois
@@ -28,17 +51,18 @@ export const SelectClinic = ({navigation}) => {
 
             
             <ComponentList
-                data={Clinicas}
+                data={clinicList}
                 keyExtractor={(item) => item.id}
 
-                renderItem={({ item }) =>
+                renderItem={( clinica ) =>
                 (
                     <ClinicCard
-                        nome={item.nome}
-                        local={item.local}
-                        rating={item.rating}
-                        agenda={item.agenda}
-                        border={item.border}
+                        clinica={clinica.item}
+                        // nome={item.nome}
+                        // local={item.local}
+                        // rating={item.rating}
+                        // agenda={item.agenda}
+                        // border={item.border}
                      />
                 )
                 }

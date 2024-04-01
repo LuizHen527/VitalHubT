@@ -9,13 +9,15 @@ import { ButtonEdit, ButtonLeave, ButtonLoginVE } from "../../components/button/
 import { useEffect, useState } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { userDecodeToken } from "../../utils/Auth"
+import Loading from "../../utils/Loading"
 
-export const EditProfile = ({navigation}) => {
+export const EditProfile = ({ navigation }) => {
 
-    const [nome,setNome] = useState('')
-    const [email,setEmail] = useState('')
+    const [visible, setVisible] = useState(false)
+    const [nome, setNome] = useState('')
+    const [email, setEmail] = useState('')
 
-    async function profileLoad(){
+    async function profileLoad() {
 
         const token = await userDecodeToken();
 
@@ -28,27 +30,35 @@ export const EditProfile = ({navigation}) => {
 
     useEffect(() => {
         profileLoad();
-    },[]);
+    }, []);
 
     async function logOff() {
+        setVisible(true);
 
 
-try {
-    
-    const token = await AsyncStorage.removeItem('token')
+        try {
 
-    console.log(token);
-} catch (error) {
-    console.log(error);
-}
+            const token = await AsyncStorage.removeItem('token')
+
+            console.log(token);
+        } catch (error) {
+            console.log(error);
+            setVisible(false);
+
+        }
 
 
         navigation.replace("Login")
+
+        
+            setVisible(false);
+      
+
     }
 
 
 
-    return(
+    return (
         <ScrollView>
             <Container>
                 <ImageProfile
@@ -104,11 +114,35 @@ try {
                         <ButtonTitle>Editar</ButtonTitle>
                     </ButtonEdit>
 
-                    <ButtonLeave 
-                     onPress={() => logOff()}
-                    >
-                        <ButtonTitle>sair do app</ButtonTitle>
-                    </ButtonLeave>
+
+                    {
+                        !visible ? (
+
+                            <ButtonLeave
+                                onPress={() => logOff()}
+
+                            >
+                                <Loading visible={visible} />
+
+                                <ButtonTitle>sair do app</ButtonTitle>
+                            </ButtonLeave>
+                        ) : (
+                            <ButtonLeave
+                                onPress={() => setVisible(true) &
+                                    setTimeout(() => {
+                                        setVisible(false);
+                                    }, 5000) 
+                                    }
+
+                            >
+                                <Loading visible={visible} />
+
+                                <ButtonTitle>sair do app</ButtonTitle>
+                            </ButtonLeave>
+                        )
+                    }
+
+
                 </AlignContainer>
             </Container>
         </ScrollView>
