@@ -47,10 +47,10 @@ export const Login = ({navigation}) => {
             
         });
 
-        console.log(response);
+        //console.log(response);
 
         await AsyncStorage.setItem('token', JSON.stringify(response.data));
-        // await AsyncStorage.setItem('idUsuario', (response.data));
+        // await AsyncStorage.setItem('idUsuario', (response.data.));
 
         navigation.replace("Main");
 

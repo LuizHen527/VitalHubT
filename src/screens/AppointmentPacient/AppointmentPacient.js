@@ -17,8 +17,10 @@ import { DoctorModal } from "../../components/DoctorModal/DoctorModal";
 import { NameUser, TextDefault } from "../../components/title/style";
 import { Octicons } from '@expo/vector-icons';
 import api from "../../service/service"
+import { userDecodeToken } from '../../utils/Auth'; 
 
 import * as Notifications from 'expo-notifications';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 Notifications.requestPermissionsAsync();
 
@@ -32,34 +34,44 @@ Notifications.setNotificationHandler({
     })
 });
 
-const Consultas = [
-    {id: 1, nome: "Carlos", situacao: "pendente"},
-    {id: 2, nome: "Luiz", situacao: "realizado"},
-    {id: 3, nome: "Eduardo", situacao: "cancelado"},
-    {id: 4, nome: "Joao", situacao: "realizado"},
-    {id: 5, nome: "Maria", situacao: "cancelado"}
-];
-
 const User = {id: 1, nome: "Dr Drauzio", sourceImage:'../../assets/eduProfileImage.png'};
 
 export const AppointmentPacient = ({navigation}) => {
     const [consultasMedico, setConsultasMedico] = useState([]);
-    const [idUser, setIdUser] = useState();
+    const [idUser, setIdUser] = useState('');
+    const [showModalCancel, setShowModalCancel] = useState(false);
+    const [showModalAppointment, setShowModalAppointment] = useState(false);
+    const [showModalSchedule, setShowModalSchedule] = useState(false);
+    // Nao sei onde colocar a ativacao desse modal, por isso esta true. 
+    const [showModalDoctor, setShowModalDoctor] = useState(false);
+    const[statusLista, setStatusLista] = useState("pedente");
+    const [dataConsulta, setDataConsulta] = useState();
+    const [idPaciente, setIdPaciente] = useState();
+    const [consultas, setConsultas] = useState();
+    const [role, setRole] = useState();
+    const [profile, setProfile] = useState();
 
     async function profileLoad(){
         const token = await userDecodeToken();
 
-        setIdUser(token.jti);
+        if(token != null){
+            setProfile(token);
 
-        console.log(idUser);
+            // setDataConsulta(moment().format('YYYY-MM-DD'));
+        }
+
+        setIdUser(token.name);
+        setRole(token.role); 
+
+        //console.log(idUser);
     }
 
     async function ListarConsultasMedico(){
-        const token = await userDecodeToken();
+        const idUsuario = await AsyncStorage.getItem('idUsuario');
 
-        await setIdUser(token.idUsuario);
+        console.log(idUsuario);
 
-        await api.get(`/Medicos/BuscarPorId?id=${idUser}`)
+        await api.get(`/Medicos/BuscarPorId?id=${idUsuario}`)
         .then(response => {
             console.log(response);
         }).catch(error => {
@@ -71,6 +83,18 @@ export const AppointmentPacient = ({navigation}) => {
             setConsultasMedico(response.data);
             console.log(consultasMedico);
         }).catch(error => {
+            console.log(error);
+        })
+    }
+
+    async function ListarConsultas(){
+        const url = (profile.role == 'Medico' ? 'Medicos' : 'Pacientes');
+
+        await api.get(`/${url}/BuscarPorData?data=${dataConsulta}&id=${profile.role}`)
+        .then( response => {
+            setConsultas(response.data);
+            console.log(consultas);
+        }).catch( error => {
             console.log(error);
         })
     }
@@ -94,17 +118,16 @@ export const AppointmentPacient = ({navigation}) => {
     }
 
     useEffect(() => {
-        //profileLoad();
+        profileLoad();
+    }, []);
 
-        ListarConsultasMedico();
-    }, [])
+    useEffect(() => {
+        if( dataConsulta != ''){
+            ListarConsultas();
+        }
+    }, [dataConsulta]);
 
-    const [showModalCancel, setShowModalCancel] = useState(false);
-    const [showModalAppointment, setShowModalAppointment] = useState(false);
-    const [showModalSchedule, setShowModalSchedule] = useState(false);
-    // Nao sei onde colocar a ativacao desse modal, por isso esta true. 
-    const [showModalDoctor, setShowModalDoctor] = useState(false);
-    const[statusLista, setStatusLista] = useState("pedente");
+
 
         //define padrão pt-br para calendário
         moment.updateLocale("pt-br", {
@@ -153,6 +176,8 @@ export const AppointmentPacient = ({navigation}) => {
         <HeaderProfile/>
 
         <StyledCalendarStrip
+
+        onDateSelected={date => setDataConsulta(moment(date).format('YYYY-MM-DD'))}
         // animação e seleção de cada data
         calendarAnimation={{ type: "sequence", duration: 30 }}
         daySelectionAnimation={styles.selectedAnimationStyle}
@@ -213,21 +238,23 @@ export const AppointmentPacient = ({navigation}) => {
 
             <ContainerList>
             <ListComponent
-                data={Consultas}
+                data={consultas}
                 keyExtractor={(item) => item.id}
 
                 renderItem={({item}) => 
                 statusLista == item.situacao && (
-                    <AppointmentCard
-                        situacao={item.situacao}
-                        perfil="paciente"
-                        onPressCancel={() => setShowModalCancel(true)}
-                        onPressAppointment={() => navigation.navigate("EditMedicalRecord")}
-                        onPressDoctorModal={() => setShowModalDoctor(true)}
-                        // apagar depois (Fiz so pra testar validacao)
-                        onPressDoctorInsert={() => setShowModalAppointment(true)}
 
-                    />
+                    console.log(item)
+                    // <AppointmentCard
+                    //     situacao={item.situacao}
+                    //     perfil="paciente"
+                    //     onPressCancel={() => setShowModalCancel(true)}
+                    //     onPressAppointment={() => navigation.navigate("EditMedicalRecord")}
+                    //     onPressDoctorModal={() => setShowModalDoctor(true)}
+                    //     // apagar depois (Fiz so pra testar validacao)
+                    //     onPressDoctorInsert={() => setShowModalAppointment(true)}
+
+                    // />
                 )
             }
             />

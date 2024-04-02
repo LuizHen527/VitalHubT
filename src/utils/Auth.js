@@ -22,13 +22,13 @@ export const userDecodeToken = async () => {
     //Descriptografando token
     const decoded = jwtDecode(token);
 
-    console.log(decoded);
+    //console.log(decoded);
 
     return {
         role : decoded.role,
         name : decoded.name,
         email : decoded.email,
-        idUsuario : decoded.jti
+        jti : decoded.jti
     }
 
 }

@@ -13,11 +13,18 @@ import { useEffect, useState } from 'react';
 export const HeaderProfile = () => {
     const navigation = useNavigation();
     const [ nome, setNome ] = useState('');
+    const [idUser, setIdUser] = useState('');
 
     async function profileLoad(){
         const token = await userDecodeToken();
 
         setNome(token.name);
+        setIdUser(token.jti);
+
+        await AsyncStorage.setItem('idUsuario', (idUser));
+
+        //console.log(nome);
+        //console.log(idUser);
     }
 
     useEffect(() => {
