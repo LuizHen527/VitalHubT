@@ -19,6 +19,7 @@ import { Octicons } from '@expo/vector-icons';
 import api from "../../service/Service";
 
 import * as Notifications from 'expo-notifications';
+import { userDecodeToken } from "../../utils/Auth";
 
 Notifications.requestPermissionsAsync();
 
@@ -46,24 +47,54 @@ export const AppointmentPacient = ({ navigation }) => {
 
     const [consultasPaciente, setConsultasPaciente] = useState([])
 
+    const [idPaciente,setIdPaciente] = useState("")
 
-    const ListarConsultasPaciente = async () => {
-        await api.get('/Pacientes/BuscarPorData?data=2024-03-28-7CD9160076BB')
-            .then(response => {
+    const [dataConsulta,setDataConsulta] = useState("")
 
-                
-                setConsultasPaciente(response.data)
-                console.log(consultasPaciente);
 
-            }).catch(error => {
-                console.log(error);
-            })
+
+    async function profileLoad() {
+       const token = await userDecodeToken();
+ 
+        if (token !== null) {
+            setIdPaciente(token)
+            
+            setDataConsulta(moment().format('YYYY-MM-DD'))
+        }
     }
 
+
+    // const ListarConsultasPaciente = async () => {
+
+    //     const token = await userDecodeToken();
+    
+    //     const url = (token.role === 'Paciente' ? 'Pacientes':'Medicos')
+
+    //     await api.get(`${url}/BuscarPorData?data=${dataConsulta}&id=${idPaciente.id}`)
+    //         .then(response => {
+
+                
+    //             setConsultasPaciente(response.data)
+    //             console.log(consultasPaciente);
+
+    //         }).catch(error => {
+    //             console.log(error);
+    //         })
+    // }
+
     useEffect(() => {
-        console.log(consultasPaciente);
-        ListarConsultasPaciente()
-    },[])
+      profileLoad()
+    //   console.log(idPaciente);
+    }, [])
+    
+
+    // useEffect(() => {
+    //     if (dataConsulta != '') {
+            
+    //         ListarConsultasPaciente()
+    //         console.log(consultasPaciente);
+    //     }
+    // },[dataConsulta])
 
 
 
@@ -139,6 +170,8 @@ export const AppointmentPacient = ({ navigation }) => {
             <HeaderProfile />
 
             <StyledCalendarStrip
+
+                onDateSelected={date => setDataConsulta(moment(date).format('YYYY-MM-DD'))}
                 // animação e seleção de cada data
                 calendarAnimation={{ type: "sequence", duration: 30 }}
                 daySelectionAnimation={styles.selectedAnimationStyle}

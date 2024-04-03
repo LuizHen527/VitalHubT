@@ -11,11 +11,44 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { userDecodeToken } from "../../utils/Auth"
 import Loading from "../../utils/Loading"
 
+import api from "../../service/Service"
+
+
+
+
 export const EditProfile = ({ navigation }) => {
 
     const [visible, setVisible] = useState(false)
     const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
+    const [userID,setUserID] = useState('')
+    const [pacienteInfo,setPacienteInfo] = useState('')
+    const [nascimento,setNascimento] = ('')
+    const [cpf,setCPF] = ('')
+    const [endereco,setEndereco] = ('')
+
+
+
+    async function LoadInfo() {
+
+        const token = userDecodeToken();
+        
+        setUserID(token.jti)
+        // console.log(userID);
+
+        if (token.role = 'Paciente') {
+            
+            await api.get(`/Pacientes/BuscarPorID?id${userID}`)
+            .then( response => {
+               setPacienteInfo( response.data) 
+            //    console.log(pacienteInfo);
+    
+            })
+        }
+        
+       
+    
+    }
 
     async function profileLoad() {
 
@@ -25,35 +58,29 @@ export const EditProfile = ({ navigation }) => {
         setEmail(token.email)
 
 
-        console.log(token);
+        // console.log(token);
     }
 
     useEffect(() => {
         profileLoad();
+        LoadInfo();
     }, []);
+
+
 
     async function logOff() {
         setVisible(true);
 
-
         try {
-
             const token = await AsyncStorage.removeItem('token')
-
             console.log(token);
         } catch (error) {
             console.log(error);
             setVisible(false);
-
         }
 
-
         navigation.replace("Login")
-
-        
-            setVisible(false);
-      
-
+        setVisible(false);
     }
 
 
@@ -131,8 +158,8 @@ export const EditProfile = ({ navigation }) => {
                                 onPress={() => setVisible(true) &
                                     setTimeout(() => {
                                         setVisible(false);
-                                    }, 5000) 
-                                    }
+                                    }, 5000)
+                                }
 
                             >
                                 <Loading visible={visible} />
