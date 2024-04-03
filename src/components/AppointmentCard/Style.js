@@ -32,11 +32,11 @@ export const ContainerProfile = styled.View`
     justify-content: space-between;
 `
 
-export const NameProfile = styled.Text`
+export const NameProfile = styled.TextInput`
     font-size: 16px;
     font-family: MontserratAlternates_600SemiBold;
     color: #33303E;
-    margin-bottom: 5px;
+    margin-bottom: 1px;
 `
 
 export const AgeProfile = styled.Text`

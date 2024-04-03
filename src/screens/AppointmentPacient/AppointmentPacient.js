@@ -46,10 +46,9 @@ export const AppointmentPacient = ({navigation}) => {
     const [showModalDoctor, setShowModalDoctor] = useState(false);
     const[statusLista, setStatusLista] = useState("pedente");
     const [dataConsulta, setDataConsulta] = useState();
-    const [idPaciente, setIdPaciente] = useState();
     const [consultas, setConsultas] = useState();
-    const [role, setRole] = useState();
     const [profile, setProfile] = useState();
+    const [consultaSelecionada, setConsultaSelecionada] = useState();
 
     async function profileLoad(){
         const token = await userDecodeToken();
@@ -57,11 +56,10 @@ export const AppointmentPacient = ({navigation}) => {
         if(token != null){
             setProfile(token);
 
-            // setDataConsulta(moment().format('YYYY-MM-DD'));
+            setDataConsulta(moment().format('YYYY-MM-DD'));
         }
 
         setIdUser(token.name);
-        setRole(token.role); 
 
         //console.log(idUser);
     }
@@ -89,11 +87,12 @@ export const AppointmentPacient = ({navigation}) => {
 
     async function ListarConsultas(){
         const url = (profile.role == 'Medico' ? 'Medicos' : 'Pacientes');
+        console.log(`/${url}/BuscarPorData?data=${dataConsulta}&id=${profile.jti}`);
 
-        await api.get(`/${url}/BuscarPorData?data=${dataConsulta}&id=${profile.role}`)
+        await api.get(`/${url}/BuscarPorData?data=${dataConsulta}&id=${profile.jti}`)
         .then( response => {
             setConsultas(response.data);
-            console.log(consultas);
+            console.log(response.data);
         }).catch( error => {
             console.log(error);
         })
@@ -115,6 +114,17 @@ export const AppointmentPacient = ({navigation}) => {
             },
             trigger: null
         })
+    }
+
+    function MostrarModal(modal, consulta){
+        setConsultaSelecionada(consulta);
+
+        if(modal == 'cancelar'){
+            setShowModalCancel(true)
+
+        }else{
+            setShowModalAppointment(true);
+        }
     }
 
     useEffect(() => {
@@ -218,20 +228,20 @@ export const AppointmentPacient = ({navigation}) => {
                 {/* Botao agendado */}
                 <AbsListAppointment
                     textButton={"Agendadas"}
-                    clickButton={statusLista === "pendente"}
-                    onPress={() => setStatusLista("pendente")}
+                    clickButton={statusLista === "Pendentes"}
+                    onPress={() => setStatusLista("Pendentes")}
                 />
                 {/* Botao realizado */}
                 <AbsListAppointment
                     textButton={"Realizadas"}
-                    clickButton={statusLista === "realizado"}
-                    onPress={() => setStatusLista("realizado")}
+                    clickButton={statusLista === "Realizados"}
+                    onPress={() => setStatusLista("Realizados")}
                 />
                 {/* Botao cancelado */}
                 <AbsListAppointment
                     textButton={"Canceladas"}
-                    clickButton={statusLista === "cancelado"}
-                    onPress={() => setStatusLista("cancelado")}
+                    clickButton={statusLista === "Cancelados"}
+                    onPress={() => setStatusLista("Cancelados")}
                 />
 
             </FilterAppointment>
@@ -242,19 +252,26 @@ export const AppointmentPacient = ({navigation}) => {
                 keyExtractor={(item) => item.id}
 
                 renderItem={({item}) => 
-                statusLista == item.situacao && (
+                statusLista == item.situacao.situacao && (
 
-                    console.log(item)
-                    // <AppointmentCard
-                    //     situacao={item.situacao}
-                    //     perfil="paciente"
-                    //     onPressCancel={() => setShowModalCancel(true)}
-                    //     onPressAppointment={() => navigation.navigate("EditMedicalRecord")}
-                    //     onPressDoctorModal={() => setShowModalDoctor(true)}
-                    //     // apagar depois (Fiz so pra testar validacao)
-                    //     onPressDoctorInsert={() => setShowModalAppointment(true)}
+                     <AppointmentCard
+                         
 
-                    // />
+                         perfil={profile.role}
+                         consultas={item}
+                         dataNascimento={item.paciente.dataNascimento}
+                         onPressCancel={() => setShowModalCancel(true)}
+                         onPressAppointment={() => navigation.navigate("EditMedicalRecord")}
+                         onPressDoctorModal={() => setShowModalDoctor(true)}
+                         // apagar depois (Fiz so pra testar validacao)
+                         onPressDoctorInsert={() => setShowModalAppointment(true)}
+
+                         //Modal de cancelar
+                         onConnectCancelar={() => MostrarModal('cancelar', item)}
+                         onConnectAppoitment={() => MostrarModal('prontuario', item)}
+                         consultaS={consultaSelecionada}
+
+                     />
                 )
             }
             />

@@ -3,10 +3,15 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AgeProfile, ButtonCard, ButtonText, ButtonTextPront, ContainerCard, ContainerProfile, ContainerTime, DataProfileCard, DateTime, NameProfile, TypeAppointment, ViewRow } from "./Style"
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import moment from "moment";
 
 export const AppointmentCard = ({
-    situacao = "realizado",
+    situacao,
+    perfil,
+    consultaS,
+    consultas,
+    dataNascimento,
     onPressCancel,
     onPressAppointment,
     onPressDoctorModal,
@@ -15,13 +20,26 @@ export const AppointmentCard = ({
 }) => {
     const navigation = useNavigation();
 
-    const [ profile, setProfile ] = useState("paciente")
+    const [ profile, setProfile ] = useState("paciente");
+    const [ idade, setIdade ] = useState();
+
+    async function CalcIdade(){
+        const date = moment().format('YYYY');
+        const nascimento = moment(dataNascimento).format('YYYY');
+        const idadeResult = date - nascimento;
+
+        setIdade({idadeResult});
+    }
 
     async function openLocalModal(){
         
     }
+
+    useEffect(() => {
+        CalcIdade();
+    }, []);
     return(
-        <ContainerCard onPress={situacao === "pendente" ? onPressDoctorModal : null} style={styles.shadow}>
+        <ContainerCard onPress={situacao === "Pendentes" ? onPressDoctorModal : null} style={styles.shadow}>
                 <ImageAppointmentProfile
                     source={require('../../assets/eduProfileImage.png')}
                 />
@@ -29,9 +47,9 @@ export const AppointmentCard = ({
 
                 <DataProfileCard>
 
-                <NameProfile>Eduardo Benvenuti</NameProfile>
+                <NameProfile maxLength={27} >{consultas.paciente.idNavigation.nome}</NameProfile>
 
-                <AgeProfile>38 anos - <TypeAppointment>Rotina</TypeAppointment></AgeProfile>
+                <AgeProfile> anos - <TypeAppointment>Rotina</TypeAppointment></AgeProfile>
 
                 </DataProfileCard>
 
@@ -39,16 +57,16 @@ export const AppointmentCard = ({
                     <ContainerTime situacao={situacao}>
                         <MaterialCommunityIcons 
                             name="clock" size={15} 
-                            color={situacao == "pendente" ? "#49B3BA" : "#8C8A97"} />
+                            color={situacao == "Pendentes" ? "#49B3BA" : "#8C8A97"} />
                         <DateTime situacao={situacao} color={"#49B3BA"}>
                             14:00
                         </DateTime>
                     </ContainerTime>
 
                     {
-                        situacao == "cancelado" ? (
+                        situacao == "Cancelados" ? (
                             <></>
-                        ) : situacao == "pendente" ? (
+                        ) : situacao == "Pendentes" ? (
                             <ButtonCard onPress={onPressCancel}>
                                 <ButtonText situacao={situacao}>Cancelar</ButtonText>
                             </ButtonCard>

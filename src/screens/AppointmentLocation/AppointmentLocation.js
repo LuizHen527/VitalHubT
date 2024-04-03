@@ -15,7 +15,7 @@ import MapViewDirections from "react-native-maps-directions";
 
 
 
-export const AppointmentLocation = ({navigation}) => {
+export const AppointmentLocation = ({navigation, route}) => {
 
     const mapReference = useRef(null)
     //Guarda a posicao do dispositivo
@@ -75,6 +75,10 @@ export const AppointmentLocation = ({navigation}) => {
         //Chama a funcao que recarrega o mapa com as novas coordenadas que foram passadas pelo watchPositionAsync
         RecarregarVizualizacaoMapa()
     }, [initialPosition]);
+
+    useEffect(() => {
+      console.log(route);
+    }, [])
 
     return(
         <Container>

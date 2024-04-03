@@ -7,8 +7,18 @@ import { ButtonTitle, InfoTextProfile, TitleProfile } from "../title/style"
 import { BoxInfoDoctor, DoctorImage } from "./Style"
 
 export const DoctorModal = ({
-    visible, setShowModalDoctor, onPressLocal, ...rest
+    visible, setShowModalDoctor, onPressLocal, navigation, ...rest
 }) => {
+
+    async function handleClose(screen){
+        await setShowModalAppoitment(false);
+
+        if(screen == 'Local consulta'){
+            navigation.replace(screen, {clinicaid : consulta.medicoClinica.clinicaId})
+        }else{
+            navigation.replace(screen)
+        }
+    }
     return(
         <ModalConfirmation {...rest} visible={visible} transparent={true} animationType="fade">
             <PacientModal>
