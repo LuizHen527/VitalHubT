@@ -31,20 +31,21 @@ export const EditProfile = ({ navigation }) => {
 
     async function LoadInfo() {
 
-        const token = userDecodeToken();
+        const token = await userDecodeToken();
         
-        setUserID(token.jti)
+        setUserID(token)
         // console.log(userID);
 
-        if (token.role = 'Paciente') {
             
-            await api.get(`/Pacientes/BuscarPorID?id${userID}`)
+            await api.get(`/Pacientes/BuscarPorID?id${userID.jti}`)
             .then( response => {
                setPacienteInfo( response.data) 
             //    console.log(pacienteInfo);
     
+            }).catch(error => {
+                console.log(error);
             })
-        }
+        
         
        
     
