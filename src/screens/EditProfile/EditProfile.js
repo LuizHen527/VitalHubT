@@ -6,39 +6,94 @@ import { ContainerInfoProfile } from "../Profile/style"
 import { DateBox, DoubleContentBoxEP } from "./Style"
 import { InputGrey } from "../../components/input/styled"
 import { ButtonEdit, ButtonLeave, ButtonLoginVE } from "../../components/button/style"
-
-import { userDecodeToken } from '../../utils/Auth'; 
 import { useEffect, useState } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { userDecodeToken } from "../../utils/Auth"
+import Loading from "../../utils/Loading"
 
-export const EditProfile = ({navigation}) => {
+import api from "../../service/Service"
 
-    const [ nome, setNome ] = useState('');
-    const [ email, setEmail ] = useState('');
 
-    async function logoff(){
-        try {
-            await AsyncStorage.removeItem('token');
-        } catch (e) {
-            console.log(e);
-        }
 
-        navigation.replace("Login");
-    }
 
-    async function profileLoad(){
+export const EditProfile = ({ navigation }) => {
+
+    const [visible, setVisible] = useState(false)
+    const [nome, setNome] = useState('')
+    const [email, setEmail] = useState('')
+    const [profile,setProfile] =useState()
+    const [pacienteInfo,setPacienteInfo] = useState(null)
+    const [nascimento,setNascimento] = ('')
+    const [cpf,setCPF] = ('')
+    const [endereco,setEndereco] = ('')
+
+    async function profileLoad() {
+
         const token = await userDecodeToken();
 
-        setNome(token.name);
-        setEmail(token.email);
+
+        setProfile(token)
+        setNome(token.name)
+        setEmail(token.email)
+
+
+       
     }
 
-    useEffect(() => {
-        profileLoad();
-    }, []);
+    
 
-    return(
+    async function LoadInfo() {
+
+
+        await api.get(`/Pacientes/BuscarPorID?id=${profile.jti}`)
+        .then( response => {
+           setPacienteInfo( response.data) 
+           console.log("infos paciente------------------------");
+           console.log(response.data);
+
+        }).catch(error => {
+            console.log(error);
+            console.log(`/Pacientes/BuscarPorID?id=${profile.jti}`);
+        })
+    
+    
+   
+
+}
+
+    useEffect(() => {
+        if(pacienteInfo == null){
+            profileLoad();
+            LoadInfo();
+        }
+        
+    }, [pacienteInfo]);
+   
+
+
+
+    async function logOff() {
+        setVisible(true);
+
+        try {
+            const token = await AsyncStorage.removeItem('token')
+            console.log(token);
+        } catch (error) {
+            console.log(error);
+            setVisible(false);
+        }
+
+        navigation.replace("Login")
+        setVisible(false);
+    }
+
+
+
+    return (
         <ScrollView>
+            {
+                pacienteInfo != null ?(
+
             <Container>
                 <ImageProfile
                     source={require('../../assets/profilePic.jpg')}
@@ -51,21 +106,21 @@ export const EditProfile = ({navigation}) => {
                     <DateBox>
                         <LabelLocal>Data de nascimento:</LabelLocal>
                         <InputGrey
-                            placeholder="04/05/1999"
+                            placeholder={pacienteInfo.dataNascimento}
                         />
                     </DateBox>
 
                     <DateBox>
                         <LabelLocal>CPF</LabelLocal>
                         <InputGrey
-                            placeholder="859********"
+                            placeholder={pacienteInfo.cpf}
                         />
                     </DateBox>
 
                     <DateBox>
                         <LabelLocal>Endereço</LabelLocal>
                         <InputGrey
-                            placeholder="Rua Vicenso Silva, 987"
+                            // placeholder={pacienteInfo.endereco.logradouro}
                         />
                     </DateBox>
 
@@ -73,7 +128,7 @@ export const EditProfile = ({navigation}) => {
                         <SmallBox>
                             <LabelLocal>Numero</LabelLocal>
                             <InputGrey
-                                placeholder="578"
+                                // placeholder={pacienteInfo.endereco.logradouro}
                             />
                         </SmallBox>
 
@@ -93,13 +148,39 @@ export const EditProfile = ({navigation}) => {
                         <ButtonTitle>Editar</ButtonTitle>
                     </ButtonEdit>
 
-                    <ButtonLeave
-                        onPress={() => logoff()}
-                    >
-                        <ButtonTitle>sair do app</ButtonTitle>
-                    </ButtonLeave>
+
+                    {
+                        !visible ? (
+
+                            <ButtonLeave
+                                onPress={() => logOff()}
+
+                            >
+                                <Loading visible={visible} />
+
+                                <ButtonTitle>sair do app</ButtonTitle>
+                            </ButtonLeave>
+                        ) : (
+                            <ButtonLeave
+                                onPress={() => setVisible(true) &
+                                    setTimeout(() => {
+                                        setVisible(false);
+                                    }, 5000)
+                                }
+
+                            >
+                                <Loading visible={visible} />
+
+                                <ButtonTitle>sair do app</ButtonTitle>
+                            </ButtonLeave>
+                        )
+                    }
+
+
                 </AlignContainer>
             </Container>
+                ):(<></>)
+            }
         </ScrollView>
     )
 }

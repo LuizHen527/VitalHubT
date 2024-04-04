@@ -86,6 +86,8 @@ export const Login = ({navigation}) => {
             secureTextEntry={true}
             value={senha}
             onChangeText={(txt) => setSenha(txt)}
+            value={senha}
+            onChangeText={(txt) => setSenha(txt)}
             />
 
             <LinkMedium onPress={() => navigation.navigate("RecuperarSenha")}>Esqueceu sua senha?</LinkMedium>
