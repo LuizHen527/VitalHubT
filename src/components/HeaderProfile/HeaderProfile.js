@@ -23,7 +23,7 @@ export const HeaderProfile = () => {
         setNome(token.name)
 
 
-        console.log(token);
+        
     }
 
     useEffect(() => {

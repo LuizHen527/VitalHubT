@@ -21,51 +21,54 @@ export const EditProfile = ({ navigation }) => {
     const [visible, setVisible] = useState(false)
     const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
-    const [userID,setUserID] = useState('')
-    const [pacienteInfo,setPacienteInfo] = useState('')
+    const [profile,setProfile] =useState()
+    const [pacienteInfo,setPacienteInfo] = useState(null)
     const [nascimento,setNascimento] = ('')
     const [cpf,setCPF] = ('')
     const [endereco,setEndereco] = ('')
-
-
-
-    async function LoadInfo() {
-
-        const token = await userDecodeToken();
-        
-        setUserID(token)
-        // console.log(userID);
-
-            
-            await api.get(`/Pacientes/BuscarPorID?id${userID.jti}`)
-            .then( response => {
-               setPacienteInfo( response.data) 
-            //    console.log(pacienteInfo);
-    
-            }).catch(error => {
-                console.log(error);
-            })
-        
-        
-       
-    
-    }
 
     async function profileLoad() {
 
         const token = await userDecodeToken();
 
+
+        setProfile(token)
         setNome(token.name)
         setEmail(token.email)
 
 
-        // console.log(token);
+       
     }
 
+    
+
+    async function LoadInfo() {
+
+
+        await api.get(`/Pacientes/BuscarPorID?id=${profile.jti}`)
+        .then( response => {
+           setPacienteInfo( response.data) 
+           console.log("infos paciente------------------------");
+           console.log(response.data);
+
+        }).catch(error => {
+            console.log(error);
+            console.log(`/Pacientes/BuscarPorID?id=${profile.jti}`);
+        })
+    
+    
+   
+
+}
+
     useEffect(() => {
-        profileLoad();
-        LoadInfo();
-    }, []);
+        if(pacienteInfo == null){
+            profileLoad();
+            LoadInfo();
+        }
+        
+    }, [pacienteInfo]);
+   
 
 
 
@@ -88,6 +91,9 @@ export const EditProfile = ({ navigation }) => {
 
     return (
         <ScrollView>
+            {
+                pacienteInfo != null ?(
+
             <Container>
                 <ImageProfile
                     source={require('../../assets/profilePic.jpg')}
@@ -100,21 +106,21 @@ export const EditProfile = ({ navigation }) => {
                     <DateBox>
                         <LabelLocal>Data de nascimento:</LabelLocal>
                         <InputGrey
-                            placeholder="04/05/1999"
+                            placeholder={pacienteInfo.dataNascimento}
                         />
                     </DateBox>
 
                     <DateBox>
                         <LabelLocal>CPF</LabelLocal>
                         <InputGrey
-                            placeholder="859********"
+                            placeholder={pacienteInfo.cpf}
                         />
                     </DateBox>
 
                     <DateBox>
                         <LabelLocal>Endereço</LabelLocal>
                         <InputGrey
-                            placeholder="Rua Vicenso Silva, 987"
+                            // placeholder={pacienteInfo.endereco.logradouro}
                         />
                     </DateBox>
 
@@ -122,7 +128,7 @@ export const EditProfile = ({ navigation }) => {
                         <SmallBox>
                             <LabelLocal>Numero</LabelLocal>
                             <InputGrey
-                                placeholder="578"
+                                // placeholder={pacienteInfo.endereco.logradouro}
                             />
                         </SmallBox>
 
@@ -173,6 +179,8 @@ export const EditProfile = ({ navigation }) => {
 
                 </AlignContainer>
             </Container>
+                ):(<></>)
+            }
         </ScrollView>
     )
 }
