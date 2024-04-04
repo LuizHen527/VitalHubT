@@ -5,7 +5,7 @@ import axios from "axios";
 
 const portaApi = '4466'
 
-const ip = '192.168.19.141'
+const ip = '192.168.1.106'
 
 const apiUrlLocal =  `http://${ip}:${portaApi}/api`
 

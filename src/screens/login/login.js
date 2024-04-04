@@ -9,7 +9,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { ContainerLogo, ContentAccount } from "./style";
 
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import api from "../../service/service"
+import api from "../../Service/Service"
 
 //Import das bibliotecas para a biometria
 import * as LocalAuthentication from 'expo-local-authentication';
@@ -18,7 +18,7 @@ import { useEffect, useState } from "react"
 
 export const Login = ({navigation}) => {
 
-    const [email, setEmail] = useState('lucas@gmail.com');
+    const [email, setEmail] = useState('l@gmail.com');
     const [senha, setSenha] = useState('123456');
     const [loadingIcon, setLoadingIcon] = useState(false);
     const [errors, setErrors] = useState({});
@@ -84,8 +84,6 @@ export const Login = ({navigation}) => {
             <Input
             placeholder="Senha"
             secureTextEntry={true}
-            value={senha}
-            onChangeText={(txt) => setSenha(txt)}
             value={senha}
             onChangeText={(txt) => setSenha(txt)}
             />

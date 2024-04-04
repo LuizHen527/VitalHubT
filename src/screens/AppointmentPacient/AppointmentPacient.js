@@ -6,7 +6,6 @@ import { StyleSheet } from "react-native";
 import { BoxBell, BoxUser, ContainerList, DataUser, FilterAppointment, ImageUser } from "../AppointmentDoctor/style";
 import { AbsListAppointment } from "../../components/AbsListAppointment/AbsListAppointment";
 import { useEffect, useState } from "react";
-import { useEffect, useState } from "react";
 import { ListComponent } from "../../components/List/Style";
 import { AppointmentCard } from "../../components/AppointmentCard/AppointmentCard";
 import { CancelAppointmentModal } from "../../components/CancelAppointmentModal/CancelAppointmentModal";
@@ -17,7 +16,7 @@ import { ScheduleModal } from "../../components/ScheduleModal/ScheduleModal";
 import { DoctorModal } from "../../components/DoctorModal/DoctorModal";
 import { NameUser, TextDefault } from "../../components/title/style";
 import { Octicons } from '@expo/vector-icons';
-import api from "../../service/service"
+import api from "../../Service/Service"
 import { userDecodeToken } from '../../utils/Auth'; 
 
 import * as Notifications from 'expo-notifications';
