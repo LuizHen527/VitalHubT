@@ -64,27 +64,6 @@ export const AppointmentPacient = ({navigation}) => {
         //console.log(idUser);
     }
 
-    async function ListarConsultasMedico(){
-        const idUsuario = await AsyncStorage.getItem('idUsuario');
-
-        console.log(idUsuario);
-
-        await api.get(`/Medicos/BuscarPorId?id=${idUsuario}`)
-        .then(response => {
-            console.log(response);
-        }).catch(error => {
-            console.log(error);
-        });
-
-        await api.get(`/Consultas/ConsultasMedico?id=${idMedico}`)
-        .then(response => {
-            setConsultasMedico(response.data);
-            console.log(consultasMedico);
-        }).catch(error => {
-            console.log(error);
-        })
-    }
-
     async function ListarConsultas(){
         const url = (profile.role == 'Medico' ? 'Medicos' : 'Pacientes');
         console.log(`/${url}/BuscarPorData?data=${dataConsulta}&id=${profile.jti}`);
