@@ -54,7 +54,7 @@ export const ContainerTime = styled.View`
     width: 100px;
     height: 26px;
     border-radius: 5px;
-    background-color: ${(props) => props.situacao == "pendente" ?
+    background-color: ${(props) => props.situacao == "Pendentes" ?
     "#E8FCFD" : "#F1F0F5"};
     flex-direction: row;
     align-items: center;
@@ -74,7 +74,7 @@ export const ViewRow = styled.View`
 
 export const DateTime = styled.Text`
     font-family: Quicksand_600SemiBold;
-    color: ${(props) => props.situacao == "pendente" ?
+    color: ${(props) => props.situacao == "Pendentes" ?
     "#49B3BA" : "#4E4B59"};
 `
 

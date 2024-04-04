@@ -11,7 +11,11 @@ export const AppointmentCard = ({
     perfil,
     consultaS,
     consultas,
+
+    prioridade,
+    dataConsulta,
     dataNascimento,
+
     onPressCancel,
     onPressAppointment,
     onPressDoctorModal,
@@ -19,8 +23,8 @@ export const AppointmentCard = ({
 
 }) => {
     const navigation = useNavigation();
-
-    const [ profile, setProfile ] = useState("paciente");
+    
+    const [ tipoPrioridade, setTipoPrioridade ] = useState();
     const [ idade, setIdade ] = useState();
 
     async function CalcIdade(){
@@ -28,7 +32,17 @@ export const AppointmentCard = ({
         const nascimento = moment(dataNascimento).format('YYYY');
         const idadeResult = date - nascimento;
 
-        setIdade({idadeResult});
+        setIdade(idadeResult);
+    }
+
+    async function SwitchPrioridade(){
+        if (prioridade == '0') {
+            setTipoPrioridade('Rotina');
+        } else if(prioridade == '1'){
+            setTipoPrioridade('Exame');
+        } else {
+            setTipoPrioridade('Urgencia');
+        }
     }
 
     async function openLocalModal(){
@@ -37,9 +51,10 @@ export const AppointmentCard = ({
 
     useEffect(() => {
         CalcIdade();
+        SwitchPrioridade();
     }, []);
     return(
-        <ContainerCard onPress={situacao === "Pendentes" ? onPressDoctorModal : null} style={styles.shadow}>
+        <ContainerCard onPress={situacao == "Pendentes" ? onPressDoctorModal : null} style={styles.shadow}>
                 <ImageAppointmentProfile
                     source={require('../../assets/eduProfileImage.png')}
                 />
@@ -47,9 +62,9 @@ export const AppointmentCard = ({
 
                 <DataProfileCard>
 
-                <NameProfile maxLength={27} >{consultas.paciente.idNavigation.nome}</NameProfile>
+                <NameProfile editable={false} maxLength={27} >{consultas.paciente.idNavigation.nome}</NameProfile>
 
-                <AgeProfile> anos - <TypeAppointment>Rotina</TypeAppointment></AgeProfile>
+                <AgeProfile>{idade} anos - <TypeAppointment>{tipoPrioridade}</TypeAppointment></AgeProfile>
 
                 </DataProfileCard>
 
@@ -59,7 +74,7 @@ export const AppointmentCard = ({
                             name="clock" size={15} 
                             color={situacao == "Pendentes" ? "#49B3BA" : "#8C8A97"} />
                         <DateTime situacao={situacao} color={"#49B3BA"}>
-                            14:00
+                            {dataConsulta}
                         </DateTime>
                     </ContainerTime>
 
@@ -71,7 +86,7 @@ export const AppointmentCard = ({
                                 <ButtonText situacao={situacao}>Cancelar</ButtonText>
                             </ButtonCard>
                         ) : (
-                            <ButtonCard onPress={profile === "paciente" ? onPressAppointment : onPressDoctorInsert}>
+                            <ButtonCard onPress={perfil === "Paciente" ? onPressAppointment : onPressDoctorInsert}>
                                 <ButtonTextPront situacao={situacao}>Ver Prontuario</ButtonTextPront>
                             </ButtonCard>
                         )

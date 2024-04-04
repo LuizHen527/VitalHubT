@@ -259,12 +259,19 @@ export const AppointmentPacient = ({navigation}) => {
 
                          perfil={profile.role}
                          consultas={item}
-                         dataNascimento={item.paciente.dataNascimento}
+
+                         //funções
                          onPressCancel={() => setShowModalCancel(true)}
                          onPressAppointment={() => navigation.navigate("EditMedicalRecord")}
                          onPressDoctorModal={() => setShowModalDoctor(true)}
                          // apagar depois (Fiz so pra testar validacao)
                          onPressDoctorInsert={() => setShowModalAppointment(true)}
+
+                         //Dados
+                         dataNascimento={item.paciente.dataNascimento}
+                         prioridade={item.prioridade.prioridade}
+                         dataConsulta={moment(item.dataConsulta).format('h:mm')}
+                         situacao={item.situacao.situacao}
 
                          //Modal de cancelar
                          onConnectCancelar={() => MostrarModal('cancelar', item)}
