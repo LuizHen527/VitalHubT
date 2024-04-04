@@ -100,8 +100,12 @@ export const AppointmentPacient = ({navigation}) => {
 
         if(modal == 'cancelar'){
             setShowModalCancel(true)
+            
+        }else if (modal == 'local'){
+            setShowModalDoctor(true)
 
         }else{
+            
             setShowModalAppointment(true);
         }
     }
@@ -242,7 +246,8 @@ export const AppointmentPacient = ({navigation}) => {
                          //funções
                          onPressCancel={() => setShowModalCancel(true)}
                          onPressAppointment={() => navigation.navigate("EditMedicalRecord")}
-                         onPressDoctorModal={() => setShowModalDoctor(true)}
+                         onPressDoctorModal={() => MostrarModal('local', item)}
+                         
                          // apagar depois (Fiz so pra testar validacao)
                          onPressDoctorInsert={() => setShowModalAppointment(true)}
 
@@ -271,8 +276,12 @@ export const AppointmentPacient = ({navigation}) => {
 
             <DoctorModal
                 visible={showModalDoctor}
+                navigation={navigation}
+
+                consulta={consultaSelecionada}
+
                 setShowModalDoctor={setShowModalDoctor}
-                onPressLocal={() => navigation.navigate("AppointmentLocation") & setShowModalDoctor(false)}
+                onPressLocal={() => setShowModalDoctor(false)}
             />
 
             <MedicalRecordModal

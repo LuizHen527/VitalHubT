@@ -12,10 +12,12 @@ import { mapsKey } from "../../utils/mapsApiKey"
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import { LocationAccuracy, getCurrentPositionAsync, requestForegroundPermissionsAsync, watchPositionAsync } from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
+import api from "../../service/service"
 
 
 
 export const AppointmentLocation = ({navigation, route}) => {
+
 
     const mapReference = useRef(null)
     //Guarda a posicao do dispositivo
@@ -77,8 +79,24 @@ export const AppointmentLocation = ({navigation, route}) => {
     }, [initialPosition]);
 
     useEffect(() => {
-      console.log(route);
-    }, [])
+      if(clinica == null){
+        BuscarClinica();
+      }
+
+    }, [clinica]);
+
+    const [clinica, setClinica] = useState(null);
+
+    async function BuscarClinica(){
+      await api.get(`/Clinica/BuscarPorId?id=${route.params.clinicaid}`)
+      .then(response => {
+        setClinica(response.data);
+
+        console.log(response.data);
+      }).catch(error => {
+        console.log(error);
+      })
+    }
 
     return(
         <Container>
@@ -140,52 +158,56 @@ export const AppointmentLocation = ({navigation, route}) => {
                 )
             }
 
+            {
+              clinica != null ? (
+                <ContainerBackground
+                darkTheme={darkTheme}
+              >
+                  <ContentAL
+                    darkTheme={darkTheme}
+                  >
+  
+                      <TitleProfile darkTheme={darkTheme}>Clínica Natureh</TitleProfile>
+                      <SubtextLocal darkTheme={darkTheme}>São Paulo, SP</SubtextLocal>
+  
+                      <AddressBox>
+                          <LabelLocal darkTheme={darkTheme}>Endereço</LabelLocal>
+                          <InputGrey
+                              darkTheme={darkTheme}
+                              placeholder="Rua Vicenso Silva, 987"
+                          />
+                      </AddressBox>
+  
+  
+                      {/* Criar os componentes DoubleContentBox e SmallBox na pasta Container. Porque vamos usar eles dnv */}
+                      <DoubleContentBox>
+                          <SmallBox>
+                              <LabelLocal darkTheme={darkTheme}>Numero</LabelLocal>
+                              <InputGrey
+                                  darkTheme={darkTheme}
+                                  placeholder="578"
+                              />
+                          </SmallBox>
+  
+                          <SmallBox>
+                              <LabelLocal>Bairro</LabelLocal>
+                              <InputGrey
+                                  placeholder="Moema-SP"
+                              />
+                          </SmallBox>
+                      </DoubleContentBox>
+  
+                      <AlignButton>
+                          <ButtonBox onPress={() => navigation.replace("AppointmentPacient")}>
+                              <LinkCancel >Voltar</LinkCancel>
+                          </ButtonBox>
+                      </AlignButton>
+  
+                  </ContentAL>
+                </ContainerBackground>
+              ):(<ActivityIndicator/>)
+            }
 
-            <ContainerBackground
-              darkTheme={darkTheme}
-            >
-                <ContentAL
-                  darkTheme={darkTheme}
-                >
-
-                    <TitleProfile darkTheme={darkTheme}>Clínica Natureh</TitleProfile>
-                    <SubtextLocal darkTheme={darkTheme}>São Paulo, SP</SubtextLocal>
-
-                    <AddressBox>
-                        <LabelLocal darkTheme={darkTheme}>Endereço</LabelLocal>
-                        <InputGrey
-                            darkTheme={darkTheme}
-                            placeholder="Rua Vicenso Silva, 987"
-                        />
-                    </AddressBox>
-
-
-                    {/* Criar os componentes DoubleContentBox e SmallBox na pasta Container. Porque vamos usar eles dnv */}
-                    <DoubleContentBox>
-                        <SmallBox>
-                            <LabelLocal darkTheme={darkTheme}>Numero</LabelLocal>
-                            <InputGrey
-                                darkTheme={darkTheme}
-                                placeholder="578"
-                            />
-                        </SmallBox>
-
-                        <SmallBox>
-                            <LabelLocal>Bairro</LabelLocal>
-                            <InputGrey
-                                placeholder="Moema-SP"
-                            />
-                        </SmallBox>
-                    </DoubleContentBox>
-
-                    <AlignButton>
-                        <ButtonBox onPress={() => navigation.pop(1)}>
-                            <LinkCancel >Voltar</LinkCancel>
-                        </ButtonBox>
-                    </AlignButton>
-
-                </ContentAL>
-            </ContainerBackground>
 
         </Container>
     )
