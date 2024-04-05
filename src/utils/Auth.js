@@ -12,17 +12,17 @@ if( !global.btoa ){
 
 //funcao de decodificar o token
 export const userDecodeToken = async () => {
+
     //Capturando token
     const token = await AsyncStorage.getItem('token');
+
 
     if( token === null){
         return null;
     }
-    //console.log(token.token);
+
     //Descriptografando token
     const decoded = jwtDecode(token);
-
-    //console.log(decoded);
 
     return {
         role : decoded.role,
@@ -30,5 +30,4 @@ export const userDecodeToken = async () => {
         email : decoded.email,
         jti : decoded.jti
     }
-
 }

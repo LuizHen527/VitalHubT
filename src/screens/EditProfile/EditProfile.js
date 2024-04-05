@@ -1,4 +1,4 @@
-import { ScrollView } from "react-native"
+import { ActivityIndicator, ScrollView } from "react-native"
 import { ImageProfile } from "../../components/images/style"
 import { ButtonTitle, InfoProfile, InfoTextProfile, LabelLocal, ProfileName, TitleProfile } from "../../components/title/style"
 import { AlignContainer, Container, DoubleContentBox, SmallBox } from "../../components/container/style"
@@ -13,64 +13,46 @@ import Loading from "../../utils/Loading"
 
 import api from "../../Service/Service"
 
-
-
-
 export const EditProfile = ({ navigation }) => {
 
     const [visible, setVisible] = useState(false)
+
+    
     const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
-    const [profile,setProfile] =useState()
-    const [pacienteInfo,setPacienteInfo] = useState(null)
-    const [nascimento,setNascimento] = ('')
-    const [cpf,setCPF] = ('')
-    const [endereco,setEndereco] = ('')
 
+    const [profile, setProfile] = useState()
+    const [pacienteInfo, setPacienteInfo] = useState(null)
+
+    //carrega o token com as informacoes do usuario
     async function profileLoad() {
 
         const token = await userDecodeToken();
 
-
-        setProfile(token)
+        // setIdUsuario()
         setNome(token.name)
         setEmail(token.email)
 
+        await LoadInfo(token.jti);
 
-       
     }
 
-    
-
-    async function LoadInfo() {
-
-
-        await api.get(`/Pacientes/BuscarPorID?id=${profile.jti}`)
-        .then( response => {
-           setPacienteInfo( response.data) 
-           console.log("infos paciente------------------------");
-           console.log(response.data);
-
-        }).catch(error => {
-            console.log(error);
-            console.log(`/Pacientes/BuscarPorID?id=${profile.jti}`);
-        })
-    
-    
-   
-
-}
+    async function LoadInfo(idUsuario) {
+        await api.get(`/Pacientes/BuscarPorID?id=${idUsuario}`)
+            .then(response => {
+                setPacienteInfo(response.data)
+            }).catch(error => {
+                console.log(error);
+            })
+    }
 
     useEffect(() => {
-        if(pacienteInfo == null){
-            profileLoad();
-            LoadInfo();
-        }
-        
-    }, [pacienteInfo]);
-   
+        profileLoad();
+    }, []);
 
-
+    // useEffect(() => {
+    //     LoadInfo();
+    // }, [])
 
     async function logOff() {
         setVisible(true);
@@ -91,96 +73,98 @@ export const EditProfile = ({ navigation }) => {
 
     return (
         <ScrollView>
-            {
-                pacienteInfo != null ?(
 
-            <Container>
-                <ImageProfile
-                    source={require('../../assets/profilePic.jpg')}
-                />
-                <AlignContainer>
-                    <ProfileName>{nome}</ProfileName>
+            {pacienteInfo !== null ?
+                (<Container>
+                    <ImageProfile
+                        source={require('../../assets/profilePic.jpg')}
+                    />
+                    <AlignContainer>
+                        <ProfileName>{nome}</ProfileName>
 
-                    <InfoProfile>{email}</InfoProfile>
+                        <InfoProfile>{email}</InfoProfile>
 
-                    <DateBox>
-                        <LabelLocal>Data de nascimento:</LabelLocal>
-                        <InputGrey
-                            placeholder={pacienteInfo.dataNascimento}
-                        />
-                    </DateBox>
-
-                    <DateBox>
-                        <LabelLocal>CPF</LabelLocal>
-                        <InputGrey
-                            placeholder={pacienteInfo.cpf}
-                        />
-                    </DateBox>
-
-                    <DateBox>
-                        <LabelLocal>Endereço</LabelLocal>
-                        <InputGrey
-                            // placeholder={pacienteInfo.endereco.logradouro}
-                        />
-                    </DateBox>
-
-                    <DoubleContentBoxEP>
-                        <SmallBox>
-                            <LabelLocal>Numero</LabelLocal>
+                        <DateBox>
+                            <LabelLocal>Data de nascimento:</LabelLocal>
                             <InputGrey
-                                // placeholder={pacienteInfo.endereco.logradouro}
+                                placeholder={pacienteInfo.dataNascimento}
                             />
-                        </SmallBox>
+                        </DateBox>
 
-                        <SmallBox>
-                            <LabelLocal>Bairro</LabelLocal>
+                        <DateBox>
+                            <LabelLocal>CPF</LabelLocal>
                             <InputGrey
-                                placeholder="Moema-SP"
+                                placeholder={pacienteInfo.cpf}
                             />
-                        </SmallBox>
-                    </DoubleContentBoxEP>
+                        </DateBox>
 
-                    <ButtonEdit>
-                        <ButtonTitle>SALVAR</ButtonTitle>
-                    </ButtonEdit>
+                        <DateBox>
+                            <LabelLocal>Endereço</LabelLocal>
+                            <InputGrey
+                                placeholder={pacienteInfo.endereco.logradouro}
+                            />
+                        </DateBox>
 
-                    <ButtonEdit>
-                        <ButtonTitle>Editar</ButtonTitle>
-                    </ButtonEdit>
+                        <DoubleContentBoxEP>
+                            <SmallBox>
+                                <LabelLocal>Numero</LabelLocal>
+                                <InputGrey
+                                    placeholder={`${pacienteInfo.endereco.numero}`}
+                                />
+                            </SmallBox>
 
+                            <SmallBox>
+                                <LabelLocal>Bairro</LabelLocal>
+                                <InputGrey
+                                    placeholder="Moema-SP"
+                                />
+                            </SmallBox>
+                        </DoubleContentBoxEP>
 
-                    {
-                        !visible ? (
+                        <ButtonEdit>
+                            <ButtonTitle>SALVAR</ButtonTitle>
+                        </ButtonEdit>
 
-                            <ButtonLeave
-                                onPress={() => logOff()}
-
-                            >
-                                <Loading visible={visible} />
-
-                                <ButtonTitle>sair do app</ButtonTitle>
-                            </ButtonLeave>
-                        ) : (
-                            <ButtonLeave
-                                onPress={() => setVisible(true) &
-                                    setTimeout(() => {
-                                        setVisible(false);
-                                    }, 5000)
-                                }
-
-                            >
-                                <Loading visible={visible} />
-
-                                <ButtonTitle>sair do app</ButtonTitle>
-                            </ButtonLeave>
-                        )
-                    }
+                        <ButtonEdit>
+                            <ButtonTitle>Editar</ButtonTitle>
+                        </ButtonEdit>
 
 
-                </AlignContainer>
-            </Container>
-                ):(<></>)
+                        {
+                            !visible ? (
+
+                                <ButtonLeave
+                                    onPress={() => logOff()}
+
+                                >
+                                    <Loading visible={visible} />
+
+                                    <ButtonTitle>sair do app</ButtonTitle>
+                                </ButtonLeave>
+                            ) : (
+                                <ButtonLeave
+                                    onPress={() => setVisible(true) &
+                                        setTimeout(() => {
+                                            setVisible(false);
+                                        }, 5000)
+                                    }
+
+                                >
+                                    <Loading visible={visible} />
+
+                                    <ButtonTitle>sair do app</ButtonTitle>
+                                </ButtonLeave>
+                            )
+                        }
+
+
+                    </AlignContainer>
+                </Container>) : (<ActivityIndicator/>)
             }
+
+
+
+
         </ScrollView>
     )
 }
