@@ -245,7 +245,7 @@ export const AppointmentPacient = ({navigation}) => {
 
                          //funções
                          onPressCancel={() => setShowModalCancel(true)}
-                         onPressAppointment={() => navigation.navigate("EditMedicalRecord")}
+                         onPressAppointment={() => navigation.replace("EditMedicalRecord", {consulta : item})}
                          onPressDoctorModal={() => MostrarModal('local', item)}
                          
                          // apagar depois (Fiz so pra testar validacao)
