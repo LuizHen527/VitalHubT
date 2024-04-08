@@ -7,7 +7,7 @@ import { Container } from "../../components/container/style"
 import { ButtonTitle, TitleModal } from "../../components/title/style"
 import { AlignBox, ContentBox, FooterBox } from "./Style"
 import { useEffect, useState } from "react";
-import api from "../../Service/Service"
+import api from "../../service/service"
 
 // const Clinicas = [
 //     { id: 1, nome: "Clínica Natureh", local: "São Paulo, SP", rating: "4,5", agenda: "Seg-Sex", border: "yes" },

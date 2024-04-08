@@ -5,7 +5,7 @@ import { Container, ContainerLogoTipo } from "../../components/container/style"
 import { Logo } from "../../components/images/style"
 import { Input } from "../../components/input/styled"
 import { ButtonTitle, RegularTextRP, Title } from "../../components/title/style"
-import api from "../../Service/Service"
+import api from "../../service/service"
 
 export const CriarConta = ({navigation}) => {
 

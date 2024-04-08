@@ -11,7 +11,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { userDecodeToken } from "../../utils/Auth"
 import Loading from "../../utils/Loading"
 
-import api from "../../Service/Service"
+import api from "../../service/service"
 
 export const EditProfile = ({ navigation }) => {
 

@@ -9,7 +9,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { ContainerLogo, ContentAccount } from "./style";
 
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import api from "../../Service/Service"
+import api from "../../service/service"
 
 //Import das bibliotecas para a biometria
 import * as LocalAuthentication from 'expo-local-authentication';

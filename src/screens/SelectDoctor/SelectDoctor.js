@@ -6,7 +6,7 @@ import { ButtonCancel, ButtonSchedule } from "../../components/button/style"
 import { Container } from "../../components/container/style"
 import { ButtonTitle, TitleModal } from "../../components/title/style"
 import { AlignBox, ContentBox } from "../SelectClinic/Style"
-import api from "../../Service/Service"
+import api from "../../service/service"
 
 export const SelectDoctor = ({navigation}) => {
     const [medicosLista, setMedicosLista] = useState([]);

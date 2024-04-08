@@ -16,7 +16,7 @@ import { ScheduleModal } from "../../components/ScheduleModal/ScheduleModal";
 import { DoctorModal } from "../../components/DoctorModal/DoctorModal";
 import { NameUser, TextDefault } from "../../components/title/style";
 import { Octicons } from '@expo/vector-icons';
-import api from "../../Service/Service"
+import api from "../../service/service"
 import { userDecodeToken } from '../../utils/Auth'; 
 
 import * as Notifications from 'expo-notifications';

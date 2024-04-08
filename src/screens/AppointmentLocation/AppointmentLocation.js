@@ -12,7 +12,7 @@ import { mapsKey } from "../../utils/mapsApiKey"
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import { LocationAccuracy, getCurrentPositionAsync, requestForegroundPermissionsAsync, watchPositionAsync } from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
-import api from "../../Service/Service"
+import api from "../../service/service"
 
 
 
