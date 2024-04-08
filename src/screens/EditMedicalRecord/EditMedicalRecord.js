@@ -12,12 +12,16 @@ import { ButtonBox, ButtonCancel, ButtonCancelProfile, ButtonEdit, ButtonSendPro
 import { LinkCancel, LinkCancelProfile } from "../../components/Links/style"
 import { AlignButton, AlingnButtonProfile } from "../AppointmentLocation/Style"
 import { CameraComp } from "../../components/CameraComp/CameraComp"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-export const EditMedicalRecord = ({navigation}) => {
+export const EditMedicalRecord = ({navigation, route}) => {
 
     const [ showCamera, setShowCamera ] = useState(false);
     const [ uriCameraCapture, setUriCameraCapture ] = useState(null);
+
+    useEffect(() => {
+        console.log();
+    }, [])
 
     return(
         
@@ -38,20 +42,18 @@ export const EditMedicalRecord = ({navigation}) => {
 
                         <AlignContainer>
 
-                            <ProfileName>Dr. Claudio</ProfileName>
+                            <ProfileName>{route.params.consulta.medicoClinica.medico.idNavigation.nome}</ProfileName>
 
                             <ContainerInfoProfile>
-                                <InfoTextProfile>Cliníco geral</InfoTextProfile>
-                                <InfoTextProfile>CRM-15286</InfoTextProfile>
+                                <InfoTextProfile>{route.params.consulta.medicoClinica.medico.especialidade.especialidade1}</InfoTextProfile>
+                                <InfoTextProfile>CRM-{route.params.consulta.medicoClinica.medico.crm}</InfoTextProfile>
                             </ContainerInfoProfile>
 
                             <DateBox>
                                 <LabelLocal>Descrição da consulta</LabelLocal>
                                 <InputBigProfile
                                     multiline={true}
-                                    placeholder="O paciente possuí uma infecção no
-                                    ouvido. Necessário repouse de 2 dias
-                                    e acompanhamento médico constante"
+                                    placeholder={`${route.params.consulta.descricao}`}
                                 />
                             </DateBox>
 
@@ -59,7 +61,7 @@ export const EditMedicalRecord = ({navigation}) => {
                                 <LabelLocal>Diagnóstico do paciente</LabelLocal>
                                 <InputGrey
                                     multiline={true}
-                                    placeholder="Infecção no ouvido"
+                                    placeholder={`${route.params.consulta.diagnostico}`}
                                 />
                             </InputProfileBox>
 
@@ -69,10 +71,7 @@ export const EditMedicalRecord = ({navigation}) => {
                                 {/* Pesquisar como wrap line in the placeholder */}
                                 <InputBigProfile
                                     multiline={true}
-                                    placeholder="Medicamento: Advil
-                                    Dosagem: 50 mg
-                                    Frequência: 3 vezes ao dia
-                                    Duração: 3 dias"
+                                    placeholder={`${route.params.consulta.receita.medicamento}`}
                                 />
                             </InputProfileBox>
 
@@ -112,7 +111,7 @@ export const EditMedicalRecord = ({navigation}) => {
                                 {/* Pesquisar como wrap line in the placeholder */}
                                 <InputResultProfile
                                     multiline={true}
-                                    placeholder="Resultado do exame de sangue : tudo normal"
+                                    placeholder={`${route.params.consulta.receita.observacoes}`}
                                 />
                             </InputProfileBox>
 

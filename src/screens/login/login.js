@@ -19,7 +19,7 @@ import { useEffect, useState } from "react"
 export const Login = ({navigation}) => {
 
     const [email, setEmail] = useState('l@gmail.com');
-    const [senha, setSenha] = useState('12345');
+    const [senha, setSenha] = useState('123456');
     const [loadingIcon, setLoadingIcon] = useState(false);
     const [errors, setErrors] = useState({});
     const [isFormValid, setIsFormValid] = useState(false);

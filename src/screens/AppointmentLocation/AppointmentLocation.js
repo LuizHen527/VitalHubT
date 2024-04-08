@@ -82,16 +82,21 @@ export const AppointmentLocation = ({navigation, route}) => {
       if(clinica == null){
         BuscarClinica();
       }
+      console.log(longitude);
+      console.log(latitude);
 
     }, [clinica]);
 
     const [clinica, setClinica] = useState(null);
+    const [longitude, setLongitude] = useState();
+    const [latitude, setLatitude] = useState();
 
     async function BuscarClinica(){
       await api.get(`/Clinica/BuscarPorId?id=${route.params.clinicaid}`)
       .then(response => {
         setClinica(response.data);
-
+        setLongitude(response.data.endereco.longitude);
+        setLatitude(response.data.endereco.latitude);
         console.log(response.data);
       }).catch(error => {
         console.log(error);
@@ -128,8 +133,8 @@ export const AppointmentLocation = ({navigation, route}) => {
                 <MapViewDirections
                     origin={initialPosition.coords}
                     destination={{
-                        latitude: -23.5329,
-                        longitude: -46.7926,
+                        latitude: latitude,
+                        longitude: longitude,
                         latitudeDelta: 0.005,
                         longitudeDelta: 0.005,
                     }}
@@ -139,8 +144,8 @@ export const AppointmentLocation = ({navigation, route}) => {
                 />
                 <Marker
                     coordinate={{
-                        latitude: -23.5329,
-                        longitude: -46.7926,
+                        latitude: latitude,
+                        longitude: longitude,
                     }}
 
                     title="Destino"
@@ -167,14 +172,14 @@ export const AppointmentLocation = ({navigation, route}) => {
                     darkTheme={darkTheme}
                   >
   
-                      <TitleProfile darkTheme={darkTheme}>Clínica Natureh</TitleProfile>
-                      <SubtextLocal darkTheme={darkTheme}>São Paulo, SP</SubtextLocal>
+                      <TitleProfile darkTheme={darkTheme}>{clinica.nomeFantasia}</TitleProfile>
+                      <SubtextLocal darkTheme={darkTheme}>{clinica.endereco.cidade}</SubtextLocal>
   
                       <AddressBox>
                           <LabelLocal darkTheme={darkTheme}>Endereço</LabelLocal>
                           <InputGrey
                               darkTheme={darkTheme}
-                              placeholder="Rua Vicenso Silva, 987"
+                              placeholder={`${clinica.endereco.logradouro}`}
                           />
                       </AddressBox>
   
@@ -185,14 +190,14 @@ export const AppointmentLocation = ({navigation, route}) => {
                               <LabelLocal darkTheme={darkTheme}>Numero</LabelLocal>
                               <InputGrey
                                   darkTheme={darkTheme}
-                                  placeholder="578"
+                                  placeholder={`${clinica.endereco.numero}`}
                               />
                           </SmallBox>
   
                           <SmallBox>
                               <LabelLocal>Bairro</LabelLocal>
                               <InputGrey
-                                  placeholder="Moema-SP"
+                                  placeholder={`${clinica.endereco.cidade}`}
                               />
                           </SmallBox>
                       </DoubleContentBox>
