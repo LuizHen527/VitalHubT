@@ -20,8 +20,13 @@ export const EditProfile = ({ navigation }) => {
     
     const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
-
-    const [profile, setProfile] = useState()
+    const [nascimento, setNascimento] = useState('')
+    const [cpf, setCpf] = useState('')
+    const [endereco, setEndereco] = useState('')
+    const [numero, setNumero] = useState('')
+    const [bairro, setBairro] = useState('')
+    
+    const [editField, setEditField] = useState(false)
     const [pacienteInfo, setPacienteInfo] = useState(null)
 
     //carrega o token com as informacoes do usuario
@@ -44,6 +49,20 @@ export const EditProfile = ({ navigation }) => {
             }).catch(error => {
                 console.log(error);
             })
+    }
+
+    async function EraseInputText(){
+        setEditField(false);
+
+        setNascimento('');
+        setCpf('');
+        setEndereco('');
+        setNumero('');
+        setBairro('');
+    }
+
+    async function SaveData(){
+        
     }
 
     useEffect(() => {
@@ -87,21 +106,30 @@ export const EditProfile = ({ navigation }) => {
                         <DateBox>
                             <LabelLocal>Data de nascimento:</LabelLocal>
                             <InputGrey
+                                editable={editField}
+                                value={nascimento}
                                 placeholder={pacienteInfo.dataNascimento}
+                                onChangeText={value => setNascimento(value)}
                             />
                         </DateBox>
 
                         <DateBox>
                             <LabelLocal>CPF</LabelLocal>
                             <InputGrey
+                                editable={editField}
+                                value={cpf}
                                 placeholder={pacienteInfo.cpf}
+                                onChangeText={value => setCpf(value)}
                             />
                         </DateBox>
 
                         <DateBox>
                             <LabelLocal>Endereço</LabelLocal>
                             <InputGrey
+                                editable={editField}
+                                value={endereco}
                                 placeholder={pacienteInfo.endereco.logradouro}
+                                onChangeText={value => setEndereco(value)}
                             />
                         </DateBox>
 
@@ -109,14 +137,20 @@ export const EditProfile = ({ navigation }) => {
                             <SmallBox>
                                 <LabelLocal>Numero</LabelLocal>
                                 <InputGrey
+                                    editable={editField}
+                                    value={numero}
                                     placeholder={`${pacienteInfo.endereco.numero}`}
+                                    onChangeText={value => setNumero(value)}
                                 />
                             </SmallBox>
 
                             <SmallBox>
                                 <LabelLocal>Bairro</LabelLocal>
                                 <InputGrey
+                                    editable={editField}
+                                    value={bairro}
                                     placeholder="Moema-SP"
+                                    onChangeText={value => setBairro(value)}
                                 />
                             </SmallBox>
                         </DoubleContentBoxEP>
@@ -125,8 +159,15 @@ export const EditProfile = ({ navigation }) => {
                             <ButtonTitle>SALVAR</ButtonTitle>
                         </ButtonEdit>
 
-                        <ButtonEdit>
-                            <ButtonTitle>Editar</ButtonTitle>
+                        <ButtonEdit onPress={() => editField == true ? EraseInputText() : setEditField(true)}>
+                            {
+                                editField == true ? (
+                                    <ButtonTitle>Parar de editar</ButtonTitle>
+                                ) : (
+                                    <ButtonTitle>Editar</ButtonTitle>
+                                )
+                            }
+                            
                         </ButtonEdit>
 
 
