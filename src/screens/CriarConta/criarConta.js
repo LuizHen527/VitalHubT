@@ -9,6 +9,7 @@ import api from "../../service/service"
 
 export const CriarConta = ({navigation}) => {
 
+    const [nome,setNome]= useState("")
     const [email,setEmail]= useState("")
     const [senha,setSenha]= useState("")
 
@@ -24,10 +25,10 @@ export const CriarConta = ({navigation}) => {
             cep: "",
             logradouro: "",
             numero:0,
-            nome: "",
+            nome: nome,
             email: email,
             senha:senha,
-            idTipoUsuario: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            idTipoUsuario: "21A9FD40-9E9E-410F-B45D-861F3A0FFACB",
             foto: ""
         }).then(response => {
             console.log(response);
@@ -58,6 +59,10 @@ export const CriarConta = ({navigation}) => {
 
             <RegularTextRP>Insira seu endereço de e-mail e senha para realizar seu cadastro.</RegularTextRP>
 
+            <Input
+            onChangeText={(txt) => setNome(txt)}
+            placeholder="Nome"
+            />
             <Input
             onChangeText={(txt) => setEmail(txt)}
             placeholder="Usuario ou Email"
