@@ -149,7 +149,7 @@ export const EditProfile = ({ navigation }) => {
                                 <InputGrey
                                     editable={editField}
                                     value={bairro}
-                                    placeholder="Moema-SP"
+                                    placeholder={`${pacienteInfo.endereco.cidade}`}
                                     onChangeText={value => setBairro(value)}
                                 />
                             </SmallBox>
