@@ -1,17 +1,19 @@
 import { ActivityIndicator, ScrollView } from "react-native"
-import { ImageProfile } from "../../components/images/style"
+import { ContainerImage, ImageProfile } from "../../components/images/style"
 import { ButtonTitle, InfoProfile, InfoTextProfile, LabelLocal, ProfileName, TitleProfile } from "../../components/title/style"
 import { AlignContainer, Container, DoubleContentBox, SmallBox } from "../../components/container/style"
 import { ContainerInfoProfile } from "../Profile/style"
-import { DateBox, DoubleContentBoxEP } from "./Style"
+import { ButtonCamera, DateBox, DoubleContentBoxEP } from "./Style"
 import { InputGrey } from "../../components/input/styled"
 import { ButtonEdit, ButtonLeave, ButtonLoginVE } from "../../components/button/style"
 import { useEffect, useState } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { userDecodeToken } from "../../utils/Auth"
-import Loading from "../../utils/Loading"
+import Loading from "../../utils/Loading";
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import api from "../../service/service"
+import { CameraComp } from "../../components/CameraComp/CameraComp"
 
 export const EditProfile = ({ navigation }) => {
 
@@ -27,7 +29,10 @@ export const EditProfile = ({ navigation }) => {
     const [bairro, setBairro] = useState('')
     
     const [editField, setEditField] = useState(false)
-    const [pacienteInfo, setPacienteInfo] = useState(null)
+    const [pacienteInfo, setPacienteInfo] = useState(null);
+    const [medicoInfo, setMedicoInfo] = useState(null);
+    const [ showCamera, setShowCamera ] = useState(false);
+    const [ uriCameraCapture, setUriCameraCapture ] = useState(null);
 
     //carrega o token com as informacoes do usuario
     async function profileLoad() {
@@ -38,17 +43,28 @@ export const EditProfile = ({ navigation }) => {
         setNome(token.name)
         setEmail(token.email)
 
-        await LoadInfo(token.jti);
+        await LoadInfo(token);
+
+        console.log(token);
 
     }
 
-    async function LoadInfo(idUsuario) {
-        await api.get(`/Pacientes/BuscarPorID?id=${idUsuario}`)
-            .then(response => {
-                setPacienteInfo(response.data)
-            }).catch(error => {
-                console.log(error);
-            })
+    async function LoadInfo(usuario) {
+        if (usuario.role == 'Paciente') {
+            await api.get(`/Pacientes/BuscarPorID?id=${usuario.jti}`)
+                .then(response => {
+                    setPacienteInfo(response.data)
+                }).catch(error => {
+                    console.log(error);
+                })       
+        } else {
+            await api.get(`/Medicos/BuscarPorId?id=${usuario.jti}`)
+                .then(response => {
+                    setPacienteInfo(response.data)
+                }).catch(error => {
+                    console.log(error);
+                })
+        }
     }
 
     async function EraseInputText(){
@@ -95,9 +111,27 @@ export const EditProfile = ({ navigation }) => {
 
             {pacienteInfo !== null ?
                 (<Container>
-                    <ImageProfile
-                        source={require('../../assets/profilePic.jpg')}
-                    />
+                    {
+                        showCamera == true ? (
+                        <CameraComp
+                            getMediaLibrary={true}
+                            setShowCameraModal={setShowCamera}
+                            showCameraModal={showCamera}
+                            setUriCameraCapture={setUriCameraCapture}
+                        />
+                        ):(<></> )
+                    }
+
+                    <ContainerImage>
+                        <ImageProfile
+                            source={require('../../assets/profilePic.jpg')}
+                        />  
+                        {/*  */}
+                        
+                        <ButtonCamera onPress={() => setShowCamera(true)}>
+                            <MaterialCommunityIcons name="camera-plus" size={20} color="#fbfbfb" />
+                        </ButtonCamera>
+                    </ContainerImage>
                     <AlignContainer>
                         <ProfileName>{nome}</ProfileName>
 

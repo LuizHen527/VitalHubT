@@ -10,13 +10,14 @@ import * as MediaLibrary from 'expo-media-library'
 import { useEffect, useRef, useState } from 'react';
 
 
-export const CameraComp = ({setUriCameraCapture, setShowCameraModal, showCameraModal}) => {
+export const CameraComp = ({setUriCameraCapture, setShowCameraModal, getMediaLibrary = false, showCameraModal}) => {
 
     const [ tipoCamera, setTipoCamera ] = useState(Camera.Constants.Type.back);
     const [ photo, setPhoto ] = useState(null);
     const [ openModal, setOpenModal ] = useState(false);
     const [ flash, setFlash ] = useState(FlashMode.off);
     const [ flashIcon, setFlashIcon ] = useState(false);
+    const [ latestPhoto, setLatestPhoto ] = useState(null); //Salva a ultima foto
     const cameraRef = useRef(null);
 
     async function CapturarFoto(){
@@ -62,12 +63,22 @@ export const CameraComp = ({setUriCameraCapture, setShowCameraModal, showCameraM
         setFlashIcon( flashIcon == true ? false : true);
     }
 
+    async function GetLastPhoto(){
+        const assets = await MediaLibrary.getAssetsAsync({ sortBy : [[MediaLibrary.SortBy.creationTime, false]], first : 1 });
+
+        console.log(assets);
+    }
+
     useEffect(() => {
         ( async () => {
             const { status: cameraStatus } =  await Camera.requestCameraPermissionsAsync();
 
             const { status: mediaStatus } = await MediaLibrary.requestPermissionsAsync();
         })();
+
+        if(getMediaLibrary){
+            GetLastPhoto();
+        }
     }, []);
     return(
         <Camera
