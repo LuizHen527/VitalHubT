@@ -60,7 +60,8 @@ export const EditProfile = ({ navigation }) => {
         } else {
             await api.get(`/Medicos/BuscarPorId?id=${usuario.jti}`)
                 .then(response => {
-                    setPacienteInfo(response.data)
+                    setPacienteInfo(response.data);
+                    console.log(response.data);
                 }).catch(error => {
                     console.log(error);
                 })
@@ -77,6 +78,24 @@ export const EditProfile = ({ navigation }) => {
         setBairro('');
     }
 
+    async function AlterarFotoPerfil(usuario) {
+        const formData = new FormData();
+        formData.append("Arquivo", {
+            uri : uriCameraCapture,
+            name : `image.${uriCameraCapture.split(".")[1]}`,
+            type : `image/${uriCameraCapture.split(".")[1]}`
+        })
+        await api.put(`/Usuario/AlterarFotoPerfil?id=${usuario.jti}`, formdata, {
+            headers : {
+                "Content-Type" : "multipart/form-data"
+            }
+        }).then(response => {
+            console.log('resposta' + response);
+        }).catch( error => {
+            console.log(error);
+        })
+    }
+
     async function SaveData(){
         
     }
@@ -84,6 +103,12 @@ export const EditProfile = ({ navigation }) => {
     useEffect(() => {
         profileLoad();
     }, []);
+
+    useEffect(() => {
+        if (uriCameraCapture) {
+            AlterarFotoPerfil();
+        }
+    }, [uriCameraCapture]);
 
     // useEffect(() => {
     //     LoadInfo();
@@ -125,7 +150,7 @@ export const EditProfile = ({ navigation }) => {
                     <ContainerImage>
                         <ImageProfile
                             source={require('../../assets/profilePic.jpg')}
-                        />  
+                        />
                         {/*  */}
                         
                         <ButtonCamera onPress={() => setShowCamera(true)}>
