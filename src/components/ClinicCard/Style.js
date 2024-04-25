@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const BoxText = styled.View`
-    width: 70%;
 `
 
 export const BoxInfo =styled.View`
