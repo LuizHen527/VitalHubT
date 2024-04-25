@@ -18,6 +18,27 @@ export const EditMedicalRecord = ({navigation, route}) => {
 
     const [ showCamera, setShowCamera ] = useState(false);
     const [ uriCameraCapture, setUriCameraCapture ] = useState(null);
+    const [ descricaoExame, setDescricaoExame ] = useState();
+
+    async function InserirExame() {
+        const formData = new FormData();
+        formData.append("ConsultaId", '3FA85F64-5717-4562-B3FC-2C963F66AFA6')
+        formData.append("Imagem", {
+            uri : uriCameraCapture,
+            name : `image.${uriCameraCapture.split('.').pop()}`,
+            type : `image/${uriCameraCapture.split('.').pop()}`
+        })
+
+        await api.post(`/Exame/Cadastrar`, formData, {
+            headers : {
+                "Content-Type" : "multipart/form-data"
+            }
+        }).then(response => {
+            setDescricaoExame( descricaoExame + "\n" + response.data.descricao)
+        }).catch(error => {
+            console.log(error);
+        })
+    }
 
     useEffect(() => {
         console.log();
@@ -111,7 +132,8 @@ export const EditMedicalRecord = ({navigation, route}) => {
                                 {/* Pesquisar como wrap line in the placeholder */}
                                 <InputResultProfile
                                     multiline={true}
-                                    placeholder={`${route.params.consulta.receita.observacoes}`}
+                                    // placeholder={`${route.params.consulta.receita.observacoes}`}
+                                    placeholder={descricaoExame}
                                 />
                             </InputProfileBox>
 

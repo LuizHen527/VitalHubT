@@ -107,7 +107,7 @@ export const Login = ({navigation}) => {
 
             <ButtonGoogle onPress={() => LoginDoctor()}>
             <AntDesign name="google" size={18} color="#496BBA" />
-                <ButtonTitleGoogle>Entrar com google</ButtonTitleGoogle>
+                <ButtonTitleGoogle >Entrar com google</ButtonTitleGoogle>
             </ButtonGoogle>
 
             <ContentAccount>

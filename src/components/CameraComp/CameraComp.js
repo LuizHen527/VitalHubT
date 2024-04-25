@@ -68,7 +68,6 @@ export const CameraComp = ({setUriCameraCapture, setShowCameraModal, getMediaLib
     async function GetLastPhoto(){
         const {assets} = await MediaLibrary.getAssetsAsync({ sortBy : [[MediaLibrary.SortBy.creationTime, false]], first : 1 });
 
-        console.log(assets);
 
         if (assets.length > 0) {
             setLatestPhoto(assets[0].uri)

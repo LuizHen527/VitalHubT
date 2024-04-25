@@ -26,13 +26,15 @@ export const EditProfile = ({ navigation }) => {
     const [cpf, setCpf] = useState('')
     const [endereco, setEndereco] = useState('')
     const [numero, setNumero] = useState('')
-    const [bairro, setBairro] = useState('')
+    const [bairro, setBairro] = useState('');
+    const [fotoPerfil, setFotoPerfil] = useState();
     
     const [editField, setEditField] = useState(false)
     const [pacienteInfo, setPacienteInfo] = useState(null);
     const [medicoInfo, setMedicoInfo] = useState(null);
     const [ showCamera, setShowCamera ] = useState(false);
     const [ uriCameraCapture, setUriCameraCapture ] = useState(null);
+    const [ usuarioInfo, setUsuarioInfo ] = useState(null);
 
     //carrega o token com as informacoes do usuario
     async function profileLoad() {
@@ -40,20 +42,19 @@ export const EditProfile = ({ navigation }) => {
         const token = await userDecodeToken();
 
         // setIdUsuario()
-        setNome(token.name)
-        setEmail(token.email)
+        setNome(token.name);
+        setEmail(token.email);
+        setUsuarioInfo(token);
 
         await LoadInfo(token);
-
-        console.log(token);
-
     }
 
     async function LoadInfo(usuario) {
         if (usuario.role == 'Paciente') {
             await api.get(`/Pacientes/BuscarPorID?id=${usuario.jti}`)
                 .then(response => {
-                    setPacienteInfo(response.data)
+                    setPacienteInfo(response.data);
+                    setFotoPerfil(response.data.idNavigation.foto)
                 }).catch(error => {
                     console.log(error);
                 })       
@@ -61,7 +62,6 @@ export const EditProfile = ({ navigation }) => {
             await api.get(`/Medicos/BuscarPorId?id=${usuario.jti}`)
                 .then(response => {
                     setPacienteInfo(response.data);
-                    console.log(response.data);
                 }).catch(error => {
                     console.log(error);
                 })
@@ -78,22 +78,25 @@ export const EditProfile = ({ navigation }) => {
         setBairro('');
     }
 
-    async function AlterarFotoPerfil(usuario) {
+    async function AlterarFotoPerfil() {
         const formData = new FormData();
         formData.append("Arquivo", {
             uri : uriCameraCapture,
             name : `image.${uriCameraCapture.split(".")[1]}`,
             type : `image/${uriCameraCapture.split(".")[1]}`
         })
-        await api.put(`/Usuario/AlterarFotoPerfil?id=${usuario.jti}`, formdata, {
+        await api.put(`/Usuario/AlterarFotoPerfil?id=${usuarioInfo.jti}`, formData, {
             headers : {
                 "Content-Type" : "multipart/form-data"
             }
         }).then(response => {
-            console.log('resposta' + response);
+            setFotoPerfil(uriCameraCapture);
         }).catch( error => {
             console.log(error);
         })
+
+        console.log(fotoPerfil);
+
     }
 
     async function SaveData(){
@@ -149,7 +152,7 @@ export const EditProfile = ({ navigation }) => {
 
                     <ContainerImage>
                         <ImageProfile
-                            source={require('../../assets/profilePic.jpg')}
+                            source={{uri : fotoPerfil}}
                         />
                         {/*  */}
                         

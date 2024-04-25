@@ -62,6 +62,9 @@ export const AppointmentPacient = ({navigation}) => {
         setIdUser(token.name);
 
         //console.log(idUser);
+
+        console.log(profile);
+        console.log(token);
     }
 
     async function ListarConsultas(){
