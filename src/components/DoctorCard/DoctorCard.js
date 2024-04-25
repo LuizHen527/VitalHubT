@@ -8,6 +8,7 @@ export const DoctorCard = ({
     border="",
     nome="",
     especialidade="",
+    medico
 }) => {
     return(
         <ContainerDoctorCard border={border}  style={styles.shadow}>
@@ -19,8 +20,8 @@ export const DoctorCard = ({
             />  
 
             <BoxText>
-                <NameProfile>{nome}</NameProfile>
-                <SubtextModal>{especialidade}</SubtextModal>
+                <NameProfile>{medico.idNavigation.nome}</NameProfile>
+                <SubtextModal>{medico.especialidade.especialidade1}</SubtextModal>
             </BoxText>
 
         </ContainerDoctorCard>

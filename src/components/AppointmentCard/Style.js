@@ -16,7 +16,7 @@ export const ContainerClinicCard = styled(ContainerCard)`
     width: 88%;
     justify-content: space-between;
     padding: 0px 18px;
-    border: ${(props) => props.border == "yes" ?
+    border: ${(props) => props.border === true ?
     "2px solid #496BBA" : "0px solid "};
 `
 
@@ -32,11 +32,11 @@ export const ContainerProfile = styled.View`
     justify-content: space-between;
 `
 
-export const NameProfile = styled.Text`
+export const NameProfile = styled.TextInput`
     font-size: 16px;
     font-family: MontserratAlternates_600SemiBold;
     color: #33303E;
-    margin-bottom: 5px;
+    margin-bottom: 1px;
 `
 
 export const AgeProfile = styled.Text`
@@ -54,7 +54,7 @@ export const ContainerTime = styled.View`
     width: 100px;
     height: 26px;
     border-radius: 5px;
-    background-color: ${(props) => props.situacao == "pendente" ?
+    background-color: ${(props) => props.situacao == "Pendentes" ?
     "#E8FCFD" : "#F1F0F5"};
     flex-direction: row;
     align-items: center;
@@ -74,7 +74,7 @@ export const ViewRow = styled.View`
 
 export const DateTime = styled.Text`
     font-family: Quicksand_600SemiBold;
-    color: ${(props) => props.situacao == "pendente" ?
+    color: ${(props) => props.situacao == "Pendentes" ?
     "#49B3BA" : "#4E4B59"};
 `
 

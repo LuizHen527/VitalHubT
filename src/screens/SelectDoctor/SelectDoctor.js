@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"
 import { DoctorCard } from "../../components/DoctorCard/DoctorCard"
 import { LinkCancel } from "../../components/Links/style"
 import { ComponentList } from "../../components/List/Style"
@@ -5,28 +6,38 @@ import { ButtonCancel, ButtonSchedule } from "../../components/button/style"
 import { Container } from "../../components/container/style"
 import { ButtonTitle, TitleModal } from "../../components/title/style"
 import { AlignBox, ContentBox } from "../SelectClinic/Style"
-
-const Doctors = [
-    {id: 1, nome:"Dra Alessandra", especialidade:"Demartologa, Esteticista"},
-    {id: 2, nome:"Dr Kumushiro", especialidade:"Cirurgião, Cardiologista"},
-    {id: 3, nome:"Dr Rodrigo Santos", especialidade:"Clínico, Pediatra"},
-];
+import api from "../../service/service"
 
 export const SelectDoctor = ({navigation}) => {
+    const [medicosLista, setMedicosLista] = useState([]);
+
+    async function ListarMedicos(){
+        //Instanciar a chamada da api
+        await api.get('/Medicos')
+        .then( response => {
+            setMedicosLista(response.data)
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
+    useEffect(() => {
+        ListarMedicos()
+    }, []);
+
     return(
         <Container>
             <ContentBox>
                 <TitleModal>Selecionar médico</TitleModal>
 
                 <ComponentList
-                data={Doctors}
+                data={medicosLista}
                 keyExtractor={(item) => item.id}
 
-                renderItem={({ item }) =>
+                renderItem={(medico) =>
                 (
                     <DoctorCard
-                        nome={item.nome}
-                        especialidade={item.especialidade}
+                        medico={medico.item}
                     />
                 )
                 }
