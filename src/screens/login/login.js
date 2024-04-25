@@ -18,7 +18,7 @@ import { useEffect, useState } from "react"
 
 export const Login = ({navigation}) => {
 
-    const [email, setEmail] = useState('lu@gmail.com');
+    const [email, setEmail] = useState('k@gmail.com');
     const [senha, setSenha] = useState('12345');
     const [loadingIcon, setLoadingIcon] = useState(false);
     const [errors, setErrors] = useState({});
