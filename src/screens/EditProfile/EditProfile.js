@@ -14,6 +14,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import api from "../../service/service"
 import { CameraComp } from "../../components/CameraComp/CameraComp"
+import moment from "moment"
 
 export const EditProfile = ({ navigation }) => {
 
@@ -100,7 +101,9 @@ export const EditProfile = ({ navigation }) => {
     }
 
     async function SaveData(){
-        
+        if (usuario.role == 'Paciente') {
+            api.put(`/Pacientes`)
+        }
     }
 
     useEffect(() => {
@@ -169,8 +172,9 @@ export const EditProfile = ({ navigation }) => {
                             <LabelLocal>Data de nascimento:</LabelLocal>
                             <InputGrey
                                 editable={editField}
+                                inputMode={'numeric'}
                                 value={nascimento}
-                                placeholder={pacienteInfo.dataNascimento}
+                                placeholder={pacienteInfo.dataNascimento == undefined ? 'Não informado' : moment(pacienteInfo.dataNascimento).format('L')}
                                 onChangeText={value => setNascimento(value)}
                             />
                         </DateBox>
@@ -180,7 +184,7 @@ export const EditProfile = ({ navigation }) => {
                             <InputGrey
                                 editable={editField}
                                 value={cpf}
-                                placeholder={pacienteInfo.cpf}
+                                placeholder={pacienteInfo.cpf == undefined ? 'Não informado' : pacienteInfo.cpf}
                                 onChangeText={value => setCpf(value)}
                             />
                         </DateBox>
@@ -190,7 +194,7 @@ export const EditProfile = ({ navigation }) => {
                             <InputGrey
                                 editable={editField}
                                 value={endereco}
-                                placeholder={pacienteInfo.endereco.logradouro}
+                                placeholder={pacienteInfo.endereco.logradouro == undefined ? 'Não informado' : pacienteInfo.endereco.logradouro}
                                 onChangeText={value => setEndereco(value)}
                             />
                         </DateBox>
@@ -201,7 +205,7 @@ export const EditProfile = ({ navigation }) => {
                                 <InputGrey
                                     editable={editField}
                                     value={numero}
-                                    placeholder={`${pacienteInfo.endereco.numero}`}
+                                    placeholder={`${pacienteInfo.endereco.numero == undefined ? 'Não informado' : pacienteInfo.endereco.numero}`}
                                     onChangeText={value => setNumero(value)}
                                 />
                             </SmallBox>
@@ -211,13 +215,13 @@ export const EditProfile = ({ navigation }) => {
                                 <InputGrey
                                     editable={editField}
                                     value={bairro}
-                                    placeholder={`${pacienteInfo.endereco.cidade}`}
+                                    placeholder={`${pacienteInfo.endereco.cidade == undefined ? 'Não informado' : pacienteInfo.endereco.cidade}`}
                                     onChangeText={value => setBairro(value)}
                                 />
                             </SmallBox>
                         </DoubleContentBoxEP>
 
-                        <ButtonEdit>
+                        <ButtonEdit onPress={() => SaveData()}>
                             <ButtonTitle>SALVAR</ButtonTitle>
                         </ButtonEdit>
 

@@ -46,7 +46,7 @@ export const AppointmentPacient = ({navigation}) => {
     const [showModalDoctor, setShowModalDoctor] = useState(false);
     const[statusLista, setStatusLista] = useState("pedente");
     const [dataConsulta, setDataConsulta] = useState();
-    const [consultas, setConsultas] = useState();
+    const [consultas, setConsultas] = useState([]);
     const [profile, setProfile] = useState();
     const [consultaSelecionada, setConsultaSelecionada] = useState();
 
@@ -62,9 +62,6 @@ export const AppointmentPacient = ({navigation}) => {
         setIdUser(token.name);
 
         //console.log(idUser);
-
-        console.log(profile);
-        console.log(token);
     }
 
     async function ListarConsultas(){
@@ -74,7 +71,7 @@ export const AppointmentPacient = ({navigation}) => {
         await api.get(`/${url}/BuscarPorData?data=${dataConsulta}&id=${profile.jti}`)
         .then( response => {
             setConsultas(response.data);
-            console.log(response.data);
+            //console.log(response.data[0]);
         }).catch( error => {
             console.log(error);
         })
@@ -120,7 +117,9 @@ export const AppointmentPacient = ({navigation}) => {
     useEffect(() => {
         if( dataConsulta != ''){
             ListarConsultas();
+            console.log('CONSULTASaaaaaaaa' + consultas);
         }
+        console.log('CONSULTAS' + consultas);
     }, [dataConsulta]);
 
 
