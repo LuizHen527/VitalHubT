@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { LinkCancel } from "../../components/Links/style"
 import { ButtonCancel, ButtonSchedule } from "../../components/button/style"
 import { Container } from "../../components/container/style"
@@ -34,10 +34,13 @@ LocaleConfig.locales['pt'] = {
 LocaleConfig.defaultLocale = 'pt';
 
 
-export const SelectDate = ({navigation}) => {
+export const SelectDate = ({navigation, route}) => {
     const [selected, setSelected] = useState('');
     const [showModalConfirmation, setShowModalConfirmation] = useState(false);
     
+    useEffect(() => {
+        console.log(route);
+    },[route])
 
     return(
         <Container>

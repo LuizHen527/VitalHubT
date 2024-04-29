@@ -37,6 +37,8 @@ export const EditProfile = ({ navigation }) => {
     const [ uriCameraCapture, setUriCameraCapture ] = useState(null);
     const [ usuarioInfo, setUsuarioInfo ] = useState(null);
 
+    
+
     //carrega o token com as informacoes do usuario
     async function profileLoad() {
 
@@ -49,6 +51,8 @@ export const EditProfile = ({ navigation }) => {
 
         await LoadInfo(token);
     }
+
+
 
     async function LoadInfo(usuario) {
         if (usuario.role == 'Paciente') {

@@ -16,11 +16,12 @@ import api from "../../service/service"
 //     { id: 4, nome: "SP Oncologia Clínica", local: "Taboão, SP", rating: "4,2", agenda: "Seg-Sab", border: "no" },
 // ];
 
-export const SelectClinic = ({navigation}) => {
+export const SelectClinic = ({navigation, route}) => {
     const [clinicasLista, setClinicasLista] = useState([]);
+    const [clinica, setClinica] = useState(null);
 
     async function ListarClinicas(){
-        await api.get('/Clinica/ListarTodas')
+        await api.get(`/Clinica/BuscarPorCidade?cidade=${route.params.agendamento.localizacao}`)
         .then( response => {
             setClinicasLista(response.data)
             console.log(clinicasLista);
@@ -31,6 +32,15 @@ export const SelectClinic = ({navigation}) => {
     async function Login() {
         navigation.replace("Main")
     };
+
+    function handleContinue() {
+        navigation.replace("SelectDoctor", {
+            agendamento:{
+                ...route.params.agendamento, //Passando todas as informacoes contidas no route.params.agendamento
+                ...clinica
+            }
+        })
+    }
 
     useEffect(() => {
         ListarClinicas()
@@ -50,6 +60,8 @@ export const SelectClinic = ({navigation}) => {
                 (
                     <ClinicCard
                         clinica={clinica.item}
+                        clinicaAll={clinica}
+                        setClinica={setClinica}
                         // nome={item.nome}
                         // local={item.local}
                         // rating={item.rating}
@@ -62,7 +74,7 @@ export const SelectClinic = ({navigation}) => {
                 
 
             <AlignBox>
-                <ButtonSchedule onPress={() => navigation.navigate("SelectDoctor")}>
+                <ButtonSchedule onPress={() => handleContinue()}>
                     <ButtonTitle>continuar</ButtonTitle>
                 </ButtonSchedule>
 

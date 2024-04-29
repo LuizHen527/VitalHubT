@@ -30,12 +30,22 @@ export const InputDescriptionEdit = styled(InputDescriptionProfile)`
     font-size: 14px;
 `
 
-export const InputScheduleModal_1 = styled(Input)`
+export const InputScheduleModal_1 = styled.TouchableOpacity.attrs({
+    placeholderTextColor:'#34898f',
+})`
     width: 27.8%;
     margin-top: 0px;
+    height: 53px;
+    padding: 16px;
+
+    border: 2px solid #49b3ba;
+    border-radius: 5px;
+    color: #34898f;
+    font-size: 14px;
+    font-family: MontserratAlternates_600SemiBold;
 `
 
-export const InputScheduleModal_2 = styled(Input)`
+export const InputScheduleModal_2 = styled(InputScheduleModal_1)`
     width: 31%;
     margin-top: 0px;
 `
