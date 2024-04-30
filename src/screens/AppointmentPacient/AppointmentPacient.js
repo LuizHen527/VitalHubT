@@ -45,16 +45,16 @@ export const AppointmentPacient = ({navigation}) => {
     // Nao sei onde colocar a ativacao desse modal, por isso esta true. 
     const [showModalDoctor, setShowModalDoctor] = useState(false);
     const[statusLista, setStatusLista] = useState("pedente");
-    const [dataConsulta, setDataConsulta] = useState();
+    const [dataConsulta, setDataConsulta] = useState('');
     const [consultas, setConsultas] = useState([]);
-    const [profile, setProfile] = useState();
+    const [profile, setProfile] = useState(null);
     const [consultaSelecionada, setConsultaSelecionada] = useState();
 
     async function profileLoad(){
         const token = await userDecodeToken();
 
         if(token != null){
-            setProfile(token);
+            await setProfile(token);
 
             setDataConsulta(moment().format('YYYY-MM-DD'));
         }
@@ -111,15 +111,15 @@ export const AppointmentPacient = ({navigation}) => {
     }
 
     useEffect(() => {
+        console.log('profile')
         profileLoad();
     }, []);
-
+    
     useEffect(() => {
         if( dataConsulta != ''){
+            console.log('lista')
             ListarConsultas();
-            console.log('CONSULTASaaaaaaaa' + consultas);
         }
-        console.log('CONSULTAS' + consultas);
     }, [dataConsulta]);
 
 
@@ -172,7 +172,7 @@ export const AppointmentPacient = ({navigation}) => {
 
         <StyledCalendarStrip
 
-        onDateSelected={date => setDataConsulta(moment(date).format('YYYY-MM-DD'))}
+        onDateSelected={(date) => setDataConsulta(moment(date).format('YYYY-MM-DD'))}
         // animação e seleção de cada data
         calendarAnimation={{ type: "sequence", duration: 30 }}
         daySelectionAnimation={styles.selectedAnimationStyle}

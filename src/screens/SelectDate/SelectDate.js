@@ -25,26 +25,49 @@ LocaleConfig.locales['pt'] = {
         'Novembro',
         'Dezembro'
     ],
-      monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul.', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-      dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado'],
-      dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
-      today: "Hoje"
+    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul.', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado'],
+    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+    today: "Hoje"
 };
 
 LocaleConfig.defaultLocale = 'pt';
 
 
-export const SelectDate = ({navigation, route}) => {
+export const SelectDate = ({ navigation, route }) => {
     const [selected, setSelected] = useState('');
     const [showModalConfirmation, setShowModalConfirmation] = useState(false);
-    
+    const [dataSelecionada, setDataSelecionada] = useState("")
+    const [horaSelecionada, setHoraSelecionada] = useState("")
+    const [agendamento, setAgendamento] = useState({})
+
+    function HandleContinue() {
+
+        setAgendamento(
+            {
+                ...route.params.agendamento,
+                dataConsulta: `${dataSelecionada} ${horaSelecionada}`
+            })
+
+            setShowModalConfirmation(true)
+    }
+
+
     useEffect(() => {
         console.log(route);
-    },[route])
+    }, [route])
 
-    return(
+    useEffect(() => {
+        console.log(dataSelecionada);
+        console.log(horaSelecionada);
+    }, [dataSelecionada])
+
+    return (
         <Container>
             <ConfirmationModal
+                navigation={navigation}
+                agendamento={agendamento}
+
                 visible={showModalConfirmation}
                 setShowModalConfirmation={setShowModalConfirmation}
             />
@@ -54,58 +77,63 @@ export const SelectDate = ({navigation, route}) => {
                 <BoxCalendar>
                     <Calendar
 
-                    hideArrows={true}
-
-                    style={{
-                        height: 249,
-                        fontFamily: 'MontserratAlternates_600SemiBold',
-                        // width: 100%
-                    }}
-
-                    headerStyle={{
-                        fontFamily: 'MontserratAlternates_600SemiBold',
-                    }}
-
-                    theme={{
-                        backgroundColor: '#FAFAFA',
-                        calendarBackground: '#FAFAFA',
-                        textSectionTitleColor: '#b6c1cd',
-                        selectedDayBackgroundColor: '#49B3BA',
-                        selectedDayTextColor: '#ffffff',
-                        todayTextColor: '#00adf5',
-                        dayTextColor: '#2d4150',
-                        textDayFontFamily: 'Quicksand_600SemiBold', 
-                        textDayHeaderFontFamily: 'Quicksand_600SemiBold',
-                        textMonthFontFamily: 'MontserratAlternates_600SemiBold',
-                        textMonthFontSize: 20,
-                        textDayHeaderFontSize: 12,
 
 
-            
-                    }}
+                        hideArrows={true}
 
-                    onDayPress={day => {
-                        setSelected(day.dateString);
-                    }}
-                    markedDates={{
-                        [selected]: {selected: true, disableTouchEvent: true, selectedDotColor: 'orange'}
-                    }}
+                        style={{
+                            height: 249,
+                            fontFamily: 'MontserratAlternates_600SemiBold',
+                            // width: 100%
+                        }}
+
+                        headerStyle={{
+                            fontFamily: 'MontserratAlternates_600SemiBold',
+                        }}
+
+                        theme={{
+                            backgroundColor: '#FAFAFA',
+                            calendarBackground: '#FAFAFA',
+                            textSectionTitleColor: '#b6c1cd',
+                            selectedDayBackgroundColor: '#49B3BA',
+                            selectedDayTextColor: '#ffffff',
+                            todayTextColor: '#00adf5',
+                            dayTextColor: '#2d4150',
+                            textDayFontFamily: 'Quicksand_600SemiBold',
+                            textDayHeaderFontFamily: 'Quicksand_600SemiBold',
+                            textMonthFontFamily: 'MontserratAlternates_600SemiBold',
+                            textMonthFontSize: 20,
+                            textDayHeaderFontSize: 12,
+
+
+
+                        }}da
+                        // (day => {
+                        //     setSelected(day.dateString);
+                        // }) &
+                        onDayPress={(date) => setDataSelecionada(date.dateString)}
+                        markedDates={{
+
+                            [dataSelecionada]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' }
+                        }}
                     />
 
                 </BoxCalendar>
 
                 <BoxSelect>
                     <DateText>Selecione um horário disponível</DateText>
-                    <Select/>
+                    <Select
+                        setHoraSelecionada={setHoraSelecionada}
+                    />
                 </BoxSelect>
 
 
-                
+
             </ContentBox>
-                
+
 
             <AlignBox>
-                <ButtonSchedule onPress={() => setShowModalConfirmation(true)}>
+                <ButtonSchedule onPress={() => HandleContinue()}>
                     <ButtonTitle>continuar</ButtonTitle>
                 </ButtonSchedule>
 
@@ -114,7 +142,7 @@ export const SelectDate = ({navigation, route}) => {
                 </ButtonCancel>
             </AlignBox>
 
-            
+
         </Container>
     )
 }

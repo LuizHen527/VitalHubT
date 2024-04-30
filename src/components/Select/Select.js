@@ -1,23 +1,52 @@
 import RNPickerSelect from 'react-native-picker-select';
 import { SelectComponent, ViewSelect } from './Style';
 import { StyleSheet, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import moment from 'moment';
 
-export const Select = () => {
+export const Select = ({setHoraSelecionada}) => {
+    const dataAtual = moment().format('YYYY-MM-DD');
+    const [arrayOptions,setArrayOption] = useState(null)
+
+
+    function LoadOptions(){
+      //conferir quanto falta em horas para meia noite
+      const horasRestantes = moment(dataAtual).add(24,'hours').diff( moment(), 'hours' )
+      console.log(horasRestantes);
+      //Criar um laço que rode a quantidade de horas que faltan
+      const options = Array.from({length : horasRestantes},(_,index)=>{
+        let valor = new Date().getHours() + (index + 1);
+
+        return{
+          label : `${valor}:00`,value : `${valor}:00`
+        }
+
+      })  // no caso de 8:27 de hoje faltam 15 horas pra acabar o dia logo tem 15 posisões
+
+      //Devolver cada hora,uma nova opção no select
+
+      setArrayOption(options)
+    }
+
+    useEffect(()=>{
+      LoadOptions()
+    },[])
+    
     return(
         <ViewSelect>
-            <RNPickerSelect
+          {arrayOptions != null 
+            ?(
+              <RNPickerSelect
                 placeholder={{
                     label: 'Selecionar horário',
                     value: null,
                     color: '#34898F',
                   }}
                 useNativeAndroidPickerStyle={false} 
-                onValueChange={(value) => console.log(value)}
-                items={[
-                    { label: '7h00', value: '7h00' },
-                    { label: '10h00', value: '10h00' },
-                    { label: '15h00', value: '15h00' },
-                ]}
+                onValueChange={(value) => setHoraSelecionada(value)}
+                items={
+                  arrayOptions
+                }
     
                 style={{
                     ...pickerSelectStyles,
@@ -52,6 +81,17 @@ export const Select = () => {
     
                 
             />
+            ) :
+
+            (
+              <></>
+            )
+          
+          
+          
+          
+          }
+            
         </ViewSelect>
     )
 }
