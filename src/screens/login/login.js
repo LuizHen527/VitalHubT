@@ -18,25 +18,42 @@ import { useEffect, useState } from "react"
 
 export const Login = ({navigation}) => {
 
-    const [email, setEmail] = useState('luiz@gmail.com');
-    const [senha, setSenha] = useState('123456');
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
     const [loadingIcon, setLoadingIcon] = useState(false);
-    const [errors, setErrors] = useState({});
-    const [isFormValid, setIsFormValid] = useState(false);
+    const [errorEmail, setErrorEmail] = useState("");
+    const [errorSenha, setErrorSenha] = useState("");
+
 
     async function fieldValidation() {
-        let errors = {};
-
-        if(!email){
-            errors.email = 'Coloque seu email';
+        let error = false;
+    
+        if (!email.trim()) {
+            setErrorEmail("Email deve ser preenchido");
+            error = true;
+        } else {
+            setErrorEmail("");
         }
-
-        if (!senha) {
-            errors.senha = 'Coloque sua senha';
+    
+        if (!senha.trim()) {
+            setErrorSenha("Senha deve ser preenchida");
+            error = true;
+        } else {
+            setErrorSenha("");
         }
+    
+        return !error;
     }
+    
 
     async function Login() {
+        if (fieldValidation()) {
+    
+            console.log("TA ERRADO");
+            console.log(errorEmail,errorSenha);
+
+            return; // Se a validação falhar, não continue com o login
+        }
 
         setLoadingIcon(true);
 
@@ -44,7 +61,6 @@ export const Login = ({navigation}) => {
         const response = await api.post('/Login', {
             email: email,
             senha: senha,
-            
         });
 
         //console.log(response);
@@ -79,31 +95,27 @@ export const Login = ({navigation}) => {
             placeholder="Usuario ou Email"
             value={email}
             onChangeText={(txt) => setEmail(txt)}
-            // onChange={event => event.nativeEvent.text}
+            errorMessage={errorEmail}
             />
             <Input
             placeholder="Senha"
             secureTextEntry={true}
             value={senha}
             onChangeText={(txt) => setSenha(txt)}
+            errorMessage={errorSenha}
             />
 
             <LinkMedium onPress={() => navigation.navigate("RecuperarSenha")}>Esqueceu sua senha?</LinkMedium>
 
-            
-                {
-                    !loadingIcon ? (
-                        <ButtonLogin onPress={() => Login()}>
-                            <ButtonTitle>Entrar</ButtonTitle>
-                        </ButtonLogin>
-                    ) : (
-                        <ButtonLogin>
-                            <ActivityIndicator size="small" color="white"/>
-                        </ButtonLogin>
-                    )
-                }
-                
-            
+            {!loadingIcon ? (
+                <ButtonLogin onPress={() => Login()}>
+                    <ButtonTitle>Entrar</ButtonTitle>
+                </ButtonLogin>
+            ) : (
+                <ButtonLogin>
+                    <ActivityIndicator size="small" color="white"/>
+                </ButtonLogin>
+            )}
 
             <ButtonGoogle onPress={() => LoginDoctor()}>
             <AntDesign name="google" size={18} color="#496BBA" />
