@@ -24,7 +24,7 @@ export const CameraComp = ({setUriCameraCapture, setShowCameraModal, getMediaLib
 
     async function CapturarFoto(){
         if(cameraRef){
-            const photo = await cameraRef.current.takePictureAsync();
+            const photo = await cameraRef.current.takePictureAsync({quality : 1});
 
             await setPhoto(photo.uri);
 
@@ -81,7 +81,8 @@ export const CameraComp = ({setUriCameraCapture, setShowCameraModal, getMediaLib
         });
 
         if (!result.canceled) {
-            setPhoto( result.assets[0].uri )
+            setPhoto( result.assets[0].uri );
+            handleClose();
         }
     }
 

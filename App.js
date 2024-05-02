@@ -65,89 +65,91 @@ export default function App() {
         <Stack.Screen
           name='Login'
           component={Login}
-          options={{title:'Login'}}
+          options={{title:'Login', headerShown: false}}
         />
 
         <Stack.Screen
           name='Main'
           component={Main}
+          options={{headerShown: false}}
         />
 
         <Stack.Screen
           name='MainDoctor'
           component={MainDoctor}
+          options={{headerShown: false}}
         />
 
         <Stack.Screen
           name='RecuperarSenha'
           component={RecoverPassword}
-          options={{title:'RecuperarSenha'}}
+          options={{title:'RecuperarSenha', headerShown: false}}
         />
 
         <Stack.Screen
           name='VerifyEmail'
           component={VerifyEmail}
-          options={{title:'VerifyEmail'}}
+          options={{title:'VerifyEmail', headerShown: false}}
         />
         <Stack.Screen
           name='ResetPassword'
           component={ResetPassword}
-          options={{title:'Redefinir senha'}}
+          options={{title:'Redefinir senha', headerShown: false}}
         />
         <Stack.Screen
           name='CriarConta'
           component={CriarConta}
-          options={{title:'Criar conta'}}
+          options={{title:'Criar conta', headerShown: false}}
         />
         <Stack.Screen
           name='Profile'
           component={Profile}
-          options={{title:'Perfil'}}
+          options={{title:'Perfil', headerShown: false}}
         />
         <Stack.Screen
           name='AppointmentDoctor'
           component={AppointmentDoctor}
-          options={{title:'Consulta doutor'}}
+          options={{title:'Consulta doutor', headerShown: false}}
         />
         <Stack.Screen
           name='AppointmentPacient'
           component={AppointmentPacient}
-          options={{title:'Consulta paciente'}}
+          options={{title:'Consulta paciente', headerShown: false}}
         />
         <Stack.Screen
           name='SelectClinic'
           component={SelectClinic}
-          options={{title:'Selecionar clinica'}}
+          options={{title:'Selecionar clinica', headerShown: false}}
         />
         <Stack.Screen
           name='SelectDoctor'
           component={SelectDoctor}
-          options={{title:'Selecionar medico'}}
+          options={{title:'Selecionar medico', headerShown: false}}
         />
         <Stack.Screen
           name='SelectDate'
           component={SelectDate}
-          options={{title:'Selecionar data'}}
+          options={{title:'Selecionar data', headerShown: false}}
         />
         <Stack.Screen
           name='AppointmentLocation'
           component={AppointmentLocation}
-          options={{title:'Ver local'}}
+          options={{title:'Ver local', headerShown: false}}
         />
         <Stack.Screen
           name='EditProfile'
           component={EditProfile}
-          options={{title:'Editar perfil'}}
+          options={{title:'Editar perfil', headerShown: false}}
         />
         <Stack.Screen
           name='EditMedicalRecord'
           component={EditMedicalRecord}
-          options={{title:'Editar prontuário'}}
+          options={{title:'Editar prontuário', headerShown: false}}
         />
         <Stack.Screen
           name='ScheduleModal'
           component={ScheduleModal}
-          options={{title:'Agendar consulta'}}
+          options={{title:'Agendar consulta', headerShown: false}}
         />
         
       </Stack.Navigator>

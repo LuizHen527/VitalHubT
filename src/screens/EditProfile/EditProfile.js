@@ -117,6 +117,8 @@ export const EditProfile = ({ navigation }) => {
     useEffect(() => {
         if (uriCameraCapture) {
             AlterarFotoPerfil();
+        } else {
+            
         }
     }, [uriCameraCapture]);
 

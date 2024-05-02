@@ -13,6 +13,7 @@ import { LinkCancel, LinkCancelProfile } from "../../components/Links/style"
 import { AlignButton, AlingnButtonProfile } from "../AppointmentLocation/Style"
 import { CameraComp } from "../../components/CameraComp/CameraComp"
 import { useEffect, useState } from "react"
+import api from "../../service/service"
 
 export const EditMedicalRecord = ({navigation, route}) => {
 
@@ -41,7 +42,7 @@ export const EditMedicalRecord = ({navigation, route}) => {
     }
 
     useEffect(() => {
-        console.log();
+        console.log(route.params.consulta.receita);
     }, [])
 
     return(
@@ -53,6 +54,7 @@ export const EditMedicalRecord = ({navigation, route}) => {
                         setShowCameraModal={setShowCamera}
                         showCameraModal={showCamera}
                         setUriCameraCapture={setUriCameraCapture}
+                        getMediaLibrary={true}
                     />
                 ) : (
                     <ScrollContainer>
@@ -74,7 +76,7 @@ export const EditMedicalRecord = ({navigation, route}) => {
                                 <LabelLocal>Descrição da consulta</LabelLocal>
                                 <InputBigProfile
                                     multiline={true}
-                                    placeholder={`${route.params.consulta.descricao}`}
+                                    placeholder={`${route.params.consulta.descricao === undefined ? 'Insira sua descrição' : route.params.consulta.descricao}`}
                                 />
                             </DateBox>
 
@@ -82,7 +84,7 @@ export const EditMedicalRecord = ({navigation, route}) => {
                                 <LabelLocal>Diagnóstico do paciente</LabelLocal>
                                 <InputGrey
                                     multiline={true}
-                                    placeholder={`${route.params.consulta.diagnostico}`}
+                                    placeholder={`${route.params.consulta.diagnostico === undefined ? 'Seu médico ainda vai colocar seu diagnóstico' : route.params.consulta.diagnostico}`}
                                 />
                             </InputProfileBox>
 
@@ -92,7 +94,7 @@ export const EditMedicalRecord = ({navigation, route}) => {
                                 {/* Pesquisar como wrap line in the placeholder */}
                                 <InputBigProfile
                                     multiline={true}
-                                    placeholder={`${route.params.consulta.receita.medicamento}`}
+                                    placeholder={`${route.params.consulta.receita === undefined ? 'Seu médico ainda vai colocar sua prescrição' : route.params.consulta.receita.medicamento}`}
                                 />
                             </InputProfileBox>
 
@@ -105,7 +107,7 @@ export const EditMedicalRecord = ({navigation, route}) => {
                                             <TextPhoto>Nenhuma foto informada</TextPhoto>
                                         </ButtonPhoto> 
                                     ) : (
-                                        <ButtonPhoto>
+                                        <ButtonPhoto onPress={() => setShowCamera(true)}>
                                             <Image
                                                 style={{ width: '100%', height: '100%', borderRadius: 5}}
                                                 source={{uri : uriCameraCapture}}
@@ -116,7 +118,7 @@ export const EditMedicalRecord = ({navigation, route}) => {
                             </InputProfileBox>
 
                             <DoubleContentBoxEP>
-                                <ButtonSendProfile>
+                                <ButtonSendProfile onPress={() => InserirExame()}>
                                     <MaterialCommunityIcons name="camera-plus-outline" size={24} color="white" />
                                     <ButtonTitle>Enviar</ButtonTitle>
                                 </ButtonSendProfile>
@@ -133,7 +135,8 @@ export const EditMedicalRecord = ({navigation, route}) => {
                                 <InputResultProfile
                                     multiline={true}
                                     // placeholder={`${route.params.consulta.receita.observacoes}`}
-                                    placeholder={descricaoExame}
+                                    value={descricaoExame}
+                                    numberOflines={20}
                                 />
                             </InputProfileBox>
 
