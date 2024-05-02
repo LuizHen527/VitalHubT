@@ -8,10 +8,11 @@ export const DoctorCard = ({
     border="",
     nome="",
     especialidade="",
-    medico
+    medico,
+    setMedico
 }) => {
     return(
-        <ContainerDoctorCard border={border}  style={styles.shadow}>
+        <ContainerDoctorCard onPress={() => setMedico({medicoClinicaId: medico.id, medicoLabel: medico.idNavigation.nome})} border={border}  style={styles.shadow}>
 
             {/* Nao sei como muda a imagem dinamicamente */}
 

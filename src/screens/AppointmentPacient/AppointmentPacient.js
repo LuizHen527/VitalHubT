@@ -45,16 +45,16 @@ export const AppointmentPacient = ({navigation}) => {
     // Nao sei onde colocar a ativacao desse modal, por isso esta true. 
     const [showModalDoctor, setShowModalDoctor] = useState(false);
     const[statusLista, setStatusLista] = useState("pedente");
-    const [dataConsulta, setDataConsulta] = useState();
-    const [consultas, setConsultas] = useState();
-    const [profile, setProfile] = useState();
+    const [dataConsulta, setDataConsulta] = useState('');
+    const [consultas, setConsultas] = useState([]);
+    const [profile, setProfile] = useState(null);
     const [consultaSelecionada, setConsultaSelecionada] = useState();
 
     async function profileLoad(){
         const token = await userDecodeToken();
 
         if(token != null){
-            setProfile(token);
+            await setProfile(token);
 
             setDataConsulta(moment().format('YYYY-MM-DD'));
         }
@@ -71,7 +71,7 @@ export const AppointmentPacient = ({navigation}) => {
         await api.get(`/${url}/BuscarPorData?data=${dataConsulta}&id=${profile.jti}`)
         .then( response => {
             setConsultas(response.data);
-            console.log(response.data);
+            //console.log(response.data[0]);
         }).catch( error => {
             console.log(error);
         })
@@ -111,11 +111,13 @@ export const AppointmentPacient = ({navigation}) => {
     }
 
     useEffect(() => {
+        console.log('profile')
         profileLoad();
     }, []);
-
+    
     useEffect(() => {
         if( dataConsulta != ''){
+            console.log('lista')
             ListarConsultas();
         }
     }, [dataConsulta]);
@@ -170,7 +172,7 @@ export const AppointmentPacient = ({navigation}) => {
 
         <StyledCalendarStrip
 
-        onDateSelected={date => setDataConsulta(moment(date).format('YYYY-MM-DD'))}
+        onDateSelected={(date) => setDataConsulta(moment(date).format('YYYY-MM-DD'))}
         // animação e seleção de cada data
         calendarAnimation={{ type: "sequence", duration: 30 }}
         daySelectionAnimation={styles.selectedAnimationStyle}

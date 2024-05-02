@@ -12,12 +12,14 @@ export const ClinicCard = ({
     rating="5",
     agenda="Seg-Sex",
     clinica,
+    clinicaAll,
+    setClinica,
     onPress,
 }) => {
 
 
     return(
-        <ContainerClinicCard  border={border}  style={styles.shadow}>
+        <ContainerClinicCard onPress={() => setClinica({clinicaId : clinica.id, clinicaLabel : clinica.nomeFantasia})}  border={border}  style={styles.shadow}>
             <BoxText>
                 <NameProfile allowFontScaling={true}>{clinica.nomeFantasia}</NameProfile>
 

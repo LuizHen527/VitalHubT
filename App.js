@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { LogBox, StyleSheet, Text, View } from 'react-native';
 import { Navegation } from './src/screens/Navegation/navegation';
 import { Login } from './src/screens/login/login';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -39,7 +39,8 @@ export default function App() {
     Quicksand_500Medium,
     Quicksand_600SemiBold,
     Quicksand_400Regular
-  })
+  });
+
 
   if(!fontsLoaded && !fontsError){
     return null;

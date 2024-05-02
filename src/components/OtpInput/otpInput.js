@@ -1,6 +1,7 @@
 import { ContainerOpt, TextInputOtp } from "./style"
 
 export const OtpInput = () => {
+    
     return(
         <ContainerOpt>
                 <TextInputOtp

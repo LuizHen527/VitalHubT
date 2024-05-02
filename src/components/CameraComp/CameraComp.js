@@ -8,15 +8,18 @@ import { FontAwesome } from '@expo/vector-icons';
 import {Camera, CameraType, FlashMode} from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library'
 import { useEffect, useRef, useState } from 'react';
+import { LastPhoto } from '../button/style';
+import * as ImagePicker from 'expo-image-picker';
 
 
-export const CameraComp = ({setUriCameraCapture, setShowCameraModal, showCameraModal}) => {
+export const CameraComp = ({setUriCameraCapture, setShowCameraModal, getMediaLibrary = false, showCameraModal}) => {
 
     const [ tipoCamera, setTipoCamera ] = useState(Camera.Constants.Type.back);
     const [ photo, setPhoto ] = useState(null);
     const [ openModal, setOpenModal ] = useState(false);
     const [ flash, setFlash ] = useState(FlashMode.off);
     const [ flashIcon, setFlashIcon ] = useState(false);
+    const [ latestPhoto, setLatestPhoto ] = useState(null); //Salva a ultima foto
     const cameraRef = useRef(null);
 
     async function CapturarFoto(){
@@ -27,7 +30,7 @@ export const CameraComp = ({setUriCameraCapture, setShowCameraModal, showCameraM
 
             setOpenModal(true);
 
-            console.log(photo);
+            
         }
     }
 
@@ -62,12 +65,36 @@ export const CameraComp = ({setUriCameraCapture, setShowCameraModal, showCameraM
         setFlashIcon( flashIcon == true ? false : true);
     }
 
+    async function GetLastPhoto(){
+        const {assets} = await MediaLibrary.getAssetsAsync({ sortBy : [[MediaLibrary.SortBy.creationTime, false]], first : 1 });
+
+
+        if (assets.length > 0) {
+            setLatestPhoto(assets[0].uri)
+        }
+    }
+
+    async function SelectImageGallery(){
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes : ImagePicker.MediaTypeOptions.Images,
+            quality : 1
+        });
+
+        if (!result.canceled) {
+            setPhoto( result.assets[0].uri )
+        }
+    }
+
     useEffect(() => {
         ( async () => {
             const { status: cameraStatus } =  await Camera.requestCameraPermissionsAsync();
 
             const { status: mediaStatus } = await MediaLibrary.requestPermissionsAsync();
         })();
+
+        if(getMediaLibrary){
+            GetLastPhoto();
+        }
     }, []);
     return(
         <Camera
@@ -88,6 +115,8 @@ export const CameraComp = ({setUriCameraCapture, setShowCameraModal, showCameraM
                         <FontAwesome name='camera' size={23} color={'black'}/>
                     </TouchableOpacity>
 
+
+
                     <TouchableOpacity style={styles.btnCaptura} onPress={() => SwitchFlash()}>
                         {
                             flashIcon == true ? (
@@ -97,6 +126,18 @@ export const CameraComp = ({setUriCameraCapture, setShowCameraModal, showCameraM
                             )
                         }
                         
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.btnLastPhoto} onPress={() => SelectImageGallery()}>
+                        {
+                            latestPhoto != null ?
+                            (
+                                <LastPhoto
+                                source={{uri : latestPhoto}}
+                                />
+                            ) : (<></>)
+                            
+                        }
                     </TouchableOpacity>
                 
 
@@ -157,6 +198,13 @@ const styles = StyleSheet.create({
         padding: 20,
         borderRadius: 15,
         backgroundColor:'white',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    btnLastPhoto: {
+        margin: 20,
+        borderRadius: 15,
         alignItems: 'center',
         justifyContent: 'center',
     },

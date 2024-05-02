@@ -78,3 +78,9 @@ export const ButtonGoogle = styled(ButtonLogin)`
     flex-direction: row;
     gap: 27px;
 `
+
+export const LastPhoto = styled.Image`
+    width: 64px;
+    height: 65px;
+    border-radius: 15px;
+`

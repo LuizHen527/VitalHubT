@@ -6,6 +6,8 @@ import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import moment from "moment";
 
+
+
 export const AppointmentCard = ({
     situacao,
     perfil,
@@ -26,6 +28,7 @@ export const AppointmentCard = ({
     
     const [ tipoPrioridade, setTipoPrioridade ] = useState();
     const [ idade, setIdade ] = useState();
+    
 
     async function CalcIdade(){
         const date = moment().format('YYYY');

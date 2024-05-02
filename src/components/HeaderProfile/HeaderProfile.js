@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { userDecodeToken } from '../../utils/Auth'; 
 import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //Queria passar props com o nome e a URL da imagem, mas nao consegui
 //Update: O react native nao consegue renderizar imagens dinamicamente, quero ver como o professor vai fazer isso

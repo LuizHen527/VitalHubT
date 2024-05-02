@@ -18,8 +18,8 @@ import { useEffect, useState } from "react"
 
 export const Login = ({navigation}) => {
 
-    const [email, setEmail] = useState('k@gmail.com');
-    const [senha, setSenha] = useState('12345');
+    const [email, setEmail] = useState('luiz@gmail.com');
+    const [senha, setSenha] = useState('123456');
     const [loadingIcon, setLoadingIcon] = useState(false);
     const [errors, setErrors] = useState({});
     const [isFormValid, setIsFormValid] = useState(false);
@@ -107,7 +107,7 @@ export const Login = ({navigation}) => {
 
             <ButtonGoogle onPress={() => LoginDoctor()}>
             <AntDesign name="google" size={18} color="#496BBA" />
-                <ButtonTitleGoogle>Entrar com google</ButtonTitleGoogle>
+                <ButtonTitleGoogle >Entrar com google</ButtonTitleGoogle>
             </ButtonGoogle>
 
             <ContentAccount>
