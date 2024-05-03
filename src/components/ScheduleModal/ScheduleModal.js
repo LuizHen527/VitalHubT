@@ -20,12 +20,18 @@ export const ScheduleModal = ({
     const navigation = useNavigation();
 
     function HandleContinue() {
+        // Verifica se o nível e a localização foram selecionados
+        if (!agendamento || agendamento.prioridadeId == null || agendamento.localizacao == null) {
+            return; // Se não estiverem selecionados, retorna sem fazer nada
+        }
+    
+        // Esconde o modal de agendamento
         setShowModalSchedule(false);
-
-        console.log(agendamento);
-
-        navigation.replace('SelectClinic', {agendamento : agendamento})
+    
+        // Navega para a tela de seleção de clínica, passando os detalhes do agendamento
+        navigation.replace('SelectClinic', { agendamento: agendamento });
     }
+    
     return (
         <ModalMedicalRecord {...rest} visible={visible} transparent={true} animationType="fade">
             <ScheduleModalView>
@@ -77,11 +83,11 @@ export const ScheduleModal = ({
                                 })}
                             />
 
-                            <ButtonSchedule onPress={() => navigation.navigate("SelectClinic") & setShowModalSchedule(false) & HandleContinue()}>
+                            <ButtonSchedule onPress={() => setShowModalSchedule(false) & HandleContinue()}>
                                 <ButtonTitle>continuar</ButtonTitle>
                             </ButtonSchedule>
 
-                            <ButtonCancel onPress={() => setShowModalSchedule(false)}>
+                            <ButtonCancel onPress={() => setShowModalSchedule(true)}>
                                 <LinkCancel>Cancelar</LinkCancel>
                             </ButtonCancel>
 
