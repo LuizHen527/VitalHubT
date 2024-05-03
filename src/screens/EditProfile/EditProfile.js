@@ -22,12 +22,16 @@ export const EditProfile = ({ navigation }) => {
 
     
     const [nome, setNome] = useState('')
-    const [email, setEmail] = useState('')
+    const [nomeUpdate, setNomeUpdate] = useState('')
+    const [rg, setRg] = useState('')
     const [nascimento, setNascimento] = useState('')
     const [cpf, setCpf] = useState('')
-    const [endereco, setEndereco] = useState('')
+    const [logradouro, setLogradouro] = useState('')
     const [numero, setNumero] = useState('')
-    const [bairro, setBairro] = useState('');
+    const [cep, setCep] = useState('')
+    const [cidade, setCidade] = useState('');
+
+    const [email, setEmail] = useState('')
     const [fotoPerfil, setFotoPerfil] = useState();
     
     const [editField, setEditField] = useState(false)
@@ -78,9 +82,9 @@ export const EditProfile = ({ navigation }) => {
 
         setNascimento('');
         setCpf('');
-        setEndereco('');
+        setLogradouro('');
         setNumero('');
-        setBairro('');
+        setCidade('');
     }
 
     async function AlterarFotoPerfil() {
@@ -105,8 +109,22 @@ export const EditProfile = ({ navigation }) => {
     }
 
     async function SaveData(){
-        if (usuario.role == 'Paciente') {
-            api.put(`/Pacientes`)
+        if (usuarioInfo.role == 'Paciente') {
+
+            await api.put(`/Pacientes?idUsuario=${usuarioInfo.jti}`, {
+                rg: rg === '' ? pacienteInfo.rg : rg,
+                cpf: cpf === '' ? pacienteInfo.cpf : cpf,
+                dataNascimento: nascimento === '' ? pacienteInfo.dataNascimento : nascimento,
+                cep: cep === '' ? pacienteInfo.endereco.cep : cep,
+                logradouro: logradouro === '' ? pacienteInfo.endereco.logradouro : logradouro,
+                numero: numero === '' ? pacienteInfo.endereco.numero : numero,
+                cidade: cidade === '' ? pacienteInfo.endereco.cidade : cidade,
+                nome: nomeUpdate === '' ? pacienteInfo.idNavigation.nome : nomeUpdate,
+            }).then(response => {
+                
+            }).catch(erro => {
+                console.log(erro);
+            })
         }
     }
 
@@ -174,6 +192,28 @@ export const EditProfile = ({ navigation }) => {
 
                         <InfoProfile>{email}</InfoProfile>
 
+
+                        <DateBox>
+                            <LabelLocal>Nome</LabelLocal>
+                            <InputGrey
+                                editable={editField}
+                                value={nomeUpdate}
+                                placeholder={pacienteInfo.idNavigation.nome == undefined ? 'Não informado' : pacienteInfo.idNavigation.nome}
+                                onChangeText={value => setNomeUpdate(value)}
+                            />
+                        </DateBox>
+
+                        
+                        <DateBox>
+                            <LabelLocal>RG</LabelLocal>
+                            <InputGrey
+                                editable={editField}
+                                value={rg}
+                                placeholder={pacienteInfo.rg == undefined ? 'Não informado' : pacienteInfo.rg}
+                                onChangeText={value => setRg(value)}
+                            />
+                        </DateBox>
+
                         <DateBox>
                             <LabelLocal>Data de nascimento:</LabelLocal>
                             <InputGrey
@@ -195,19 +235,19 @@ export const EditProfile = ({ navigation }) => {
                             />
                         </DateBox>
 
-                        <DateBox>
-                            <LabelLocal>Endereço</LabelLocal>
-                            <InputGrey
-                                editable={editField}
-                                value={endereco}
-                                placeholder={pacienteInfo.endereco.logradouro == undefined ? 'Não informado' : pacienteInfo.endereco.logradouro}
-                                onChangeText={value => setEndereco(value)}
-                            />
-                        </DateBox>
-
                         <DoubleContentBoxEP>
                             <SmallBox>
-                                <LabelLocal>Numero</LabelLocal>
+                                <LabelLocal>Logradouro</LabelLocal>
+                                <InputGrey
+                                    editable={editField}
+                                    value={logradouro}
+                                    placeholder={pacienteInfo.endereco.logradouro == undefined ? 'Não informado' : pacienteInfo.endereco.logradouro}
+                                    onChangeText={value => setLogradouro(value)}
+                                />
+                            </SmallBox>
+
+                            <SmallBox>
+                                <LabelLocal>Número</LabelLocal>
                                 <InputGrey
                                     editable={editField}
                                     value={numero}
@@ -215,14 +255,26 @@ export const EditProfile = ({ navigation }) => {
                                     onChangeText={value => setNumero(value)}
                                 />
                             </SmallBox>
+                        </DoubleContentBoxEP>
 
+                        <DoubleContentBoxEP>
                             <SmallBox>
-                                <LabelLocal>Bairro</LabelLocal>
+                                <LabelLocal>Cep</LabelLocal>
                                 <InputGrey
                                     editable={editField}
-                                    value={bairro}
+                                    value={cep}
+                                    placeholder={`${pacienteInfo.endereco.cep == undefined ? 'Não informado' : pacienteInfo.endereco.cep}`}
+                                    onChangeText={value => setCep(value)}
+                                />
+                            </SmallBox>
+
+                            <SmallBox>
+                                <LabelLocal>Cidade</LabelLocal>
+                                <InputGrey
+                                    editable={editField}
+                                    value={cidade}
                                     placeholder={`${pacienteInfo.endereco.cidade == undefined ? 'Não informado' : pacienteInfo.endereco.cidade}`}
-                                    onChangeText={value => setBairro(value)}
+                                    onChangeText={value => setCidade(value)}
                                 />
                             </SmallBox>
                         </DoubleContentBoxEP>
