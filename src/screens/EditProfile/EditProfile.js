@@ -15,12 +15,13 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import api from "../../service/service"
 import { CameraComp } from "../../components/CameraComp/CameraComp"
 import moment from "moment"
+import react from "react"
 
 export const EditProfile = ({ navigation }) => {
 
     const [visible, setVisible] = useState(false)
 
-    
+
     const [nome, setNome] = useState('')
     const [nomeUpdate, setNomeUpdate] = useState('')
     const [rg, setRg] = useState('')
@@ -33,15 +34,15 @@ export const EditProfile = ({ navigation }) => {
 
     const [email, setEmail] = useState('')
     const [fotoPerfil, setFotoPerfil] = useState();
-    
+
     const [editField, setEditField] = useState(false)
     const [pacienteInfo, setPacienteInfo] = useState(null);
     const [medicoInfo, setMedicoInfo] = useState(null);
-    const [ showCamera, setShowCamera ] = useState(false);
-    const [ uriCameraCapture, setUriCameraCapture ] = useState(null);
-    const [ usuarioInfo, setUsuarioInfo ] = useState(null);
+    const [showCamera, setShowCamera] = useState(false);
+    const [uriCameraCapture, setUriCameraCapture] = useState(null);
+    const [usuarioInfo, setUsuarioInfo] = useState(null);
 
-    
+
 
     //carrega o token com as informacoes do usuario
     async function profileLoad() {
@@ -66,7 +67,7 @@ export const EditProfile = ({ navigation }) => {
                     setFotoPerfil(response.data.idNavigation.foto)
                 }).catch(error => {
                     console.log(error);
-                })       
+                })
         } else {
             await api.get(`/Medicos/BuscarPorId?id=${usuario.jti}`)
                 .then(response => {
@@ -77,7 +78,7 @@ export const EditProfile = ({ navigation }) => {
         }
     }
 
-    async function EraseInputText(){
+    async function EraseInputText() {
         setEditField(false);
 
         setNascimento('');
@@ -90,17 +91,17 @@ export const EditProfile = ({ navigation }) => {
     async function AlterarFotoPerfil() {
         const formData = new FormData();
         formData.append("Arquivo", {
-            uri : uriCameraCapture,
-            name : `image.${uriCameraCapture.split(".")[1]}`,
-            type : `image/${uriCameraCapture.split(".")[1]}`
+            uri: uriCameraCapture,
+            name: `image.${uriCameraCapture.split(".")[1]}`,
+            type: `image/${uriCameraCapture.split(".")[1]}`
         })
         await api.put(`/Usuario/AlterarFotoPerfil?id=${usuarioInfo.jti}`, formData, {
-            headers : {
-                "Content-Type" : "multipart/form-data"
+            headers: {
+                "Content-Type": "multipart/form-data"
             }
         }).then(response => {
             setFotoPerfil(uriCameraCapture);
-        }).catch( error => {
+        }).catch(error => {
             console.log(error);
         })
 
@@ -108,7 +109,7 @@ export const EditProfile = ({ navigation }) => {
 
     }
 
-    async function SaveData(){
+    async function SaveData() {
         if (usuarioInfo.role == 'Paciente') {
 
             await api.put(`/Pacientes?idUsuario=${usuarioInfo.jti}`, {
@@ -121,11 +122,15 @@ export const EditProfile = ({ navigation }) => {
                 cidade: cidade === '' ? pacienteInfo.endereco.cidade : cidade,
                 nome: nomeUpdate === '' ? pacienteInfo.idNavigation.nome : nomeUpdate,
             }).then(response => {
-                
+                Refresh();
             }).catch(erro => {
                 console.log(erro);
             })
         }
+    }
+
+    function Refresh() {
+        setEditField(false);
     }
 
     useEffect(() => {
@@ -136,7 +141,7 @@ export const EditProfile = ({ navigation }) => {
         if (uriCameraCapture) {
             AlterarFotoPerfil();
         } else {
-            
+
         }
     }, [uriCameraCapture]);
 
@@ -168,21 +173,21 @@ export const EditProfile = ({ navigation }) => {
                 (<Container>
                     {
                         showCamera == true ? (
-                        <CameraComp
-                            getMediaLibrary={true}
-                            setShowCameraModal={setShowCamera}
-                            showCameraModal={showCamera}
-                            setUriCameraCapture={setUriCameraCapture}
-                        />
-                        ):(<></> )
+                            <CameraComp
+                                getMediaLibrary={true}
+                                setShowCameraModal={setShowCamera}
+                                showCameraModal={showCamera}
+                                setUriCameraCapture={setUriCameraCapture}
+                            />
+                        ) : (<></>)
                     }
 
                     <ContainerImage>
                         <ImageProfile
-                            source={{uri : fotoPerfil}}
+                            source={{ uri: fotoPerfil }}
                         />
                         {/*  */}
-                        
+
                         <ButtonCamera onPress={() => setShowCamera(true)}>
                             <MaterialCommunityIcons name="camera-plus" size={20} color="#fbfbfb" />
                         </ButtonCamera>
@@ -203,7 +208,7 @@ export const EditProfile = ({ navigation }) => {
                             />
                         </DateBox>
 
-                        
+
                         <DateBox>
                             <LabelLocal>RG</LabelLocal>
                             <InputGrey
@@ -278,10 +283,15 @@ export const EditProfile = ({ navigation }) => {
                                 />
                             </SmallBox>
                         </DoubleContentBoxEP>
-
-                        <ButtonEdit onPress={() => SaveData()}>
-                            <ButtonTitle>SALVAR</ButtonTitle>
-                        </ButtonEdit>
+                        {
+                            editField == true ? (
+                                <ButtonEdit onPress={() => SaveData()}>
+                                    <ButtonTitle>SALVAR</ButtonTitle>
+                                </ButtonEdit>
+                            ) : (
+                                <></>
+                            )
+                        }
 
                         <ButtonEdit onPress={() => editField == true ? EraseInputText() : setEditField(true)}>
                             {
@@ -291,7 +301,7 @@ export const EditProfile = ({ navigation }) => {
                                     <ButtonTitle>Editar</ButtonTitle>
                                 )
                             }
-                            
+
                         </ButtonEdit>
 
 
@@ -324,7 +334,7 @@ export const EditProfile = ({ navigation }) => {
 
 
                     </AlignContainer>
-                </Container>) : (<ActivityIndicator/>)
+                </Container>) : (<ActivityIndicator />)
             }
 
 
@@ -333,3 +343,7 @@ export const EditProfile = ({ navigation }) => {
         </ScrollView>
     )
 }
+
+//Botoes reagindo as acoes do usuario
+//Tela recarregar quando salvar
+//Validacoes e mascara para os campos
