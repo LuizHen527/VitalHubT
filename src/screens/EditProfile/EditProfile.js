@@ -21,6 +21,7 @@ import { useScrollToTop } from "@react-navigation/native"
 export const EditProfile = ({ navigation }) => {
 
     const ref = useRef(null);
+    useScrollToTop(ref);
     const [visible, setVisible] = useState(false)
 
     const [nome, setNome] = useState('')
@@ -138,7 +139,11 @@ export const EditProfile = ({ navigation }) => {
         EraseInputText();
         profileLoad();
         setNomeUpdated(nomeUpdate);
-        useScrollToTop(ref);
+        
+        ref.current?.scrollTo({
+            y: 0,
+            animated: true,
+        });
         showToast();
     }
 
