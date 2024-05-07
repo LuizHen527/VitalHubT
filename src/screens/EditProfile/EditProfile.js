@@ -6,7 +6,7 @@ import { ContainerInfoProfile } from "../Profile/style"
 import { ButtonCamera, DateBox, DoubleContentBoxEP } from "./Style"
 import { InputGrey } from "../../components/input/styled"
 import { ButtonEdit, ButtonLeave, ButtonLoginVE } from "../../components/button/style"
-import { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { userDecodeToken } from "../../utils/Auth"
 import Loading from "../../utils/Loading";
@@ -15,15 +15,17 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import api from "../../service/service"
 import { CameraComp } from "../../components/CameraComp/CameraComp"
 import moment from "moment"
-import react from "react"
+import Toast from "react-native-toast-message"
+import { useScrollToTop } from "@react-navigation/native"
 
 export const EditProfile = ({ navigation }) => {
 
+    const ref = useRef(null);
     const [visible, setVisible] = useState(false)
-
 
     const [nome, setNome] = useState('')
     const [nomeUpdate, setNomeUpdate] = useState('')
+    const [nomeUpdated, setNomeUpdated] = useState('')
     const [rg, setRg] = useState('')
     const [nascimento, setNascimento] = useState('')
     const [cpf, setCpf] = useState('')
@@ -81,11 +83,14 @@ export const EditProfile = ({ navigation }) => {
     async function EraseInputText() {
         setEditField(false);
 
+        setRg('');
+        setNomeUpdate('');
         setNascimento('');
         setCpf('');
         setLogradouro('');
         setNumero('');
         setCidade('');
+        setCep('');
     }
 
     async function AlterarFotoPerfil() {
@@ -130,7 +135,11 @@ export const EditProfile = ({ navigation }) => {
     }
 
     function Refresh() {
-        setEditField(false);
+        EraseInputText();
+        profileLoad();
+        setNomeUpdated(nomeUpdate);
+        useScrollToTop(ref);
+        showToast();
     }
 
     useEffect(() => {
@@ -164,10 +173,19 @@ export const EditProfile = ({ navigation }) => {
         setVisible(false);
     }
 
+    const showToast = () => {
+        Toast.show({
+          type: 'success',
+          text1: 'Hello',
+          text2: 'This is some something 👋'
+        });
+    }
+
 
 
     return (
-        <ScrollView>
+        
+        <ScrollView ref={ref}>
 
             {pacienteInfo !== null ?
                 (<Container>
@@ -193,7 +211,7 @@ export const EditProfile = ({ navigation }) => {
                         </ButtonCamera>
                     </ContainerImage>
                     <AlignContainer>
-                        <ProfileName>{nome}</ProfileName>
+                        <ProfileName>{nomeUpdated === '' ? nome : nomeUpdated}</ProfileName>
 
                         <InfoProfile>{email}</InfoProfile>
 
@@ -336,10 +354,7 @@ export const EditProfile = ({ navigation }) => {
                     </AlignContainer>
                 </Container>) : (<ActivityIndicator />)
             }
-
-
-
-
+            <Toast />
         </ScrollView>
     )
 }
