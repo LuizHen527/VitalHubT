@@ -7,6 +7,7 @@ import { Input, InputScheduleModal_1, InputScheduleModal_2, InputScheduleModal_3
 import { ButtonTitle, ScheduleModalText, TitleModal } from "../title/style"
 import { BoxContent, BoxInput, ContainerBoxAlign } from "./Style"
 import { useState } from "react"
+import { Text } from "react-native"
 
 const niveis = [{ id: 'D083C4DC-66E3-4856-BBFB-159764AA958D', tipo: 'Rotina' },
 { id: '07033F9A-4E0E-4F1B-928F-08990DF17761', tipo: 'Exame' },
@@ -16,13 +17,21 @@ export const ScheduleModal = ({
     visible, setShowModalSchedule, ...rest
 }) => {
     const [agendamento, setAgendamento] = useState(null);
+    const [erroNivel,setErroNivel] = useState("");
+    const [erroLocalizacao,setErroLocalizacao] = useState("");
 
     const navigation = useNavigation();
 
     function HandleContinue() {
         // Verifica se o nível e a localização foram selecionados
         if (!agendamento || agendamento.prioridadeId == null || agendamento.localizacao == null) {
-            return; // Se não estiverem selecionados, retorna sem fazer nada
+
+            let error = false
+            setErroNivel("Selecione prioridade")
+            setErroLocalizacao("Preencha corretamente")
+            error = true
+
+            return !error; // Se não estiverem selecionados, retorna sem fazer nada
         }
     
         // Esconde o modal de agendamento
@@ -64,13 +73,16 @@ export const ScheduleModal = ({
                                 <InputScheduleModal_2
                                     onPress={() => setAgendamento({
                                         ...agendamento,
-
+                                        
                                         prioridadeId: '63261F6A-F19C-4651-A4DB-3601D68677E7',
                                         prioridadeLabel: 'Urgencia'
                                     })}
                                     placeholder="Urgência"
                                 />
                             </BoxInput>
+
+                            <Text style={{color: 'red',marginRight:"46.5%"}}>{erroNivel}</Text>
+
 
                             <ScheduleModalText>Informe a localização desejada</ScheduleModalText>
 
@@ -82,8 +94,11 @@ export const ScheduleModal = ({
                                     localizacao: txt
                                 })}
                             />
+                            <Text style={{color: 'red',marginRight:"46.5%"}}>{erroLocalizacao}</Text>
 
-                            <ButtonSchedule onPress={() => setShowModalSchedule(false) & HandleContinue()}>
+                            
+
+                            <ButtonSchedule onPress={() => HandleContinue()}>
                                 <ButtonTitle>continuar</ButtonTitle>
                             </ButtonSchedule>
 

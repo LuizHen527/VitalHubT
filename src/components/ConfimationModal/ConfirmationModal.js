@@ -40,6 +40,11 @@ export const ConfirmationModal = ({
         })
     }
 
+    async function CancelarConsulta(){
+        console.log(agendamento);
+        setShowModalConfirmation(false)
+    }
+
     useEffect(() => {
         profileLoad()
     },[])
@@ -81,7 +86,7 @@ export const ConfirmationModal = ({
                             <ButtonTitle>Confirmar</ButtonTitle>
                         </ButtonSchedule>
 
-                        <ButtonCancel onPress={() => ConfirmarConsulta()}>
+                        <ButtonCancel onPress={() => CancelarConsulta()}>
                             <LinkCancel >Cancelar</LinkCancel>
                         </ButtonCancel>
                     </AlignBoxModal>

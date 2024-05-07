@@ -29,14 +29,14 @@ export const Login = ({navigation}) => {
         let error = false;
     
         if (!email.trim()) {
-            setErrorEmail("Email deve ser preenchido");
+            setErrorEmail("Email deve ser preenchido corretamente");
             error = true;
         } else {
             setErrorEmail("");
         }
     
         if (!senha.trim()) {
-            setErrorSenha("Senha deve ser preenchida");
+            setErrorSenha("Senha deve ser preenchida corretamente");
             error = true;
         } else {
             setErrorSenha("");

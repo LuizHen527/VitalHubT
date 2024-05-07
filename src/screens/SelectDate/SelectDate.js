@@ -9,6 +9,7 @@ import { BoxCalendar, BoxSelect } from "./Style"
 import { Select } from "../../components/Select/Select"
 import { ConfirmationModal } from "../../components/ConfimationModal/ConfirmationModal"
 import { CancelAppointmentModal } from "../../components/CancelAppointmentModal/CancelAppointmentModal"
+import { Text } from "react-native"
 
 LocaleConfig.locales['pt'] = {
     monthNames: [
@@ -40,8 +41,19 @@ export const SelectDate = ({ navigation, route }) => {
     const [dataSelecionada, setDataSelecionada] = useState("")
     const [horaSelecionada, setHoraSelecionada] = useState("")
     const [agendamento, setAgendamento] = useState({})
+    const [erroData,setErroData] = useState("")
 
     function HandleContinue() {
+
+        if (dataSelecionada == null || horaSelecionada == null ) {
+
+            let error 
+            setErroData("Selecione Data e Hora")
+            error = true 
+            setShowModalConfirmation(false)
+            return !error
+            
+        }
 
         setAgendamento(
             {
@@ -50,6 +62,18 @@ export const SelectDate = ({ navigation, route }) => {
             })
 
             setShowModalConfirmation(true)
+    }
+
+    function cancelarData(){
+        setDataSelecionada(null)
+        setHoraSelecionada(null)
+        navigation.replace("SelectDoctor", {
+            agendamento:{
+                ...route.params.agendamento //Passando todas as informacoes contidas no route.params.agendamento
+            
+            }
+        })
+        console.log(agendamento);
     }
 
 
@@ -127,6 +151,8 @@ export const SelectDate = ({ navigation, route }) => {
                     />
                 </BoxSelect>
 
+                <Text style={{color: 'red',marginRight:"46.5%"}}>{erroData}</Text>
+
 
 
             </ContentBox>
@@ -137,7 +163,7 @@ export const SelectDate = ({ navigation, route }) => {
                     <ButtonTitle>continuar</ButtonTitle>
                 </ButtonSchedule>
 
-                <ButtonCancel onPress={() => navigation.pop(3)}>
+                <ButtonCancel onPress={() => cancelarData()}>
                     <LinkCancel>Cancelar</LinkCancel>
                 </ButtonCancel>
             </AlignBox>
