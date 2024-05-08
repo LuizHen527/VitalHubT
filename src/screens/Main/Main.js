@@ -48,7 +48,7 @@ export const Main = () => {
             <BottomTab.Screen
                 name='Home'
                 component={ AppointmentPacient }
-                options={{headerShow: false}}
+                options={{headerShown: false}}
             />
 
             {/* Criar rota do perfil */}
@@ -56,7 +56,7 @@ export const Main = () => {
             <BottomTab.Screen
                 name='Perfil'
                 component={ EditProfile }
-                options={{headerShow: false}}
+                options={{headerShown: false}}
             />
 
         </BottomTab.Navigator>

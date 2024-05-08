@@ -1,4 +1,4 @@
-import { ActivityIndicator, ScrollView } from "react-native"
+import { ActivityIndicator, ScrollView, Text, View } from "react-native"
 import { ContainerImage, ImageProfile } from "../../components/images/style"
 import { ButtonTitle, InfoProfile, InfoTextProfile, LabelLocal, ProfileName, TitleProfile } from "../../components/title/style"
 import { AlignContainer, Container, DoubleContentBox, SmallBox } from "../../components/container/style"
@@ -15,8 +15,33 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import api from "../../service/service"
 import { CameraComp } from "../../components/CameraComp/CameraComp"
 import moment from "moment"
-import Toast from "react-native-toast-message"
+import Toast, { BaseToast } from "react-native-toast-message"
 import { useScrollToTop } from "@react-navigation/native"
+import { ContentView } from "../EditMedicalRecord/Style"
+
+const toastConfig = {
+    sucessoToast: ({ text1, text2 }) => (
+        <View style={{ height: 60, width: '100%', backgroundColor: 'tomato' }}>
+            <Text>{text1}</Text>
+            <Text>{text2}</Text>
+        </View>
+    ),
+
+    success: (props) => (
+        <BaseToast
+            {...props}
+            style={{ borderLeftColor: '#49B3BA', width: '90%' }}
+            contentContainerStyle={{ paddingHorizontal: 15 }}
+            text1Style={{
+                fontSize: 15,
+                fontWeight: '400'
+            }}
+            text2Style={{
+                fontSize: 13
+            }}
+        />
+    ),
+}
 
 export const EditProfile = ({ navigation }) => {
 
@@ -44,6 +69,8 @@ export const EditProfile = ({ navigation }) => {
     const [showCamera, setShowCamera] = useState(false);
     const [uriCameraCapture, setUriCameraCapture] = useState(null);
     const [usuarioInfo, setUsuarioInfo] = useState(null);
+
+
 
 
 
@@ -139,7 +166,7 @@ export const EditProfile = ({ navigation }) => {
         EraseInputText();
         profileLoad();
         setNomeUpdated(nomeUpdate);
-        
+
         ref.current?.scrollTo({
             y: 0,
             animated: true,
@@ -180,187 +207,194 @@ export const EditProfile = ({ navigation }) => {
 
     const showToast = () => {
         Toast.show({
-          type: 'success',
-          text1: 'Hello',
-          text2: 'This is some something 👋'
+            type: 'success',
+            text1: 'Perfil atualizado',
+            text2: 'Alterações feitas com sucesso'
         });
     }
 
 
 
     return (
-        
-        <ScrollView ref={ref}>
 
+        <ContentView>
+            {
+                showCamera == true ? (
+
+                    <CameraComp
+                        getMediaLibrary={true}
+                        setShowCameraModal={setShowCamera}
+                        showCameraModal={showCamera}
+                        setUriCameraCapture={setUriCameraCapture}
+                    />
+
+
+                ) : (<></>)
+            }
             {pacienteInfo !== null ?
-                (<Container>
-                    {
-                        showCamera == true ? (
-                            <CameraComp
-                                getMediaLibrary={true}
-                                setShowCameraModal={setShowCamera}
-                                showCameraModal={showCamera}
-                                setUriCameraCapture={setUriCameraCapture}
-                            />
-                        ) : (<></>)
-                    }
+                (
+                    <ScrollView ref={ref}>
+                        <Container>
 
-                    <ContainerImage>
-                        <ImageProfile
-                            source={{ uri: fotoPerfil }}
-                        />
-                        {/*  */}
-
-                        <ButtonCamera onPress={() => setShowCamera(true)}>
-                            <MaterialCommunityIcons name="camera-plus" size={20} color="#fbfbfb" />
-                        </ButtonCamera>
-                    </ContainerImage>
-                    <AlignContainer>
-                        <ProfileName>{nomeUpdated === '' ? nome : nomeUpdated}</ProfileName>
-
-                        <InfoProfile>{email}</InfoProfile>
-
-
-                        <DateBox>
-                            <LabelLocal>Nome</LabelLocal>
-                            <InputGrey
-                                editable={editField}
-                                value={nomeUpdate}
-                                placeholder={pacienteInfo.idNavigation.nome == undefined ? 'Não informado' : pacienteInfo.idNavigation.nome}
-                                onChangeText={value => setNomeUpdate(value)}
-                            />
-                        </DateBox>
-
-
-                        <DateBox>
-                            <LabelLocal>RG</LabelLocal>
-                            <InputGrey
-                                editable={editField}
-                                value={rg}
-                                placeholder={pacienteInfo.rg == undefined ? 'Não informado' : pacienteInfo.rg}
-                                onChangeText={value => setRg(value)}
-                            />
-                        </DateBox>
-
-                        <DateBox>
-                            <LabelLocal>Data de nascimento:</LabelLocal>
-                            <InputGrey
-                                editable={editField}
-                                inputMode={'numeric'}
-                                value={nascimento}
-                                placeholder={pacienteInfo.dataNascimento == undefined ? 'Não informado' : moment(pacienteInfo.dataNascimento).format('L')}
-                                onChangeText={value => setNascimento(value)}
-                            />
-                        </DateBox>
-
-                        <DateBox>
-                            <LabelLocal>CPF</LabelLocal>
-                            <InputGrey
-                                editable={editField}
-                                value={cpf}
-                                placeholder={pacienteInfo.cpf == undefined ? 'Não informado' : pacienteInfo.cpf}
-                                onChangeText={value => setCpf(value)}
-                            />
-                        </DateBox>
-
-                        <DoubleContentBoxEP>
-                            <SmallBox>
-                                <LabelLocal>Logradouro</LabelLocal>
-                                <InputGrey
-                                    editable={editField}
-                                    value={logradouro}
-                                    placeholder={pacienteInfo.endereco.logradouro == undefined ? 'Não informado' : pacienteInfo.endereco.logradouro}
-                                    onChangeText={value => setLogradouro(value)}
+                            <ContainerImage>
+                                <ImageProfile
+                                    source={{ uri: fotoPerfil }}
                                 />
-                            </SmallBox>
+                                {/*  */}
 
-                            <SmallBox>
-                                <LabelLocal>Número</LabelLocal>
-                                <InputGrey
-                                    editable={editField}
-                                    value={numero}
-                                    placeholder={`${pacienteInfo.endereco.numero == undefined ? 'Não informado' : pacienteInfo.endereco.numero}`}
-                                    onChangeText={value => setNumero(value)}
-                                />
-                            </SmallBox>
-                        </DoubleContentBoxEP>
+                                <ButtonCamera onPress={() => setShowCamera(true)}>
+                                    <MaterialCommunityIcons name="camera-plus" size={20} color="#fbfbfb" />
+                                </ButtonCamera>
+                            </ContainerImage>
+                            <AlignContainer>
+                                <ProfileName>{nomeUpdated === '' ? nome : nomeUpdated}</ProfileName>
 
-                        <DoubleContentBoxEP>
-                            <SmallBox>
-                                <LabelLocal>Cep</LabelLocal>
-                                <InputGrey
-                                    editable={editField}
-                                    value={cep}
-                                    placeholder={`${pacienteInfo.endereco.cep == undefined ? 'Não informado' : pacienteInfo.endereco.cep}`}
-                                    onChangeText={value => setCep(value)}
-                                />
-                            </SmallBox>
-
-                            <SmallBox>
-                                <LabelLocal>Cidade</LabelLocal>
-                                <InputGrey
-                                    editable={editField}
-                                    value={cidade}
-                                    placeholder={`${pacienteInfo.endereco.cidade == undefined ? 'Não informado' : pacienteInfo.endereco.cidade}`}
-                                    onChangeText={value => setCidade(value)}
-                                />
-                            </SmallBox>
-                        </DoubleContentBoxEP>
-                        {
-                            editField == true ? (
-                                <ButtonEdit onPress={() => SaveData()}>
-                                    <ButtonTitle>SALVAR</ButtonTitle>
-                                </ButtonEdit>
-                            ) : (
-                                <></>
-                            )
-                        }
-
-                        <ButtonEdit onPress={() => editField == true ? EraseInputText() : setEditField(true)}>
-                            {
-                                editField == true ? (
-                                    <ButtonTitle>Parar de editar</ButtonTitle>
-                                ) : (
-                                    <ButtonTitle>Editar</ButtonTitle>
-                                )
-                            }
-
-                        </ButtonEdit>
+                                <InfoProfile>{email}</InfoProfile>
 
 
-                        {
-                            !visible ? (
+                                <DateBox>
+                                    <LabelLocal>Nome</LabelLocal>
+                                    <InputGrey
+                                        editable={editField}
+                                        value={nomeUpdate}
+                                        placeholder={pacienteInfo.idNavigation.nome == undefined ? 'Não informado' : pacienteInfo.idNavigation.nome}
+                                        onChangeText={value => setNomeUpdate(value)}
+                                    />
+                                </DateBox>
 
-                                <ButtonLeave
-                                    onPress={() => logOff()}
 
-                                >
-                                    <Loading visible={visible} />
+                                <DateBox>
+                                    <LabelLocal>RG</LabelLocal>
+                                    <InputGrey
+                                        editable={editField}
+                                        value={rg}
+                                        placeholder={pacienteInfo.rg == undefined ? 'Não informado' : pacienteInfo.rg}
+                                        onChangeText={value => setRg(value)}
+                                    />
+                                </DateBox>
 
-                                    <ButtonTitle>sair do app</ButtonTitle>
-                                </ButtonLeave>
-                            ) : (
-                                <ButtonLeave
-                                    onPress={() => setVisible(true) &
-                                        setTimeout(() => {
-                                            setVisible(false);
-                                        }, 5000)
+                                <DateBox>
+                                    <LabelLocal>Data de nascimento:</LabelLocal>
+                                    <InputGrey
+                                        editable={editField}
+                                        inputMode={'numeric'}
+                                        value={nascimento}
+                                        placeholder={pacienteInfo.dataNascimento == undefined ? 'Não informado' : moment(pacienteInfo.dataNascimento).format('L')}
+                                        onChangeText={value => setNascimento(value)}
+                                    />
+                                </DateBox>
+
+                                <DateBox>
+                                    <LabelLocal>CPF</LabelLocal>
+                                    <InputGrey
+                                        editable={editField}
+                                        value={cpf}
+                                        placeholder={pacienteInfo.cpf == undefined ? 'Não informado' : pacienteInfo.cpf}
+                                        onChangeText={value => setCpf(value)}
+                                    />
+                                </DateBox>
+
+                                <DoubleContentBoxEP>
+                                    <SmallBox>
+                                        <LabelLocal>Logradouro</LabelLocal>
+                                        <InputGrey
+                                            editable={editField}
+                                            value={logradouro}
+                                            placeholder={pacienteInfo.endereco.logradouro == undefined ? 'Não informado' : pacienteInfo.endereco.logradouro}
+                                            onChangeText={value => setLogradouro(value)}
+                                        />
+                                    </SmallBox>
+
+                                    <SmallBox>
+                                        <LabelLocal>Número</LabelLocal>
+                                        <InputGrey
+                                            editable={editField}
+                                            value={numero}
+                                            placeholder={`${pacienteInfo.endereco.numero == undefined ? 'Não informado' : pacienteInfo.endereco.numero}`}
+                                            onChangeText={value => setNumero(value)}
+                                        />
+                                    </SmallBox>
+                                </DoubleContentBoxEP>
+
+                                <DoubleContentBoxEP>
+                                    <SmallBox>
+                                        <LabelLocal>Cep</LabelLocal>
+                                        <InputGrey
+                                            editable={editField}
+                                            value={cep}
+                                            placeholder={`${pacienteInfo.endereco.cep == undefined ? 'Não informado' : pacienteInfo.endereco.cep}`}
+                                            onChangeText={value => setCep(value)}
+                                        />
+                                    </SmallBox>
+
+                                    <SmallBox>
+                                        <LabelLocal>Cidade</LabelLocal>
+                                        <InputGrey
+                                            editable={editField}
+                                            value={cidade}
+                                            placeholder={`${pacienteInfo.endereco.cidade == undefined ? 'Não informado' : pacienteInfo.endereco.cidade}`}
+                                            onChangeText={value => setCidade(value)}
+                                        />
+                                    </SmallBox>
+                                </DoubleContentBoxEP>
+                                {
+                                    editField == true ? (
+                                        <ButtonEdit onPress={() => SaveData()}>
+                                            <ButtonTitle>SALVAR</ButtonTitle>
+                                        </ButtonEdit>
+                                    ) : (
+                                        <></>
+                                    )
+                                }
+
+                                <ButtonEdit onPress={() => editField == true ? EraseInputText() : setEditField(true)}>
+                                    {
+                                        editField == true ? (
+                                            <ButtonTitle>Parar de editar</ButtonTitle>
+                                        ) : (
+                                            <ButtonTitle>Editar</ButtonTitle>
+                                        )
                                     }
 
-                                >
-                                    <Loading visible={visible} />
-
-                                    <ButtonTitle>sair do app</ButtonTitle>
-                                </ButtonLeave>
-                            )
-                        }
+                                </ButtonEdit>
 
 
-                    </AlignContainer>
-                </Container>) : (<ActivityIndicator />)
+                                {
+                                    !visible ? (
+
+                                        <ButtonLeave
+                                            onPress={() => logOff()}
+
+                                        >
+                                            <Loading visible={visible} />
+
+                                            <ButtonTitle>sair do app</ButtonTitle>
+                                        </ButtonLeave>
+                                    ) : (
+                                        <ButtonLeave
+                                            onPress={() => setVisible(true) &
+                                                setTimeout(() => {
+                                                    setVisible(false);
+                                                }, 5000)
+                                            }
+
+                                        >
+                                            <Loading visible={visible} />
+
+                                            <ButtonTitle>sair do app</ButtonTitle>
+                                        </ButtonLeave>
+                                    )
+                                }
+
+
+                            </AlignContainer>
+                        </Container>
+                    </ScrollView>
+                ) : (<ActivityIndicator />)
             }
-            <Toast />
-        </ScrollView>
+            <Toast config={toastConfig} />
+        </ContentView>
+
     )
 }
 

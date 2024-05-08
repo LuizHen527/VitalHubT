@@ -42,6 +42,7 @@ export const ButtonSendProfile = styled(ButtonLogin)`
 
 export const ButtonLeave = styled(ButtonLogin)`
     margin-top: 30px;
+    margin-bottom: 50px;
     width: 100%;
     background-color: red;
     border: none;
