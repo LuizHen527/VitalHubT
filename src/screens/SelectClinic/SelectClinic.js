@@ -51,6 +51,7 @@ export const SelectClinic = ({navigation, route}) => {
         })
     }
 
+
     useEffect(() => {
         ListarClinicas()
     }, []);
@@ -90,7 +91,7 @@ export const SelectClinic = ({navigation, route}) => {
                     <ButtonTitle>continuar</ButtonTitle>
                 </ButtonSchedule>
 
-                <ButtonCancel onPress={() => navigation.goBack("Main")}>
+                <ButtonCancel onPress={() => navigation.rep("AppointmentPacient")}>
                     <LinkCancel>Cancelar</LinkCancel>
                 </ButtonCancel>
             </AlignBox>

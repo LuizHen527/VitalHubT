@@ -41,6 +41,7 @@ export const ConfirmationModal = ({
     }
 
     async function CancelarConsulta(){
+        agendamento.dataConsulta = null
         console.log(agendamento);
         setShowModalConfirmation(false)
     }

@@ -14,11 +14,13 @@ const niveis = [{ id: 'D083C4DC-66E3-4856-BBFB-159764AA958D', tipo: 'Rotina' },
 { id: '63261F6A-F19C-4651-A4DB-3601D68677E7', tipo: 'Urgencia' }]
 
 export const ScheduleModal = ({
-    visible, setShowModalSchedule, ...rest
+    visible, setShowModalSchedule, route, ...rest
 }) => {
     const [agendamento, setAgendamento] = useState(null);
-    const [erroNivel,setErroNivel] = useState("");
-    const [erroLocalizacao,setErroLocalizacao] = useState("");
+    const [erroNivel, setErroNivel] = useState("");
+    const [listaLocalizacao,setListaLocalizacao] = useState(null)
+    const [localizacao,setLocalizacao] = useState(null)
+    const [erroLocalizacao, setErroLocalizacao] = useState("");
 
     const navigation = useNavigation();
 
@@ -33,14 +35,22 @@ export const ScheduleModal = ({
 
             return !error; // Se não estiverem selecionados, retorna sem fazer nada
         }
-    
+
         // Esconde o modal de agendamento
         setShowModalSchedule(false);
-    
+
         // Navega para a tela de seleção de clínica, passando os detalhes do agendamento
         navigation.replace('SelectClinic', { agendamento: agendamento });
     }
-    
+
+
+    function Cancelar() {
+
+        console.log("E NULOOOOOOOOOOOOOOOOOO___________________", agendamento);
+        navigation.replace("AppointmentPacient")
+
+    }
+
     return (
         <ModalMedicalRecord {...rest} visible={visible} transparent={true} animationType="fade">
             <ScheduleModalView>
@@ -73,7 +83,7 @@ export const ScheduleModal = ({
                                 <InputScheduleModal_2
                                     onPress={() => setAgendamento({
                                         ...agendamento,
-                                        
+
                                         prioridadeId: '63261F6A-F19C-4651-A4DB-3601D68677E7',
                                         prioridadeLabel: 'Urgencia'
                                     })}
@@ -81,10 +91,12 @@ export const ScheduleModal = ({
                                 />
                             </BoxInput>
 
-                            <Text style={{color: 'red',marginRight:"46.5%"}}>{erroNivel}</Text>
+                            <Text style={{ color: 'red', marginRight: "46.5%" }}>{erroNivel}</Text>
 
 
                             <ScheduleModalText>Informe a localização desejada</ScheduleModalText>
+
+                            
 
                             <InputScheduleModal_3
                                 placeholder="Informe a localização"
@@ -94,15 +106,16 @@ export const ScheduleModal = ({
                                     localizacao: txt
                                 })}
                             />
-                            <Text style={{color: 'red',marginRight:"46.5%"}}>{erroLocalizacao}</Text>
-
                             
+                            <Text style={{ color: 'red', marginRight: "46.5%" }}>{erroLocalizacao}</Text>
+
+
 
                             <ButtonSchedule onPress={() => HandleContinue()}>
                                 <ButtonTitle>continuar</ButtonTitle>
                             </ButtonSchedule>
 
-                            <ButtonCancel onPress={() => setShowModalSchedule(true)}>
+                            <ButtonCancel onPress={() => Cancelar()}>
                                 <LinkCancel>Cancelar</LinkCancel>
                             </ButtonCancel>
 

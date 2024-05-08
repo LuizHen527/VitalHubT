@@ -64,10 +64,10 @@ export const SelectDate = ({ navigation, route }) => {
             setShowModalConfirmation(true)
     }
 
-    function cancelarData(){
-        setDataSelecionada(null)
-        setHoraSelecionada(null)
-        navigation.replace("SelectDoctor", {
+    function Cancelar(){
+        agendamento.params = null
+        console.log("E NULOOOOOOOOOOOOOOOOOO___________________",agendamento);
+        navigation.replace("AppointmentPacient", {
             agendamento:{
                 ...route.params.agendamento //Passando todas as informacoes contidas no route.params.agendamento
             
@@ -163,7 +163,7 @@ export const SelectDate = ({ navigation, route }) => {
                     <ButtonTitle>continuar</ButtonTitle>
                 </ButtonSchedule>
 
-                <ButtonCancel onPress={() => cancelarData()}>
+                <ButtonCancel onPress={() => Cancelar()}>
                     <LinkCancel>Cancelar</LinkCancel>
                 </ButtonCancel>
             </AlignBox>

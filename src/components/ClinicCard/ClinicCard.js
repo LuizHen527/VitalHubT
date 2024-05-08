@@ -45,6 +45,7 @@ export const ClinicCard = ({
     )
 }
 
+
 const styles =  StyleSheet.create({
     shadow: {
         elevation: 5,
