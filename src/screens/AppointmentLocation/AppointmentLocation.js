@@ -119,7 +119,7 @@ export const AppointmentLocation = ({navigation, route}) => {
                     longitudeDelta: 0.005
                 }}
                 provider={PROVIDER_GOOGLE}
-                customMapStyle={darkMapStyle}
+                customMapStyle={grayMapStyle}
             >
                 <Marker
                     coordinate={{

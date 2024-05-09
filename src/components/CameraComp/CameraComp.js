@@ -5,7 +5,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 
 //import das bibliotecas da camera
-import {Camera, CameraType, FlashMode} from 'expo-camera';
+import {Camera, CameraType, CameraView, FlashMode} from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library'
 import { useEffect, useRef, useState } from 'react';
 import { LastPhoto } from '../button/style';
@@ -14,10 +14,10 @@ import * as ImagePicker from 'expo-image-picker';
 
 export const CameraComp = ({setUriCameraCapture, setShowCameraModal, getMediaLibrary = false, showCameraModal}) => {
 
-    const [ tipoCamera, setTipoCamera ] = useState(Camera.Constants.Type.back);
+    const [ facing, setFacing ] = useState('back');
     const [ photo, setPhoto ] = useState(null);
     const [ openModal, setOpenModal ] = useState(false);
-    const [ flash, setFlash ] = useState(FlashMode.off);
+    const [ flash, setFlash ] = useState('off');
     const [ flashIcon, setFlashIcon ] = useState(false);
     const [ latestPhoto, setLatestPhoto ] = useState(null); //Salva a ultima foto
     const cameraRef = useRef(null);
@@ -61,7 +61,7 @@ export const CameraComp = ({setUriCameraCapture, setShowCameraModal, getMediaLib
     }
 
     async function SwitchFlash(){
-        setFlash( flash == FlashMode.off ? FlashMode.on : FlashMode.off);
+        setFlash( flash == 'off' ? 'on' : 'off');
         setFlashIcon( flashIcon == true ? false : true);
     }
 
@@ -82,8 +82,12 @@ export const CameraComp = ({setUriCameraCapture, setShowCameraModal, getMediaLib
 
         if (!result.canceled) {
             setPhoto( result.assets[0].uri );
-            handleClose();
+            setOpenModal(true);
         }
+    }
+
+    function toggleCameraFacing() {
+        setFacing(current => (current === 'back' ? 'front' : 'back'));
     }
 
     useEffect(() => {
@@ -98,17 +102,16 @@ export const CameraComp = ({setUriCameraCapture, setShowCameraModal, getMediaLib
         }
     }, []);
     return(
-        <Camera
+        <CameraView
             ref={cameraRef}
             style={styles.camera}
-            type={tipoCamera}
-            ratio={'16:9'}
-            flashMode={flash}
-        >
+            facing={facing}
+            flash={flash}
+            >
 
             <View style={styles.viewFlip}>
                 
-                    <TouchableOpacity style={styles.btnFlip} onPress={() => setTipoCamera( tipoCamera == CameraType.front ? CameraType.back : CameraType.front)}>
+                    <TouchableOpacity style={styles.btnFlip} onPress={toggleCameraFacing}>
                         <MaterialIcons name="cameraswitch" size={30} color="black" />
                     </TouchableOpacity>
 
@@ -124,7 +127,7 @@ export const CameraComp = ({setUriCameraCapture, setShowCameraModal, getMediaLib
                                 <Ionicons name="flash" size={24} color="black"/>
                             ) : (
                                 <Ionicons name="flash-off" size={24} color="black" />
-                            )
+                           )
                         }
                         
                     </TouchableOpacity>
@@ -167,7 +170,7 @@ export const CameraComp = ({setUriCameraCapture, setShowCameraModal, getMediaLib
                 </Modal>
             </View>
 
-        </Camera>
+        </CameraView>
     )
 }
 

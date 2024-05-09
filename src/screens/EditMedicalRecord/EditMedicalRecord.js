@@ -23,7 +23,7 @@ export const EditMedicalRecord = ({navigation, route}) => {
 
     async function InserirExame() {
         const formData = new FormData();
-        formData.append("ConsultaId", '3FA85F64-5717-4562-B3FC-2C963F66AFA6')
+        formData.append("ConsultaId", '68402C87-2474-4F58-ADF2-62BBBA94D701')
         formData.append("Imagem", {
             uri : uriCameraCapture,
             name : `image.${uriCameraCapture.split('.').pop()}`,
@@ -141,7 +141,7 @@ export const EditMedicalRecord = ({navigation, route}) => {
                             </InputProfileBox>
 
                             <AlingnButtonProfile>
-                                <ButtonBox onPress={() => navigation.goBack()}>
+                                <ButtonBox onPress={() => navigation.replace('Main')}>
                                     <LinkCancel >Voltar</LinkCancel>
                                 </ButtonBox>
                             </AlingnButtonProfile>
