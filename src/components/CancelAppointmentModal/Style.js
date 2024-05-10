@@ -27,7 +27,7 @@ export const BoxConfirmationModal =styled(ContainerBoxModal)`
 
 export const BoxModalSchedule = styled(ContainerBoxModal)`
     width: 100%;
-    height: 56%;
+    height: 65%;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
 `

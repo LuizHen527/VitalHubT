@@ -27,7 +27,7 @@ export const SelectDoctor = ({navigation, route}) => {
 
     function cancelarMedico(){
         setMedico(null)
-        navigation.replace("AppointmentPacient")
+        navigation.replace("Main")
     }
 
     function handleContinue() {

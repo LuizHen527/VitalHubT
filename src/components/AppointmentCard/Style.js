@@ -32,7 +32,7 @@ export const ContainerProfile = styled.View`
     justify-content: space-between;
 `
 
-export const NameProfile = styled.TextInput`
+export const NameProfile = styled.Text`
     font-size: 16px;
     font-family: MontserratAlternates_600SemiBold;
     color: #33303E;

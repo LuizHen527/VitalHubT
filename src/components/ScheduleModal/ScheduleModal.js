@@ -7,7 +7,11 @@ import { Input, InputScheduleModal_1, InputScheduleModal_2, InputScheduleModal_3
 import { ButtonTitle, ScheduleModalText, TitleModal } from "../title/style"
 import { BoxContent, BoxInput, ContainerBoxAlign } from "./Style"
 import { useState } from "react"
-import { Text } from "react-native"
+import { Text,StyleSheet } from "react-native"
+import styled from "styled-components"
+import api from "../../service/service"
+
+
 
 const niveis = [{ id: 'D083C4DC-66E3-4856-BBFB-159764AA958D', tipo: 'Rotina' },
 { id: '07033F9A-4E0E-4F1B-928F-08990DF17761', tipo: 'Exame' },
@@ -16,13 +20,18 @@ const niveis = [{ id: 'D083C4DC-66E3-4856-BBFB-159764AA958D', tipo: 'Rotina' },
 export const ScheduleModal = ({
     visible, setShowModalSchedule, route, ...rest
 }) => {
+    const cidadeClinica = useState([])
     const [agendamento, setAgendamento] = useState(null);
     const [erroNivel, setErroNivel] = useState("");
-    const [listaLocalizacao,setListaLocalizacao] = useState(null)
-    const [localizacao,setLocalizacao] = useState(null)
+    const [listaLocalizacao, setListaLocalizacao] = useState(null)
+    const [localizacao, setLocalizacao] = useState(null)
     const [erroLocalizacao, setErroLocalizacao] = useState("");
 
     const navigation = useNavigation();
+
+    // async function GetCitys(){
+    //    await api.get("/Clinica/ListarTodas")
+    // }
 
     function HandleContinue() {
         // Verifica se o nível e a localização foram selecionados
@@ -30,7 +39,7 @@ export const ScheduleModal = ({
 
             let error = false
             setErroNivel("Selecione prioridade")
-            setErroLocalizacao("Preencha corretamente")
+            setErroLocalizacao("Preencha localização")
             error = true
 
             return !error; // Se não estiverem selecionados, retorna sem fazer nada
@@ -47,7 +56,7 @@ export const ScheduleModal = ({
     function Cancelar() {
 
         console.log("E NULOOOOOOOOOOOOOOOOOO___________________", agendamento);
-        navigation.replace("AppointmentPacient")
+        setShowModalSchedule(false)
 
     }
 
@@ -69,8 +78,7 @@ export const ScheduleModal = ({
                                         prioridadeId: 'D083C4DC-66E3-4856-BBFB-159764AA958D',
                                         prioridadeLabel: 'Rotina'
                                     })}
-                                    placeholder="Rotina"
-                                />
+                                ><Text style={styles.placeHolderNivel}  >Rotina</Text></InputScheduleModal_1>
                                 <InputScheduleModal_1
                                     onPress={() => setAgendamento({
                                         ...agendamento,
@@ -78,8 +86,9 @@ export const ScheduleModal = ({
                                         prioridadeId: '07033F9A-4E0E-4F1B-928F-08990DF17761',
                                         prioridadeLabel: 'Exame'
                                     })}
-                                    placeholder="Exame"
-                                />
+                                >
+                                    <Text style={styles.placeHolderNivel}  >Exame</Text>
+                                </InputScheduleModal_1>
                                 <InputScheduleModal_2
                                     onPress={() => setAgendamento({
                                         ...agendamento,
@@ -87,8 +96,8 @@ export const ScheduleModal = ({
                                         prioridadeId: '63261F6A-F19C-4651-A4DB-3601D68677E7',
                                         prioridadeLabel: 'Urgencia'
                                     })}
-                                    placeholder="Urgência"
-                                />
+                                    
+                                ><Text style={styles.placeHolderNivel}  >Urgência</Text></InputScheduleModal_2>
                             </BoxInput>
 
                             <Text style={{ color: 'red', marginRight: "46.5%" }}>{erroNivel}</Text>
@@ -96,7 +105,7 @@ export const ScheduleModal = ({
 
                             <ScheduleModalText>Informe a localização desejada</ScheduleModalText>
 
-                            
+
 
                             <InputScheduleModal_3
                                 placeholder="Informe a localização"
@@ -106,7 +115,7 @@ export const ScheduleModal = ({
                                     localizacao: txt
                                 })}
                             />
-                            
+
                             <Text style={{ color: 'red', marginRight: "46.5%" }}>{erroLocalizacao}</Text>
 
 
@@ -127,3 +136,10 @@ export const ScheduleModal = ({
         </ModalMedicalRecord>
     )
 }
+
+
+const styles = StyleSheet.create({
+    placeHolderNivel:{
+        color:"#34898f"
+    }
+})

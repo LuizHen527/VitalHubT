@@ -91,7 +91,7 @@ export const SelectClinic = ({navigation, route}) => {
                     <ButtonTitle>continuar</ButtonTitle>
                 </ButtonSchedule>
 
-                <ButtonCancel onPress={() => navigation.rep("AppointmentPacient")}>
+                <ButtonCancel onPress={() => navigation.replace("Main")}>
                     <LinkCancel>Cancelar</LinkCancel>
                 </ButtonCancel>
             </AlignBox>

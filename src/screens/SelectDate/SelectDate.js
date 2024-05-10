@@ -67,7 +67,7 @@ export const SelectDate = ({ navigation, route }) => {
     function Cancelar(){
         agendamento.params = null
         console.log("E NULOOOOOOOOOOOOOOOOOO___________________",agendamento);
-        navigation.replace("AppointmentPacient", {
+        navigation.replace("Main", {
             agendamento:{
                 ...route.params.agendamento //Passando todas as informacoes contidas no route.params.agendamento
             
