@@ -7,25 +7,50 @@ import { Input, InputScheduleModal_1, InputScheduleModal_2, InputScheduleModal_3
 import { ButtonTitle, ScheduleModalText, TitleModal } from "../title/style"
 import { BoxContent, BoxInput, ContainerBoxAlign } from "./Style"
 import { useState } from "react"
+import { Text } from "react-native"
 
 const niveis = [{ id: 'D083C4DC-66E3-4856-BBFB-159764AA958D', tipo: 'Rotina' },
 { id: '07033F9A-4E0E-4F1B-928F-08990DF17761', tipo: 'Exame' },
 { id: '63261F6A-F19C-4651-A4DB-3601D68677E7', tipo: 'Urgencia' }]
 
 export const ScheduleModal = ({
-    visible, setShowModalSchedule, ...rest
+    visible, setShowModalSchedule, route, ...rest
 }) => {
     const [agendamento, setAgendamento] = useState(null);
+    const [erroNivel, setErroNivel] = useState("");
+    const [listaLocalizacao,setListaLocalizacao] = useState(null)
+    const [localizacao,setLocalizacao] = useState(null)
+    const [erroLocalizacao, setErroLocalizacao] = useState("");
 
     const navigation = useNavigation();
 
     function HandleContinue() {
+        // Verifica se o nível e a localização foram selecionados
+        if (!agendamento || agendamento.prioridadeId == null || agendamento.localizacao == null) {
+
+            let error = false
+            setErroNivel("Selecione prioridade")
+            setErroLocalizacao("Preencha corretamente")
+            error = true
+
+            return !error; // Se não estiverem selecionados, retorna sem fazer nada
+        }
+
+        // Esconde o modal de agendamento
         setShowModalSchedule(false);
 
-        console.log(agendamento);
-
-        navigation.replace('SelectClinic', {agendamento : agendamento})
+        // Navega para a tela de seleção de clínica, passando os detalhes do agendamento
+        navigation.replace('SelectClinic', { agendamento: agendamento });
     }
+
+
+    function Cancelar() {
+
+        console.log("E NULOOOOOOOOOOOOOOOOOO___________________", agendamento);
+        navigation.replace("AppointmentPacient")
+
+    }
+
     return (
         <ModalMedicalRecord {...rest} visible={visible} transparent={true} animationType="fade">
             <ScheduleModalView>
@@ -66,7 +91,12 @@ export const ScheduleModal = ({
                                 />
                             </BoxInput>
 
+                            <Text style={{ color: 'red', marginRight: "46.5%" }}>{erroNivel}</Text>
+
+
                             <ScheduleModalText>Informe a localização desejada</ScheduleModalText>
+
+                            
 
                             <InputScheduleModal_3
                                 placeholder="Informe a localização"
@@ -76,12 +106,16 @@ export const ScheduleModal = ({
                                     localizacao: txt
                                 })}
                             />
+                            
+                            <Text style={{ color: 'red', marginRight: "46.5%" }}>{erroLocalizacao}</Text>
 
-                            <ButtonSchedule onPress={() => navigation.navigate("SelectClinic") & setShowModalSchedule(false) & HandleContinue()}>
+
+
+                            <ButtonSchedule onPress={() => HandleContinue()}>
                                 <ButtonTitle>continuar</ButtonTitle>
                             </ButtonSchedule>
 
-                            <ButtonCancel onPress={() => setShowModalSchedule(false)}>
+                            <ButtonCancel onPress={() => Cancelar()}>
                                 <LinkCancel>Cancelar</LinkCancel>
                             </ButtonCancel>
 

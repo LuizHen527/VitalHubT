@@ -7,10 +7,12 @@ import { Container } from "../../components/container/style"
 import { ButtonTitle, TitleModal } from "../../components/title/style"
 import { AlignBox, ContentBox } from "../SelectClinic/Style"
 import api from "../../service/service"
+import { Text } from "react-native"
 
 export const SelectDoctor = ({navigation, route}) => {
     const [medicosLista, setMedicosLista] = useState([]);
     const [medico, setMedico] = useState();
+    const [ erroMedico,setErroMedico] = useState("");
 
     async function ListarMedicos(){
         //Instanciar a chamada da api
@@ -23,7 +25,21 @@ export const SelectDoctor = ({navigation, route}) => {
         })
     }
 
+    function cancelarMedico(){
+        setMedico(null)
+        navigation.replace("AppointmentPacient")
+    }
+
     function handleContinue() {
+
+        if (medico == null ) {
+            let error
+            setErroMedico("Selecione o Medico")
+            error = true
+            return !error
+            
+        }
+
         navigation.replace("SelectDate", {
             agendamento : {
                 ...route.params.agendamento,
@@ -59,6 +75,8 @@ export const SelectDoctor = ({navigation, route}) => {
 
                 
             </ContentBox>
+
+            <Text style={{color: 'red',marginRight:"46.5%"}}>{erroMedico}</Text>
                 
 
             <AlignBox>
@@ -66,7 +84,7 @@ export const SelectDoctor = ({navigation, route}) => {
                     <ButtonTitle>continuar</ButtonTitle>
                 </ButtonSchedule>
 
-                <ButtonCancel onPress={() => navigation.pop(2)}>
+                <ButtonCancel onPress={() => cancelarMedico()}>
                     <LinkCancel>Cancelar</LinkCancel>
                 </ButtonCancel>
             </AlignBox>

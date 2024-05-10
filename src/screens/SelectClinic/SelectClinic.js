@@ -1,4 +1,4 @@
-import { ScrollView } from "react-native"
+import { ScrollView, Text } from "react-native"
 import { ClinicCard } from "../../components/ClinicCard/ClinicCard"
 import { LinkCancel } from "../../components/Links/style"
 import { ComponentList, ListComponent } from "../../components/List/Style"
@@ -19,6 +19,7 @@ import api from "../../service/service"
 export const SelectClinic = ({navigation, route}) => {
     const [clinicasLista, setClinicasLista] = useState([]);
     const [clinica, setClinica] = useState(null);
+    const [erroClinica,setErroClinica] = useState("");
 
     async function ListarClinicas(){
         await api.get(`/Clinica/BuscarPorCidade?cidade=${route.params.agendamento.localizacao}`)
@@ -34,6 +35,14 @@ export const SelectClinic = ({navigation, route}) => {
     };
 
     function handleContinue() {
+
+        if (clinica == null) {
+            let error 
+            setErroClinica("Selecione Clinica")
+            error = true
+            return !error
+        }
+
         navigation.replace("SelectDoctor", {
             agendamento:{
                 ...route.params.agendamento, //Passando todas as informacoes contidas no route.params.agendamento
@@ -41,6 +50,7 @@ export const SelectClinic = ({navigation, route}) => {
             }
         })
     }
+
 
     useEffect(() => {
         ListarClinicas()
@@ -71,6 +81,9 @@ export const SelectClinic = ({navigation, route}) => {
                 }
             />
             </ContentBox>
+
+            <Text style={{color: 'red',marginRight:"46.5%"}}>{erroClinica}</Text>
+
                 
 
             <AlignBox>
@@ -78,7 +91,7 @@ export const SelectClinic = ({navigation, route}) => {
                     <ButtonTitle>continuar</ButtonTitle>
                 </ButtonSchedule>
 
-                <ButtonCancel onPress={() => navigation.goBack("Main")}>
+                <ButtonCancel onPress={() => navigation.rep("AppointmentPacient")}>
                     <LinkCancel>Cancelar</LinkCancel>
                 </ButtonCancel>
             </AlignBox>
