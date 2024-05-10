@@ -1,4 +1,4 @@
-import { ActivityIndicator, Button, Image, Text, View } from "react-native"
+import { ActivityIndicator, Button, Image, StatusBar, Text, View } from "react-native"
 import { Container } from "../../components/container/style"
 import { ImageGoogle, Logo } from "../../components/images/style"
 import { ButtonTitle, ButtonTitleGoogle, TextAccount, Title } from "../../components/title/style"
