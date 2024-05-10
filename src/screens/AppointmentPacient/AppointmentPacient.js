@@ -70,8 +70,12 @@ export const AppointmentPacient = ({ navigation }) => {
 
         await api.get(`/${url}/BuscarPorData?data=${dataConsulta}&id=${profile.jti}`)
             .then(response => {
+                console.log('COMECOU');
+                console.log('consultas');
+                console.log(response.data);
+                console.log(response.data.paciente);
                 setConsultas(response.data);
-                //console.log(response.data[0]);
+
             }).catch(error => {
                 console.log(error);
             })
@@ -247,6 +251,7 @@ export const AppointmentPacient = ({ navigation }) => {
 
                                 perfil={profile.role}
                                 consultas={item}
+                                nome={item.paciente.idNavigation.nome}
 
                                 //funções
                                 onPressCancel={() => setShowModalCancel(true)}
@@ -257,7 +262,7 @@ export const AppointmentPacient = ({ navigation }) => {
                                 onPressDoctorInsert={() => setShowModalAppointment(true)}
 
                                 //Dados
-                                dataNascimento={item.paciente.dataNascimento}
+                                //dataNascimento={item.paciente.dataNascimento}
                                 prioridade={item.prioridade.prioridade}
                                 dataConsulta={moment(item.dataConsulta).format('h:mm')}
                                 situacao={item.situacao.situacao}

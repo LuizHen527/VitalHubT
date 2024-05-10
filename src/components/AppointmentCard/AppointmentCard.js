@@ -13,6 +13,7 @@ export const AppointmentCard = ({
     perfil,
     consultaS,
     consultas,
+    nome,
 
     prioridade,
     dataConsulta,
@@ -57,7 +58,7 @@ export const AppointmentCard = ({
         SwitchPrioridade();
     }, []);
     return(
-        <ContainerCard onPress={situacao == "Pendentes" ? onPressDoctorModal : null} style={styles.shadow}>
+        <ContainerCard onPress={situacao == "Pendentes" ? onPressDoctorModal : ''} style={styles.shadow}>
                 <ImageAppointmentProfile
                     source={require('../../assets/eduProfileImage.png')}
                 />
@@ -65,7 +66,7 @@ export const AppointmentCard = ({
 
                 <DataProfileCard>
 
-                <NameProfile editable={false} maxLength={27} >{consultas.paciente.idNavigation.nome}</NameProfile>
+                <NameProfile editable={false} maxLength={27} >{nome}</NameProfile>
 
                 <AgeProfile>{idade} anos - <TypeAppointment>{tipoPrioridade}</TypeAppointment></AgeProfile>
 
