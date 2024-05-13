@@ -11,7 +11,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 //Queria passar props com o nome e a URL da imagem, mas nao consegui
 //Update: O react native nao consegue renderizar imagens dinamicamente, quero ver como o professor vai fazer isso
 
-export const HeaderProfile = () => {
+export const HeaderProfile = ({
+    fotoPerfil
+}) => {
     const navigation = useNavigation();
     const [ nome, setNome ] = useState('');
     const [idUser, setIdUser] = useState('');
@@ -36,7 +38,7 @@ export const HeaderProfile = () => {
         <ContainerHeader>
             <BoxUser onPress={() => navigation.navigate("Profile")}>
                 <ImageUser
-                    source={require('../../assets/drauzioImage.webp')}
+                    source={{ uri: fotoPerfil }}
                 />
 
                 <DataUser>

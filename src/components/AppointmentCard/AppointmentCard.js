@@ -14,6 +14,7 @@ export const AppointmentCard = ({
     consultaS,
     consultas,
     nome,
+    fotoPerfil,
 
     prioridade,
     dataConsulta,
@@ -60,7 +61,7 @@ export const AppointmentCard = ({
     return(
         <ContainerCard onPress={situacao == "Pendentes" ? onPressDoctorModal : ''} style={styles.shadow}>
                 <ImageAppointmentProfile
-                    source={require('../../assets/eduProfileImage.png')}
+                    source={{ uri: fotoPerfil }}
                 />
             <ContainerProfile>
 

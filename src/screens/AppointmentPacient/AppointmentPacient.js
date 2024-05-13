@@ -2,8 +2,8 @@ import moment from "moment";
 import { HeaderProfile } from "../../components/HeaderProfile/HeaderProfile"
 import { Container, ContainerHeader } from "../../components/container/style";
 import { StyledCalendarStrip } from "../../components/StyledCalendarStrip/styledCalendarStrip";
-import { StatusBar, StyleSheet } from "react-native";
-import { BoxBell, BoxUser, ContainerList, DataUser, FilterAppointment, ImageUser } from "../AppointmentDoctor/style";
+import { ScrollView, StatusBar, StyleSheet } from "react-native";
+import { BoxBell, BoxUser, ContainerList, ContainerList2, DataUser, FilterAppointment, ImageUser } from "../AppointmentDoctor/style";
 import { AbsListAppointment } from "../../components/AbsListAppointment/AbsListAppointment";
 import { useEffect, useState } from "react";
 import { ListComponent } from "../../components/List/Style";
@@ -39,6 +39,7 @@ const User = { id: 1, nome: "Dr Drauzio", sourceImage: '../../assets/eduProfileI
 export const AppointmentPacient = ({ navigation }) => {
     const [consultasMedico, setConsultasMedico] = useState([]);
     const [idUser, setIdUser] = useState('');
+    const [fotoPerfil, setFotoPerfil] = useState();
     const [showModalCancel, setShowModalCancel] = useState(false);
     const [showModalAppointment, setShowModalAppointment] = useState(false);
     const [showModalSchedule, setShowModalSchedule] = useState(false);
@@ -48,6 +49,7 @@ export const AppointmentPacient = ({ navigation }) => {
     const [dataConsulta, setDataConsulta] = useState('');
     const [consultas, setConsultas] = useState([]);
     const [profile, setProfile] = useState(null);
+    const [profileData, setProfileData] = useState({});
     const [consultaSelecionada, setConsultaSelecionada] = useState();
 
     async function profileLoad() {
@@ -59,23 +61,30 @@ export const AppointmentPacient = ({ navigation }) => {
             setDataConsulta(moment().format('YYYY-MM-DD'));
         }
 
-        setIdUser(token.name);
 
-        //console.log(idUser);
+
+        setIdUser(token.name);
     }
 
     async function ListarConsultas() {
+        console.log('ROLE');
+        console.log(profile.role);
         const url = (profile.role == 'Medico' ? 'Medicos' : 'Pacientes');
-        console.log(`/${url}/BuscarPorData?data=${dataConsulta}&id=${profile.jti}`);
-
         await api.get(`/${url}/BuscarPorData?data=${dataConsulta}&id=${profile.jti}`)
             .then(response => {
-                console.log('COMECOU');
-                console.log('consultas');
-                console.log(response.data);
-                console.log(response.data.paciente);
                 setConsultas(response.data);
 
+            }).catch(error => {
+                console.log(error);
+            })
+    }
+
+    async function BuscarUsuario() {
+        const url = (profile.role == 'Medico' ? 'Medicos' : 'Pacientes');
+        await api.get(`/${url}/BuscarPorId?id=${profile.jti}`)
+            .then(response => {
+                setProfileData(response.data);
+                setFotoPerfil(response.data.idNavigation.foto);
             }).catch(error => {
                 console.log(error);
             })
@@ -115,13 +124,14 @@ export const AppointmentPacient = ({ navigation }) => {
     }
 
     useEffect(() => {
-        console.log('profile')
         profileLoad();
+        
     }, []);
 
     useEffect(() => {
+        
         if (dataConsulta != '') {
-            console.log('lista')
+            BuscarUsuario();
             ListarConsultas();
         }
     }, [dataConsulta]);
@@ -175,7 +185,9 @@ export const AppointmentPacient = ({ navigation }) => {
             name={User.nome}
         /> */}
 
-            <HeaderProfile />
+            <HeaderProfile
+                fotoPerfil={fotoPerfil}
+            />
 
             <StyledCalendarStrip
 
@@ -238,45 +250,47 @@ export const AppointmentPacient = ({ navigation }) => {
 
             </FilterAppointment>
 
-            <ContainerList>
-                <ListComponent
-                    data={consultas}
-                    keyExtractor={(item) => item.id}
 
-                    renderItem={({ item }) =>
-                        statusLista == item.situacao.situacao && (
+            <ListComponent
+                data={consultas}
+                keyExtractor={(item) => item.id}
 
-                            <AppointmentCard
+                renderItem={({ item }) =>
+                    statusLista == item.situacao.situacao && (
+
+                        <AppointmentCard
 
 
-                                perfil={profile.role}
-                                consultas={item}
-                                nome={item.paciente.idNavigation.nome}
+                            perfil={profile.role}
+                            consultas={item}
+                            nome={item.paciente.idNavigation.nome}
+                            dataNascimento={item.paciente.dataNascimento}
+                            fotoPerfil={item.paciente.idNavigation.foto}
 
-                                //funções
-                                onPressCancel={() => setShowModalCancel(true)}
-                                onPressAppointment={() => navigation.replace("EditMedicalRecord", { consulta: item })}
-                                onPressDoctorModal={() => MostrarModal('local', item)}
+                            //funções
+                            onPressCancel={() => setShowModalCancel(true)}
+                            onPressAppointment={() => navigation.replace("EditMedicalRecord", { consulta: item })}
+                            onPressDoctorModal={() => MostrarModal('local', item)}
 
-                                // apagar depois (Fiz so pra testar validacao)
-                                onPressDoctorInsert={() => setShowModalAppointment(true)}
+                            // apagar depois (Fiz so pra testar validacao)
+                            onPressDoctorInsert={() => setShowModalAppointment(true)}
 
-                                //Dados
-                                //dataNascimento={item.paciente.dataNascimento}
-                                prioridade={item.prioridade.prioridade}
-                                dataConsulta={moment(item.dataConsulta).format('h:mm')}
-                                situacao={item.situacao.situacao}
+                            //Dados
+                            //dataNascimento={item.paciente.dataNascimento}
+                            prioridade={item.prioridade.prioridade}
+                            dataConsulta={moment(item.dataConsulta).format('h:mm')}
+                            situacao={item.situacao.situacao}
 
-                                //Modal de cancelar
-                                onConnectCancelar={() => MostrarModal('cancelar', item)}
-                                onConnectAppoitment={() => MostrarModal('prontuario', item)}
-                                consultaS={consultaSelecionada}
+                            //Modal de cancelar
+                            onConnectCancelar={() => MostrarModal('cancelar', item)}
+                            onConnectAppoitment={() => MostrarModal('prontuario', item)}
+                            consultaS={consultaSelecionada}
 
-                            />
-                        )
-                    }
-                />
-            </ContainerList>
+                        />
+                    )
+                }
+            />
+
 
             <CancelAppointmentModal
                 visible={showModalCancel}
