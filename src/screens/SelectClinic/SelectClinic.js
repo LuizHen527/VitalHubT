@@ -54,6 +54,7 @@ export const SelectClinic = ({navigation, route}) => {
 
     useEffect(() => {
         ListarClinicas()
+        console.log(clinicasLista);
     }, []);
 
     return (

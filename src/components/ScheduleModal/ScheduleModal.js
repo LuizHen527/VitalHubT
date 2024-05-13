@@ -6,10 +6,11 @@ import { ButtonCancel, ButtonLogin, ButtonLoginVE, ButtonSchedule } from "../but
 import { Input, InputScheduleModal_1, InputScheduleModal_2, InputScheduleModal_3 } from "../input/styled"
 import { ButtonTitle, ScheduleModalText, TitleModal } from "../title/style"
 import { BoxContent, BoxInput, ContainerBoxAlign } from "./Style"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Text,StyleSheet } from "react-native"
 import styled from "styled-components"
 import api from "../../service/service"
+import { SelectList } from "react-native-dropdown-select-list"
 
 
 
@@ -23,15 +24,40 @@ export const ScheduleModal = ({
     const cidadeClinica = useState([])
     const [agendamento, setAgendamento] = useState(null);
     const [erroNivel, setErroNivel] = useState("");
-    const [listaLocalizacao, setListaLocalizacao] = useState(null)
+    const [listaLocalizacao, setListaLocalizacao] = useState([])
     const [localizacao, setLocalizacao] = useState(null)
     const [erroLocalizacao, setErroLocalizacao] = useState("");
 
     const navigation = useNavigation();
 
-    // async function GetCitys(){
-    //    await api.get("/Clinica/ListarTodas")
-    // }
+    async function GetCitys(){
+       await api.get("/Clinica/ListarTodas")
+       .then(response => {
+           setLocalizacao(response.data)
+           console.log("CIDADES--------------->");
+           console.log(response.data);
+       }).catch(error => {
+        console.log(error);
+       })
+    }
+
+    function SetCitys(){
+        if (localizacao && localizacao.length > 0) {
+            const cidades = localizacao.map(item => item.endereco.cidade);
+            setListaLocalizacao(cidades);
+        }
+    }
+
+
+   useEffect(() => {
+    GetCitys();
+}, []);
+
+useEffect(() => {
+    SetCitys();
+    console.log(listaLocalizacao);
+}, [localizacao]);
+
 
     function HandleContinue() {
         // Verifica se o nível e a localização foram selecionados
@@ -55,7 +81,6 @@ export const ScheduleModal = ({
 
     function Cancelar() {
 
-        console.log("E NULOOOOOOOOOOOOOOOOOO___________________", agendamento);
         setShowModalSchedule(false)
 
     }
@@ -104,17 +129,31 @@ export const ScheduleModal = ({
 
 
                             <ScheduleModalText>Informe a localização desejada</ScheduleModalText>
+                            
+                     
+                           
+                            <SelectList
 
+                                data={listaLocalizacao}
+                                placeholder="Informe a localização"
+                                value={agendamento ? agendamento.localizacao : null}
+                                onSelect={(item)=> setAgendamento({
+                                    ...agendamento,
+                                    localizacao:item
+                                })}
+                            
+                            />
+                     
 
-
-                            <InputScheduleModal_3
+                         
+                            {/* <InputScheduleModal_3
                                 placeholder="Informe a localização"
                                 value={agendamento ? agendamento.localizacao : null}
                                 onChangeText={(txt) => setAgendamento({
                                     ...agendamento, //Mantendo as informacoes de agendamento
                                     localizacao: txt
                                 })}
-                            />
+                            /> */}
 
                             <Text style={{ color: 'red', marginRight: "46.5%" }}>{erroLocalizacao}</Text>
 
