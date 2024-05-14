@@ -138,8 +138,6 @@ export const EditProfile = ({ navigation }) => {
             console.log(error);
         })
 
-        console.log(fotoPerfil);
-
     }
 
     async function SaveData() {
@@ -238,7 +236,7 @@ export const EditProfile = ({ navigation }) => {
 
                             <ContainerImage>
                                 <ImageProfile
-                                    source={{ uri: fotoPerfil }}
+                                    source={{ uri: fotoPerfil == null ? 'https://blobvitalhub3dmg2.blob.core.windows.net/blobvitalcontainer/imagemPadrao.jpg' : fotoPerfil }}
                                 />
                                 {/*  */}
 

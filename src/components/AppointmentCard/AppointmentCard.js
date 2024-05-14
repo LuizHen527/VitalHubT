@@ -15,6 +15,7 @@ export const AppointmentCard = ({
     consultas,
     nome,
     fotoPerfil,
+    dataValidation,
 
     prioridade,
     dataConsulta,
@@ -57,6 +58,7 @@ export const AppointmentCard = ({
     useEffect(() => {
         CalcIdade();
         SwitchPrioridade();
+        console.log(dataValidation);
     }, []);
     return(
         <ContainerCard onPress={situacao == "Pendentes" ? onPressDoctorModal : ''} style={styles.shadow}>

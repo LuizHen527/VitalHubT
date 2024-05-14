@@ -26,8 +26,6 @@ export const HeaderProfile = ({
 
         await AsyncStorage.setItem('idUsuario', (idUser));
 
-        //console.log(nome);
-        //console.log(idUser);
     }
 
     useEffect(() => {
