@@ -51,7 +51,7 @@ export const AppointmentPacient = ({ navigation }) => {
     const [profile, setProfile] = useState(null);
     const [profileData, setProfileData] = useState({});
     const [consultaSelecionada, setConsultaSelecionada] = useState();
-    const [dataAtual, setDataAtual] = useState();
+
 
     async function profileLoad() {
         const token = await userDecodeToken();
@@ -123,6 +123,8 @@ export const AppointmentPacient = ({ navigation }) => {
             setShowModalAppointment(true);
         }
     }
+
+
 
     useEffect(() => {
         profileLoad();
@@ -269,7 +271,7 @@ export const AppointmentPacient = ({ navigation }) => {
                             nome={item.paciente.idNavigation.nome}
                             dataNascimento={item.paciente.dataNascimento}
                             fotoPerfil={profile.role == 'Medico' ? item.paciente.idNavigation.foto : item.medicoClinica.medico.idNavigation.foto}
-                            dataValidation={profile.role == 'Medico' ? moment.min(item.dataConsulta) == item.dataConsulta ? false : true : 'paciente'}
+                            dataValidation={item.dataConsulta}
 
                             //funções
                             onPressCancel={() => setShowModalCancel(true)}

@@ -66,7 +66,7 @@ export const ScheduleModal = ({
                                     onPress={() => setAgendamento({
                                         ...agendamento,
 
-                                        prioridadeId: '83F5E13D-163C-41FD-98AF-A2A5BC765C77',
+                                        prioridadeId: 'D083C4DC-66E3-4856-BBFB-159764AA958D',
                                         prioridadeLabel: 'Rotina'
                                     })}
                                     placeholder="Rotina"
@@ -75,7 +75,7 @@ export const ScheduleModal = ({
                                     onPress={() => setAgendamento({
                                         ...agendamento,
 
-                                        prioridadeId: 'BE3B3BD5-B62E-48C4-B17D-9B0441E54E10',
+                                        prioridadeId: '07033F9A-4E0E-4F1B-928F-08990DF17761',
                                         prioridadeLabel: 'Exame'
                                     })}
                                     placeholder="Exame"
@@ -84,7 +84,7 @@ export const ScheduleModal = ({
                                     onPress={() => setAgendamento({
                                         ...agendamento,
 
-                                        prioridadeId: '1C69B86B-29BE-4C0C-AF88-F112A05992BD',
+                                        prioridadeId: '63261F6A-F19C-4651-A4DB-3601D68677E7',
                                         prioridadeLabel: 'Urgencia'
                                     })}
                                     placeholder="Urgência"

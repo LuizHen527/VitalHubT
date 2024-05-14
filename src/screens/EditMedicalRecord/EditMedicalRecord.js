@@ -22,6 +22,7 @@ export const EditMedicalRecord = ({navigation, route}) => {
     const [ descricaoExame, setDescricaoExame ] = useState();
 
     async function InserirExame() {
+        console.log('entrou');
         const formData = new FormData();
         formData.append("ConsultaId", '68402C87-2474-4F58-ADF2-62BBBA94D701')
         formData.append("Imagem", {
@@ -29,13 +30,15 @@ export const EditMedicalRecord = ({navigation, route}) => {
             name : `image.${uriCameraCapture.split('.').pop()}`,
             type : `image/${uriCameraCapture.split('.').pop()}`
         })
+        console.log('format');
 
         await api.post(`/Exame/Cadastrar`, formData, {
             headers : {
                 "Content-Type" : "multipart/form-data"
             }
         }).then(response => {
-            setDescricaoExame( descricaoExame + "\n" + response.data.descricao)
+            
+            setDescricaoExame( response.data.descricao)
         }).catch(error => {
             console.log(error);
         })
