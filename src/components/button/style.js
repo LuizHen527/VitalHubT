@@ -22,8 +22,18 @@ export const ButtonGrayEdit = styled(ButtonLoginVE)`
     background-color: #ACABB7;
     border: 0px;
 `
+export const ButtonGrayEdit2 = styled(ButtonLoginVE)`
+    margin-top: 30px;
+    
+    background-color: #ACABB7;
+    border: 0px;
+
+`
 
 export const ButtonBlue = styled(ButtonGrayEdit)`
+    background-color: #496BBA;
+`
+export const ButtonBlue2 = styled(ButtonGrayEdit2)`
     background-color: #496BBA;
 `
 
@@ -60,6 +70,11 @@ export const ButtonDoctorModal = styled(ButtonLoginVE)`
 
 export const ButtonModal = styled(ButtonLoginVE)`
     width: 285px;
+`
+export const ButtonModal2 = styled(ButtonLoginVE)`
+    width: 285px;
+    margin-top: 35px;
+    margin-bottom: 20px;
 `
 
 export const ButtonCancel = styled.TouchableOpacity`

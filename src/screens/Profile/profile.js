@@ -4,31 +4,45 @@ import { ImageProfile } from "../../components/images/style"
 import { InputDescriptionEdit, InputDescriptionProfile, InputDiagnosisEdit, InputDiagnosisProfile, InputPrescriptionEdit, InputPrescriptionProfile } from "../../components/input/styled"
 import { ButtonTitle, InfoTextProfile, InputTitle, TitleProfile } from "../../components/title/style"
 import { ContainerInfoProfile, ContainerInput, ContainerInputProfile, TextInput, TextInputEdit } from "./style"
-import { ButtonBlue, ButtonCancel, ButtonGrayEdit, ButtonLoginVE } from "../../components/button/style"
+import { ButtonBlue, ButtonBlue2, ButtonCancel, ButtonGrayEdit, ButtonGrayEdit2, ButtonLoginVE } from "../../components/button/style"
 import { LinkCancel } from "../../components/Links/style"
 import { useEffect, useState } from "react"
+import moment from "moment"
 
 
 export const Profile = ({navigation, route}) => {
 
     const [ editInput, setEditInput ] = useState(false);
+    const [idade, setIdade] = useState();
+
+    async function CalcIdade() {
+        const date = moment().format('YYYY');
+        const nascimento = moment(route.params.consulta.paciente.dataNascimento).format('YYYY');
+        const idadeResult = date - nascimento;
+
+        setIdade(idadeResult);
+    }
+
+    async function CadastrarProntuario() {
+        api.put(``)
+    }
 
     useEffect(() => {
-        console.log(route.params.consulta);
+        CalcIdade();
     }, [])
 
     return(
         <ScrollView>
             <Container>
                 <ImageProfile
-                    source={require('../../assets/profilePic.jpg')}
+                    source={{ uri: route.params.consulta.paciente.idNavigation.foto }}
                 />
 
-                <TitleProfile>Richard Kosta</TitleProfile>
+                <TitleProfile>{route.params.consulta.paciente.idNavigation.nome}</TitleProfile>
 
                 <ContainerInfoProfile>
-                    <InfoTextProfile>22 anos</InfoTextProfile>
-                    <InfoTextProfile>richard.kosta@gmail.com</InfoTextProfile>
+                    <InfoTextProfile>{idade} anos</InfoTextProfile>
+                    <InfoTextProfile>{route.params.consulta.paciente.idNavigation.email}</InfoTextProfile>
                 </ContainerInfoProfile>
                 
                 <ContainerInputProfile>
@@ -36,15 +50,17 @@ export const Profile = ({navigation, route}) => {
 
                     {
                         editInput == false ? (
-                            <InputDescriptionProfile>
-                                <TextInput>Descrição</TextInput>
+                            <InputDescriptionProfile
+                                multiline={true}
+                            >
+                                <TextInput>O paciente possuí uma infecção no 
+                                ouvido. Necessário repouse de 2 dias 
+                                e acompanhamento médico constante</TextInput>
                             </InputDescriptionProfile>
                         ) :
                         (
                             <InputDescriptionEdit>
-                                <TextInputEdit multiline={true}>O paciente possuí uma infecção no 
-                                ouvido. Necessário repouse de 2 dias 
-                                e acompanhamento médico constante</TextInputEdit>
+                                <TextInputEdit multiline={true}>Descrição</TextInputEdit>
                             </InputDescriptionEdit>
                         )
                     }
@@ -55,14 +71,14 @@ export const Profile = ({navigation, route}) => {
 
                     {
                         editInput == false ? (
-                            <InputDiagnosisProfile>
-                                <TextInput>Diagnostico</TextInput>
+                            <InputDiagnosisProfile editable={false}>
+                                <TextInput>Infecção no ouvido</TextInput>
                             </InputDiagnosisProfile>
                         ):
 
                         (
                             <InputDiagnosisEdit>
-                                <TextInputEdit>Infecção no ouvido</TextInputEdit>
+                                <TextInputEdit>Diagnostico </TextInputEdit>
                             </InputDiagnosisEdit>
                         )
                     }
@@ -73,15 +89,15 @@ export const Profile = ({navigation, route}) => {
 
                     {
                         editInput == false ? (
-                            <InputPrescriptionProfile>
-                                <TextInput>Prescrição medica</TextInput>
+                            <InputPrescriptionProfile multiline={true} editable={false}>
+                                <TextInput>Medicamento: Advil 
+                                    Dosagem: 50 mg 
+                                    Frequência: 3 vezes ao dia 
+                                    Duração: 3 dias</TextInput>
                             </InputPrescriptionProfile>
                         ):(
                             <InputPrescriptionEdit>
-                                <TextInputEdit>Medicamento: Advil 
-                                    Dosagem: 50 mg 
-                                    Frequência: 3 vezes ao dia 
-                                    Duração: 3 dias</TextInputEdit>
+                                <TextInputEdit>Prescrição medica</TextInputEdit>
                             </InputPrescriptionEdit>
                         )
                     }
@@ -89,19 +105,28 @@ export const Profile = ({navigation, route}) => {
 
                 </ContainerInputProfile>
 
-                <ButtonLoginVE>
-                    <ButtonTitle>SALVAR</ButtonTitle>
-                </ButtonLoginVE>
+                {
+                    editInput == false ? (
+                        <ButtonGrayEdit2 onPress={() => setEditInput(true)}>
+                            <ButtonTitle>SALVAR</ButtonTitle>
+                        </ButtonGrayEdit2>
+                    ):
+                    (
+                        <ButtonBlue2 onPress={() => setEditInput(false)}>
+                            <ButtonTitle>SALVAR</ButtonTitle>
+                        </ButtonBlue2>
+                    )
+                }
 
                 {
                     editInput == false ? (
-                        <ButtonGrayEdit onPress={() => setEditInput(true)}>
+                        <ButtonBlue onPress={() => setEditInput(true)}>
                             <ButtonTitle>EDITAR</ButtonTitle>
-                        </ButtonGrayEdit>
+                        </ButtonBlue>
                     ):
                     (
                         <ButtonBlue onPress={() => setEditInput(false)}>
-                            <ButtonTitle>EDITAR</ButtonTitle>
+                            <ButtonTitle>PARAR DE EDITAR</ButtonTitle>
                         </ButtonBlue>
                     )
                 }

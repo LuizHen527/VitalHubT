@@ -20,6 +20,11 @@ export const TitleModalRecord = styled(TitleModal)`
     margin-top: 20px;
 `
 
+export const TitleModalRecord2 = styled(TitleModal)`
+    margin-top: 20px;
+    margin-bottom: 10px;
+`
+
 export const ButtonTitle = styled.Text`
     font-family: MontserratAlternates_700Bold;
     font-size: 14px;
