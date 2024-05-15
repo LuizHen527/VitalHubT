@@ -18,7 +18,7 @@ export const DoctorModal = ({
         // await setShowModalAppoitment(false);
 
         if(screen == 'AppointmentLocation'){
-            navigation.replace(screen, {clinicaid : 'consulta'.medicoClinica.clinicaId})
+            navigation.replace(screen, {clinicaid : consulta.medicoClinica.clinicaId})
         }else{
             navigation.replace(screen)
         }

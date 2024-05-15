@@ -87,44 +87,46 @@ export const AppointmentPacient = ({ navigation }) => {
         }
     }
 
-    const ItemView = ({ item }) => {return(
-        statusLista == item.situacao.situacao && (
-
-            
-            
-            
-            <AppointmentCard
+    const ItemView = ({ item }) => {
+        return (
+            statusLista == item.situacao.situacao && (
 
 
-                perfil={profile.role}
-                consultas={item}
-                nome={item.paciente.idNavigation.nome}
-                dataNascimento={item.paciente.dataNascimento}
-                fotoPerfil={profile.role == 'Medico' ? item.paciente.idNavigation.foto : item.medicoClinica.medico.idNavigation.foto}
-                dataValidation={item.dataConsulta}
 
-                //funções
-                onPressCancel={() => setShowModalCancel(true)}
-                onPressAppointment={() => navigation.replace("EditMedicalRecord", { consulta: item })}
-                onPressDoctorModal={() => MostrarModal('local', item)}
 
-                // apagar depois (Fiz so pra testar validacao)
-                onPressDoctorInsert={() => setShowModalAppointment(true)}
+                <AppointmentCard
 
-                //Dados
-                //dataNascimento={item.paciente.dataNascimento}
-                prioridade={item.prioridade.prioridade}
-                dataConsulta={moment(item.dataConsulta).format('h:mm')}
-                situacao={item.situacao.situacao}
 
-                //Modal de cancelar
-                onConnectCancelar={() => MostrarModal('cancelar', item)}
-                onConnectAppoitment={() => MostrarModal('prontuario', item)}
-                consultaS={consultaSelecionada}
+                    perfil={profile.role}
+                    consultas={item}
+                    nome={item.paciente.idNavigation.nome}
+                    dataNascimento={item.paciente.dataNascimento}
+                    fotoPerfil={profile.role == 'Medico' ? item.paciente.idNavigation.foto : item.medicoClinica.medico.idNavigation.foto}
+                    dataValidation={item.dataConsulta}
 
-            />
+                    //funções
+                    onPressCancel={() => setShowModalCancel(true)}
+                    onPressAppointment={() => navigation.replace("EditMedicalRecord", { consulta: item })}
+                    onPressDoctorModal={() => MostrarModal('local', item)}
+
+                    // apagar depois (Fiz so pra testar validacao)
+                    onPressDoctorInsert={() => MostrarModal()}
+
+                    //Dados
+                    //dataNascimento={item.paciente.dataNascimento}
+                    prioridade={item.prioridade.prioridade}
+                    dataConsulta={moment(item.dataConsulta).format('h:mm')}
+                    situacao={item.situacao.situacao}
+
+                    //Modal de cancelar
+                    onConnectCancelar={() => MostrarModal('cancelar', item)}
+                    onConnectAppoitment={() => MostrarModal('prontuario', item)}
+                    consultaS={consultaSelecionada}
+
+                />
+            )
         )
-    )}
+    }
 
 
     async function profileLoad() {
@@ -183,6 +185,7 @@ export const AppointmentPacient = ({ navigation }) => {
 
     function MostrarModal(modal, consulta) {
         setConsultaSelecionada(consulta);
+        console.log(consultaSelecionada.id.paciente.idNavigation.nome);
 
         if (modal == 'cancelar') {
             setShowModalCancel(true)
@@ -201,15 +204,16 @@ export const AppointmentPacient = ({ navigation }) => {
     useEffect(() => {
         profileLoad();
 
-        
-        
+
+
     }, []);
 
     useEffect(() => {
-        
+
         if (dataConsulta != '') {
             BuscarUsuario();
             ListarConsultas();
+
         }
     }, [dataConsulta]);
 
@@ -361,14 +365,20 @@ export const AppointmentPacient = ({ navigation }) => {
                 onPressLocal={() => setShowModalDoctor(false)}
             />
 
-            <MedicalRecordModal
-                visible={showModalAppointment}
-                setShowModalAppointment={setShowModalAppointment}
-            />
+            {
+                consultaSelecionada == null ? (<></>) : (
+                    <MedicalRecordModal
+                        visible={showModalAppointment}
+                        setShowModalAppointment={setShowModalAppointment}
+                        consulta={consultaSelecionada}
+                    />
+
+                )
+            }
             {
                 profile == null ? (<></>) : profile.role == 'Medico' ? (
                     <></>
-                ):(
+                ) : (
                     <ContainerAppointmentButton
                         onPress={() => setShowModalSchedule(true)}
                     >
