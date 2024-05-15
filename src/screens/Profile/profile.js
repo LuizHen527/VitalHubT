@@ -6,12 +6,16 @@ import { ButtonTitle, InfoTextProfile, InputTitle, TitleProfile } from "../../co
 import { ContainerInfoProfile, ContainerInput, ContainerInputProfile, TextInput, TextInputEdit } from "./style"
 import { ButtonBlue, ButtonCancel, ButtonGrayEdit, ButtonLoginVE } from "../../components/button/style"
 import { LinkCancel } from "../../components/Links/style"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 
-export const Profile = ({navigation}) => {
+export const Profile = ({navigation, route}) => {
 
     const [ editInput, setEditInput ] = useState(false);
+
+    useEffect(() => {
+        console.log(route.params.consulta);
+    }, [])
 
     return(
         <ScrollView>

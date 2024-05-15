@@ -75,7 +75,7 @@ export const AppointmentPacient = ({ navigation }) => {
     const [consultas, setConsultas] = useState([]);
     const [profile, setProfile] = useState(null);
     const [profileData, setProfileData] = useState({});
-    const [consultaSelecionada, setConsultaSelecionada] = useState();
+    const [consultaSelecionada, setConsultaSelecionada] = useState(null);
     const [refreshing, setRefreshing] = useState(false);
 
     async function onRefresh() {
@@ -109,7 +109,7 @@ export const AppointmentPacient = ({ navigation }) => {
                 onPressDoctorModal={() => MostrarModal('local', item)}
 
                 // apagar depois (Fiz so pra testar validacao)
-                onPressDoctorInsert={() => setShowModalAppointment(true)}
+                onPressDoctorInsert={() => MostrarModal('', item)}
 
                 //Dados
                 //dataNascimento={item.paciente.dataNascimento}
@@ -181,7 +181,8 @@ export const AppointmentPacient = ({ navigation }) => {
         })
     }
 
-    function MostrarModal(modal, consulta) {
+    async function MostrarModal(modal, consulta) {
+
         setConsultaSelecionada(consulta);
 
         if (modal == 'cancelar') {
@@ -190,8 +191,8 @@ export const AppointmentPacient = ({ navigation }) => {
         } else if (modal == 'local') {
             setShowModalDoctor(true)
 
-        } else {
-
+        }
+         else {
             setShowModalAppointment(true);
         }
     }
@@ -361,10 +362,16 @@ export const AppointmentPacient = ({ navigation }) => {
                 onPressLocal={() => setShowModalDoctor(false)}
             />
 
-            <MedicalRecordModal
-                visible={showModalAppointment}
-                setShowModalAppointment={setShowModalAppointment}
-            />
+            {
+                consultaSelecionada == null ? (<></>) : (
+                    <MedicalRecordModal
+                        visible={showModalAppointment}
+                        setShowModalAppointment={setShowModalAppointment}
+                        consulta={consultaSelecionada}
+                    />
+
+                )
+            }
             {
                 profile == null ? (<></>) : profile.role == 'Medico' ? (
                     <></>

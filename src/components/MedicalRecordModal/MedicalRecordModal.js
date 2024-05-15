@@ -8,7 +8,7 @@ import { LinkCancel } from "../Links/style"
 import { useNavigation } from "@react-navigation/native"
 
 export const MedicalRecordModal = ({
-    visible, setShowModalAppointment, goToMedicalRecord, ...rest
+    visible, setShowModalAppointment, goToMedicalRecord, consulta, ...rest
 }) => {
 
     const navigation = useNavigation();
@@ -16,7 +16,7 @@ export const MedicalRecordModal = ({
     async function handlerContinue(){
         await setShowModalAppointment(false)
 
-        navigation.navigate("Profile")
+        navigation.navigate("Profile", { consulta: consulta })
     }
     
     return(
@@ -25,9 +25,9 @@ export const MedicalRecordModal = ({
                 <ContainerBoxModalMedicalRecord>
 
                     <ImageModalMedicalRecord
-                        source={require('../../assets/eduProfileImage.png')}
+                        source={{ uri: consulta.paciente.idNavigation.foto }}
                     />
-                    <TitleModalRecord>Eduardo Benvenuti</TitleModalRecord>
+                    <TitleModalRecord>{consulta.paciente.idNavigation.nome}</TitleModalRecord>
 
                     <ContainerData>
                         <AgeModalRecord>38 anos</AgeModalRecord>

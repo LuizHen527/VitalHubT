@@ -1,6 +1,6 @@
 import { ImageAppointmentProfile } from "../images/style"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { AgeProfile, ButtonCard, ButtonText, ButtonTextPront, ContainerCard, ContainerProfile, ContainerTime, DataProfileCard, DateTime, NameProfile, TypeAppointment, ViewRow } from "./Style"
+import { AgeProfile, ButtonCard, ButtonText, ButtonTextPront, ContainerCard, ContainerProfile, ContainerTime, DataProfileCard, DateTime, NameProfile, NameProfile2, TypeAppointment, ViewRow } from "./Style"
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
@@ -103,7 +103,7 @@ export const AppointmentCard = ({
 
                 <DataProfileCard>
 
-                    <NameProfile editable={false} maxLength={27} >{nome}</NameProfile>
+                    <NameProfile2 editable={false} maxLength={27} >{nome}</NameProfile2>
 
                     <AgeProfile>{idade} anos - <TypeAppointment>{tipoPrioridade}</TypeAppointment></AgeProfile>
 

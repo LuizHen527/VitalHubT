@@ -38,6 +38,12 @@ export const NameProfile = styled.Text`
     color: #33303E;
     margin-bottom: 1px;
 `
+export const NameProfile2 = styled.TextInput`
+    font-size: 16px;
+    font-family: MontserratAlternates_600SemiBold;
+    color: #33303E;
+    margin-bottom: 1px;
+`
 
 export const AgeProfile = styled.Text`
     font-family: Quicksand_400Regular;
