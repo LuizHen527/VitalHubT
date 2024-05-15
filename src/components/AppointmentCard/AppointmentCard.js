@@ -93,16 +93,9 @@ export const AppointmentCard = ({
     useEffect(() => {
         CalcIdade();
         SwitchPrioridade();
-        if (situacao == "Pendentes") {
-            const statusValidation = CriarDatas();
-            // console.log('Data atual');
-            // console.log(dataAtual);
-            // CompararDatas();
-            // console.log(statusValidation);
-        }
     }, []);
     return (
-        <ContainerCard onPress={situacao == "Pendentes" ? onPressDoctorModal : ''} style={styles.shadow}>
+        <ContainerCard onPress={situacao == "Pendentes" ? onPressDoctorModal : null} style={styles.shadow}>
             <ImageAppointmentProfile
                 source={{ uri: fotoPerfil }}
             />

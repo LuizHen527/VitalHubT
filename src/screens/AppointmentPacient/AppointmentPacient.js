@@ -2,10 +2,10 @@ import moment from "moment";
 import { HeaderProfile } from "../../components/HeaderProfile/HeaderProfile"
 import { Container, ContainerHeader } from "../../components/container/style";
 import { StyledCalendarStrip } from "../../components/StyledCalendarStrip/styledCalendarStrip";
-import { ScrollView, StatusBar, StyleSheet } from "react-native";
+import { ActivityIndicator, RefreshControl, ScrollView, StatusBar, StyleSheet } from "react-native";
 import { BoxBell, BoxUser, ContainerList, ContainerList2, DataUser, FilterAppointment, ImageUser } from "../AppointmentDoctor/style";
 import { AbsListAppointment } from "../../components/AbsListAppointment/AbsListAppointment";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ListComponent } from "../../components/List/Style";
 import { AppointmentCard } from "../../components/AppointmentCard/AppointmentCard";
 import { CancelAppointmentModal } from "../../components/CancelAppointmentModal/CancelAppointmentModal";
@@ -21,6 +21,7 @@ import { userDecodeToken } from '../../utils/Auth';
 
 import * as Notifications from 'expo-notifications';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast, { BaseToast } from "react-native-toast-message";
 
 Notifications.requestPermissionsAsync();
 
@@ -33,6 +34,30 @@ Notifications.setNotificationHandler({
         shouldSetBadge: false,
     })
 });
+
+const toastConfig = {
+    sucessoToast: ({ text1, text2 }) => (
+        <View style={{ height: 60, width: '100%', backgroundColor: 'tomato' }}>
+            <Text>{text1}</Text>
+            <Text>{text2}</Text>
+        </View>
+    ),
+
+    success: (props) => (
+        <BaseToast
+            {...props}
+            style={{ borderLeftColor: '#49B3BA', width: '90%' }}
+            contentContainerStyle={{ paddingHorizontal: 15 }}
+            text1Style={{
+                fontSize: 15,
+                fontWeight: '400'
+            }}
+            text2Style={{
+                fontSize: 13
+            }}
+        />
+    ),
+}
 
 const User = { id: 1, nome: "Dr Drauzio", sourceImage: '../../assets/eduProfileImage.png' };
 
@@ -51,6 +76,55 @@ export const AppointmentPacient = ({ navigation }) => {
     const [profile, setProfile] = useState(null);
     const [profileData, setProfileData] = useState({});
     const [consultaSelecionada, setConsultaSelecionada] = useState();
+    const [refreshing, setRefreshing] = useState(false);
+
+    async function onRefresh() {
+        setRefreshing(true);
+        setConsultas([]);
+        if (dataConsulta != '') {
+            BuscarUsuario();
+            ListarConsultas();
+        }
+    }
+
+    const ItemView = ({ item }) => {return(
+        statusLista == item.situacao.situacao && (
+
+            
+            
+            
+            <AppointmentCard
+
+
+                perfil={profile.role}
+                consultas={item}
+                nome={item.paciente.idNavigation.nome}
+                dataNascimento={item.paciente.dataNascimento}
+                fotoPerfil={profile.role == 'Medico' ? item.paciente.idNavigation.foto : item.medicoClinica.medico.idNavigation.foto}
+                dataValidation={item.dataConsulta}
+
+                //funções
+                onPressCancel={() => setShowModalCancel(true)}
+                onPressAppointment={() => navigation.replace("EditMedicalRecord", { consulta: item })}
+                onPressDoctorModal={() => MostrarModal('local', item)}
+
+                // apagar depois (Fiz so pra testar validacao)
+                onPressDoctorInsert={() => setShowModalAppointment(true)}
+
+                //Dados
+                //dataNascimento={item.paciente.dataNascimento}
+                prioridade={item.prioridade.prioridade}
+                dataConsulta={moment(item.dataConsulta).format('h:mm')}
+                situacao={item.situacao.situacao}
+
+                //Modal de cancelar
+                onConnectCancelar={() => MostrarModal('cancelar', item)}
+                onConnectAppoitment={() => MostrarModal('prontuario', item)}
+                consultaS={consultaSelecionada}
+
+            />
+        )
+    )}
 
 
     async function profileLoad() {
@@ -68,13 +142,11 @@ export const AppointmentPacient = ({ navigation }) => {
     }
 
     async function ListarConsultas() {
-        console.log('ROLE');
-        console.log(profile.role);
         const url = (profile.role == 'Medico' ? 'Medicos' : 'Pacientes');
         await api.get(`/${url}/BuscarPorData?data=${dataConsulta}&id=${profile.jti}`)
             .then(response => {
                 setConsultas(response.data);
-
+                setRefreshing(false);
             }).catch(error => {
                 console.log(error);
             })
@@ -140,6 +212,14 @@ export const AppointmentPacient = ({ navigation }) => {
             ListarConsultas();
         }
     }, [dataConsulta]);
+
+    const showToast = () => {
+        Toast.show({
+            type: 'success',
+            text1: 'Consulta realizada',
+            text2: 'Atualize as consultas arrastando para baixo'
+        });
+    }
 
 
 
@@ -259,42 +339,9 @@ export const AppointmentPacient = ({ navigation }) => {
             <ListComponent
                 data={consultas}
                 keyExtractor={(item) => item.id}
-
-                renderItem={({ item }) =>
-                    statusLista == item.situacao.situacao && (
-
-                        <AppointmentCard
-
-
-                            perfil={profile.role}
-                            consultas={item}
-                            nome={item.paciente.idNavigation.nome}
-                            dataNascimento={item.paciente.dataNascimento}
-                            fotoPerfil={profile.role == 'Medico' ? item.paciente.idNavigation.foto : item.medicoClinica.medico.idNavigation.foto}
-                            dataValidation={item.dataConsulta}
-
-                            //funções
-                            onPressCancel={() => setShowModalCancel(true)}
-                            onPressAppointment={() => navigation.replace("EditMedicalRecord", { consulta: item })}
-                            onPressDoctorModal={() => MostrarModal('local', item)}
-
-                            // apagar depois (Fiz so pra testar validacao)
-                            onPressDoctorInsert={() => setShowModalAppointment(true)}
-
-                            //Dados
-                            //dataNascimento={item.paciente.dataNascimento}
-                            prioridade={item.prioridade.prioridade}
-                            dataConsulta={moment(item.dataConsulta).format('h:mm')}
-                            situacao={item.situacao.situacao}
-
-                            //Modal de cancelar
-                            onConnectCancelar={() => MostrarModal('cancelar', item)}
-                            onConnectAppoitment={() => MostrarModal('prontuario', item)}
-                            consultaS={consultaSelecionada}
-
-                        />
-                    )
-                }
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                renderItem={ItemView}
             />
 
 
@@ -309,7 +356,7 @@ export const AppointmentPacient = ({ navigation }) => {
                 navigation={navigation}
 
                 consulta={consultaSelecionada}
-
+                showToast={() => showToast()}
                 setShowModalDoctor={setShowModalDoctor}
                 onPressLocal={() => setShowModalDoctor(false)}
             />
@@ -332,6 +379,7 @@ export const AppointmentPacient = ({ navigation }) => {
 
 
 
+            <Toast config={toastConfig} />
 
         </Container>
 

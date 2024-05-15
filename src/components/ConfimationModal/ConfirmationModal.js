@@ -30,7 +30,7 @@ export const ConfirmationModal = ({
         await api.post(`/Consultas/Cadastrar`, {
             ...agendamento,
             pacienteId : profile.jti,
-            situacaoId : "24656A4C-9DCA-47D1-8FE2-25B51B8C9F3A"
+            situacaoId : "B53520F3-4F34-4481-8561-776F95525C5F"
         }).then(async response => {
             await setShowModalConfirmation(false);
             console.log(response);

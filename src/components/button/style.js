@@ -53,6 +53,11 @@ export const ButtonSchedule = styled(ButtonLoginVE)`
     margin-bottom: 30px;
 `
 
+export const ButtonDoctorModal = styled(ButtonLoginVE)`
+    width: 100%;
+    margin-bottom: 0px;
+`
+
 export const ButtonModal = styled(ButtonLoginVE)`
     width: 285px;
 `
@@ -71,6 +76,11 @@ export const ButtonCancelProfile = styled.TouchableOpacity`
 
 export const ButtonBox = styled(ButtonCancel)`
     margin-bottom: 23px;
+`
+
+export const BoxButtonDoctor = styled(ButtonCancel)`
+    margin-bottom: 23px;
+    margin-top: 29px;
 `
 
 export const ButtonGoogle = styled(ButtonLogin)`
