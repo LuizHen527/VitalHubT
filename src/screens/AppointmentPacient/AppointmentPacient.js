@@ -365,12 +365,17 @@ export const AppointmentPacient = ({ navigation }) => {
                 visible={showModalAppointment}
                 setShowModalAppointment={setShowModalAppointment}
             />
-
-            <ContainerAppointmentButton
-                onPress={() => setShowModalSchedule(true)}
-            >
-                <FontAwesome name="stethoscope" size={32} color="white" />
-            </ContainerAppointmentButton>
+            {
+                profile == null ? (<></>) : profile.role == 'Medico' ? (
+                    <></>
+                ):(
+                    <ContainerAppointmentButton
+                        onPress={() => setShowModalSchedule(true)}
+                    >
+                        <FontAwesome name="stethoscope" size={32} color="white" />
+                    </ContainerAppointmentButton>
+                )
+            }
 
             <ScheduleModal
                 visible={showModalSchedule}
