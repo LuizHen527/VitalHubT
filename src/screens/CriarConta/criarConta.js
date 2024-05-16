@@ -13,7 +13,7 @@ export const CriarConta = ({ navigation }) => {
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
     const [confirmSenha, setConfirmSenha] = useState("")
-    const [idTipoUsuario, setIdTipoUsuario] = useState("599F8438-6A6C-4075-A638-D9BD16D39CBD")
+    const [idTipoUsuario, setIdTipoUsuario] = useState("EDADF11B-39D1-4623-9F81-7D0CFD6C0922")
 
     // const handleEmailInputChange = (event) => setEmail(event.target.value)
     // const handleSenhaInputChange = (event) => setSenha(event.target.value)

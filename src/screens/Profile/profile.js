@@ -8,12 +8,16 @@ import { ButtonBlue, ButtonBlue2, ButtonCancel, ButtonGrayEdit, ButtonGrayEdit2,
 import { LinkCancel } from "../../components/Links/style"
 import { useEffect, useState } from "react"
 import moment from "moment"
+import api from "../../service/service"
 
 
 export const Profile = ({navigation, route}) => {
 
     const [ editInput, setEditInput ] = useState(false);
     const [idade, setIdade] = useState();
+    const [medicamento, setMedicamento] = useState();
+    const [descricao, setDescricao] = useState();
+    const [diagnostico, setDiagnostico] = useState();
 
     async function CalcIdade() {
         const date = moment().format('YYYY');
@@ -24,7 +28,16 @@ export const Profile = ({navigation, route}) => {
     }
 
     async function CadastrarProntuario() {
-        api.put(``)
+        api.put(`/Consultas/Prontuario`, {
+            consultaId: route.params.consulta.id,
+            medicamento: medicamento,
+            descricao: descricao,
+            diagnostico: diagnostico,
+        }).then(response => {
+            console.log(response);
+        }).catch(error => {
+            console.log(error);
+        })
     }
 
     useEffect(() => {
@@ -53,14 +66,11 @@ export const Profile = ({navigation, route}) => {
                             <InputDescriptionProfile
                                 multiline={true}
                             >
-                                <TextInput>O paciente possuí uma infecção no 
-                                ouvido. Necessário repouse de 2 dias 
-                                e acompanhamento médico constante</TextInput>
+                                <TextInput>{route.params.consulta.descricao == undefined ? 'Insira a descrição' : route.params.consulta.descricao}</TextInput>
                             </InputDescriptionProfile>
                         ) :
                         (
-                            <InputDescriptionEdit>
-                                <TextInputEdit multiline={true}>Descrição</TextInputEdit>
+                            <InputDescriptionEdit multiline={true} onChangeText={value => setDescricao(value)} value={descricao}>
                             </InputDescriptionEdit>
                         )
                     }
@@ -72,13 +82,13 @@ export const Profile = ({navigation, route}) => {
                     {
                         editInput == false ? (
                             <InputDiagnosisProfile editable={false}>
-                                <TextInput>Infecção no ouvido</TextInput>
+                                <TextInput>{route.params.consulta.diagnostico == undefined ? 'Insira o diagnóstico' : route.params.consulta.diagnostico}</TextInput>
                             </InputDiagnosisProfile>
                         ):
 
                         (
-                            <InputDiagnosisEdit>
-                                <TextInputEdit>Diagnostico </TextInputEdit>
+                            <InputDiagnosisEdit onChangeText={value => setDiagnostico(value)} value={diagnostico}>
+                                
                             </InputDiagnosisEdit>
                         )
                     }
@@ -90,14 +100,10 @@ export const Profile = ({navigation, route}) => {
                     {
                         editInput == false ? (
                             <InputPrescriptionProfile multiline={true} editable={false}>
-                                <TextInput>Medicamento: Advil 
-                                    Dosagem: 50 mg 
-                                    Frequência: 3 vezes ao dia 
-                                    Duração: 3 dias</TextInput>
+                                <TextInput>{route.params.consulta.receita.medicamento == undefined ? 'Insira o diagnóstico' : route.params.consulta.receita.medicamento}</TextInput>
                             </InputPrescriptionProfile>
                         ):(
-                            <InputPrescriptionEdit>
-                                <TextInputEdit>Prescrição medica</TextInputEdit>
+                            <InputPrescriptionEdit onChangeText={value => setMedicamento(value)} value={medicamento}>
                             </InputPrescriptionEdit>
                         )
                     }
@@ -107,12 +113,12 @@ export const Profile = ({navigation, route}) => {
 
                 {
                     editInput == false ? (
-                        <ButtonGrayEdit2 onPress={() => setEditInput(true)}>
+                        <ButtonGrayEdit2 >
                             <ButtonTitle>SALVAR</ButtonTitle>
                         </ButtonGrayEdit2>
                     ):
                     (
-                        <ButtonBlue2 onPress={() => setEditInput(false)}>
+                        <ButtonBlue2 onPress={() => CadastrarProntuario()}>
                             <ButtonTitle>SALVAR</ButtonTitle>
                         </ButtonBlue2>
                     )

@@ -38,9 +38,10 @@ export const EditMedicalRecord = ({navigation, route}) => {
             }
         }).then(response => {
             
-            setDescricaoExame( response.data.descricao)
+            setDescricaoExame( "GEFORCE RTX INTEL CORE")
         }).catch(error => {
             console.log(error);
+            setDescricaoExame( "GEFORCE RTX INTEL CORE")
         })
     }
 
@@ -63,7 +64,7 @@ export const EditMedicalRecord = ({navigation, route}) => {
                     <ScrollContainer>
                     <Container>
                         <ImageProfile
-                                source={require('../../assets/doctorProfileImage.png')}
+                                source={{ uri: route.params.consulta.medicoClinica.medico.idNavigation.foto == null ? 'https://blobvitalhub3dmg2.blob.core.windows.net/blobvitalcontainer/imagemPadrao.jpg' : route.params.consulta.medicoClinica.medico.idNavigation.foto }}
                         />
 
                         <AlignContainer>
@@ -97,7 +98,7 @@ export const EditMedicalRecord = ({navigation, route}) => {
                                 {/* Pesquisar como wrap line in the placeholder */}
                                 <InputBigProfile
                                     multiline={true}
-                                    placeholder={`${route.params.consulta.receita === undefined ? 'Seu médico ainda vai colocar sua prescrição' : route.params.consulta.receita.medicamento}`}
+                                    placeholder={`${route.params.consulta.receita == undefined ? 'Seu médico ainda vai colocar sua prescrição' : route.params.consulta.receita.medicamento}`}
                                 />
                             </InputProfileBox>
 
